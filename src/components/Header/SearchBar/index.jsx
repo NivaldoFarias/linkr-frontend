@@ -1,6 +1,9 @@
 import styled from 'styled-components';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { DebounceInput } from 'react-debounce-input';
 
-const Bar = styled.div`
+
+const StyledInput = styled.input`
   background-color: white;
   height: 45px;
   border-radius: 8px;
@@ -14,5 +17,23 @@ const Bar = styled.div`
 `;
 
 export default function SearchBar() {
-  return <Bar></Bar>;
+  const [userName, setUserName] = useState(''); 
+  const [users] = useUsers(userName);
+  return (
+    <div>
+      <DebounceInput
+        required
+        type='text'
+        value={userName}
+        placeholder='Search for people'
+        onChange={(e) => setUserName(e.target.value)}
+        element={StyledInput}
+        minLength={3}
+        debounceTimeout={300}/>
+      <AiOutlineSearch/>
+      <ul>
+        {users}
+      </ul>
+    </div>
+  );
 }
