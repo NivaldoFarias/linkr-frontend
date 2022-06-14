@@ -3,11 +3,11 @@ import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { DataContextProvider } from '../hooks/DataContext';
-import SignIn from './SignIn';
+import SignIn from './SignIn/';
 import SignUp from './SignUp';
 
-import theme from './styles/theme';
-import StyleResets from './styles/resets';
+import theme from './../styles/theme';
+import StyleResets from './../styles/resets';
 
 import Home from '../pages/Home';
 import TimelinePage from '../pages/TimelinePage';

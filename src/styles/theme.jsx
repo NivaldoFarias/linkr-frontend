@@ -26,9 +26,10 @@ const theme = {
     danger: 'rgb(255,0,0)',
   },
   fonts: {
-    logotype: "'Passion One', cursive",
-    primary: "'Oswald', sans-serif",
-    secondary: "'Lato', sans-serif",
+    logotype: "'Passion One', cursive;",
+    primary: "'Oswald', sans-serif;",
+    secondary: "'Lato', sans-serif;",
+    forms: "'Lexend Deca', sans-serif;",
   },
   mixins: {
     flexbox: (direction, justify, align, gap) => {
@@ -49,7 +50,7 @@ const theme = {
   styles: {
     defaultBorder: '1px solid rgb(77, 77, 77)',
     borderRadius: '5px',
-    boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.251)',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
   },
 };
 
