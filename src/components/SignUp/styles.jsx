@@ -8,7 +8,7 @@ const StyledPage = styled.section`
 
   background-color: ${({ theme }) => theme.colors.foreground};
 
-  .signin-form {
+  .signup-form {
     ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '40px')}
     position: relative;
     height: fit-content;

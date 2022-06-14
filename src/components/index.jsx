@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { DataContextProvider } from '../hooks/DataContext';
 import SignIn from './SignIn/';
-import SignUp from './SignUp';
+import SignUp from './SignUp/';
 
 import theme from './../styles/theme';
 import StyleResets from './../styles/resets';
