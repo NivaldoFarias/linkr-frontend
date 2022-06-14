@@ -18,7 +18,7 @@ const Wrapper = styled.main`
 
 export default function Header() {
   const { width } = useContext(DataContext);
-  const isMobile = width < 600;
+  const isMobile = width < 500;
 
   return (
     <>

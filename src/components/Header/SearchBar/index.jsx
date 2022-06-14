@@ -5,8 +5,7 @@ const Bar = styled.div`
   height: 45px;
   border-radius: 8px;
   width: 100%;
-
-  margin: 10px 20px;
+  margin: 10px;
 
   @media only screen and (min-width: 500px) {
     max-width: 300px;
