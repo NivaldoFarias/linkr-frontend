@@ -38,6 +38,13 @@ const theme = {
         alignItems: ${align}
         gap: ${gap}`;
     },
+    position: (position, top, right, bottom, left) => {
+      return `position: ${position}
+        top: ${top}
+        right: ${right}
+        bottom: ${bottom}
+        left: ${left}`;
+    },
   },
   styles: {
     defaultBorder: '1px solid rgb(77, 77, 77)',
