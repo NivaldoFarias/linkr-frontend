@@ -1,8 +1,9 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { DataContextProvider } from '../hooks/DataContext';
-
+import theme from './theme';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
@@ -14,20 +15,22 @@ import MainPage from '../pages/MainPage';
 
 export default function App() {
   return (
-    <DataContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<HomePage />}>
-            <Route index element={<SignIn />} />
-            <Route path='/sign-up' element={<SignUp />} />
-          </Route>
-          <Route element={<MainPage />}>
-            <Route path='/timeline' element={<TimelinePage />} />
-            <Route path='/user/:userId' element={<UserPage />} />
-            <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </DataContextProvider>
+    <ThemeProvider theme={theme}>
+      <DataContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<HomePage />}>
+              <Route index element={<SignIn />} />
+              <Route path='/sign-up' element={<SignUp />} />
+            </Route>
+            <Route element={<MainPage />}>
+              <Route path='/timeline' element={<TimelinePage />} />
+              <Route path='/user/:userId' element={<UserPage />} />
+              <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </DataContextProvider>
+    </ThemeProvider>
   );
 }
