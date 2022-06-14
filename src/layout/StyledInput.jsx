@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const InputGroup = styled.div`
   position: relative;
   font-family: ${({ theme }) => theme.fonts.forms};
+  appearance: none;
 
   input {
     display: block;
@@ -10,7 +11,8 @@ const InputGroup = styled.div`
     width: 300px;
 
     font-weight: 300;
-    font-size: 17px;
+    font-size: 1.2rem;
+    color: white;
 
     border: none;
     background-color: transparent;
@@ -27,7 +29,7 @@ const InputGroup = styled.div`
     top: 15px;
     left: 5px;
 
-    font-size: 15px;
+    font-size: 1rem;
     font-weight: 300;
 
     color: white;
@@ -40,7 +42,14 @@ const InputGroup = styled.div`
   input:valid ~ label {
     top: -10px;
     font-size: 14px;
-    color: rgb(82, 100, 174);
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: initial !important;
   }
   /* BOTTOM BARS ================================= */
   .bar {
@@ -57,7 +66,7 @@ const InputGroup = styled.div`
     width: 0;
 
     content: '';
-    background: rgb(82, 100, 174);
+    background: ${({ theme }) => theme.colors.tertiary};
     transition: 0.2s ease all;
   }
   .bar:before {
@@ -89,7 +98,7 @@ const InputGroup = styled.div`
   }
   @keyframes input-highlighter {
     from {
-      background: rgb(82, 100, 174);
+      background: ${({ theme }) => theme.colors.tertiary};
     }
     to {
       width: 0;

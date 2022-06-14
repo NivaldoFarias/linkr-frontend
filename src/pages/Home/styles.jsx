@@ -11,8 +11,8 @@ const StyledHome = styled.div`
 
   header {
     ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
-    padding: 10px 60px;
-    min-height: 175px;
+    padding: 30px 60px;
+    height: fit-content;
     width: 100%;
     box-shadow: 0px -4px 4px rgba(255, 255, 255, 0.251);
 
@@ -31,14 +31,6 @@ const StyledHome = styled.div`
       text-align: center;
       font-family: ${({ theme }) => theme.fonts.primary};
     }
-  }
-  #signin-page {
-    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '12px')};
-    padding: 0 24px;
-    min-height: 100%;
-    width: 100%;
-
-    background-color: ${({ theme }) => theme.colors.foreground};
   }
 `;
 

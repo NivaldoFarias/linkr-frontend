@@ -9,6 +9,7 @@ import getRandomInt from './../../utils/getRandomInt.js';
 import StyledInput from '../../layout/StyledInput';
 import StyledLink from '../../layout/StyledLink';
 import StyledButton from '../../layout/StyledButton';
+import StyledPage from './styles';
 
 function SignIn() {
   const [formData, setFormData] = useState({
@@ -57,9 +58,9 @@ function SignIn() {
             <label>Password</label>
           </StyledInput>
           <StyledButton className={validateForm()} type='submit'>
-            Sign in
+            SIGN IN
           </StyledButton>
-          <StyledLink to='/'>Já possui uma conta? Faça Login</StyledLink>
+          <StyledLink to='/'>not yet registered? SIGN UP</StyledLink>
         </form>
       </>
     );
@@ -117,7 +118,7 @@ function SignIn() {
 
   const signinPage = buildSigninPage();
 
-  return <section>{signinPage}</section>;
+  return <StyledPage>{signinPage}</StyledPage>;
 }
 
 export default SignIn;

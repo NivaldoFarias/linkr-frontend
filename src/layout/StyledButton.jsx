@@ -8,7 +8,7 @@ const StyledButton = styled.button`
   width: 100%;
 
   color: white;
-  font-size: 1em;
+  font-size: 2em;
   font-weight: 500;
   letter-spacing: 2px;
   font-family: ${({ theme }) => theme.fonts.primary};
@@ -18,6 +18,10 @@ const StyledButton = styled.button`
   outline: none;
   appearance: none;
   background-color: transparent;
+
+  &:hover {
+    filter: brightness(2);
+  }
 `;
 
 export default StyledButton;
