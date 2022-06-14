@@ -32,18 +32,18 @@ const theme = {
   },
   mixins: {
     flexbox: (direction, justify, align, gap) => {
-      return `display: 'flex'
-        flexDirection: ${direction}
-        justifyContent: ${justify}
-        alignItems: ${align}
-        gap: ${gap}`;
+      return `display: flex;
+        flex-direction: ${direction};
+        justify-content: ${justify};
+        align-items: ${align};
+        gap: ${gap};`;
     },
     position: (position, top, right, bottom, left) => {
-      return `position: ${position}
-        top: ${top}
-        right: ${right}
-        bottom: ${bottom}
-        left: ${left}`;
+      return `position: ${position};
+        top: ${top};
+        right: ${right};
+        bottom: ${bottom};
+        left: ${left};`;
     },
   },
   styles: {
