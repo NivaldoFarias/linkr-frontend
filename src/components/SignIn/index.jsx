@@ -74,8 +74,8 @@ function SignIn() {
           password: formData.password,
         };
 
-        const result = await axios.post(URL, body);
-        result.status === 200 ? handleSuccess(result.token) : handleError();
+        const response = await axios.post(URL, body);
+        response.status === 200 ? handleSuccess(response.token) : handleError();
       } catch (error) {
         handleError(error);
         resetAll();

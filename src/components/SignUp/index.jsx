@@ -98,10 +98,12 @@ function SignUp() {
         const body = {
           username: formData.username,
           password: formData.password,
+          email: formData.email,
+          imageUrl: formData.imageUrl,
         };
 
-        const result = await axios.post(URL, body);
-        result.status === 200 ? handleSuccess(result.token) : handleError();
+        const response = await axios.post(URL, body);
+        response.status === 200 ? handleSuccess(response) : handleError();
       } catch (error) {
         handleError(error);
         resetAll();
@@ -119,8 +121,8 @@ function SignUp() {
         });
       }
 
-      function handleSuccess(token) {
-        setSession(token);
+      function handleSuccess(res) {
+        console.log(res);
       }
     }
 
