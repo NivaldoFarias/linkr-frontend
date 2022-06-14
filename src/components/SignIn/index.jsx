@@ -4,10 +4,11 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import DataContext from '../../hooks/DataContext';
-
 import getRandomInt from './../../utils/getRandomInt.js';
+
 import StyledInput from '../../layout/StyledInput';
 import StyledLink from '../../layout/StyledLink';
+import StyledButton from '../../layout/StyledButton';
 
 function SignIn() {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ function SignIn() {
     return (
       <>
         <form
+          className='signin-form'
           onSubmit={(e) => {
             e.preventDefault();
             setHasSubmitted(true);
@@ -40,7 +42,7 @@ function SignIn() {
             />
             <span className='highlight'></span>
             <span className='bar'></span>
-            <label>Nome</label>
+            <label>Username</label>
           </StyledInput>
           <StyledInput>
             <input
@@ -54,9 +56,9 @@ function SignIn() {
             <span className='bar'></span>
             <label>Password</label>
           </StyledInput>
-          <button className={validateForm()} type='submit'>
+          <StyledButton className={validateForm()} type='submit'>
             Sign in
-          </button>
+          </StyledButton>
           <StyledLink to='/'>Já possui uma conta? Faça Login</StyledLink>
         </form>
       </>
@@ -115,7 +117,7 @@ function SignIn() {
 
   const signinPage = buildSigninPage();
 
-  return <section id='signin-page'>{signinPage}</section>;
+  return <section>{signinPage}</section>;
 }
 
 export default SignIn;
