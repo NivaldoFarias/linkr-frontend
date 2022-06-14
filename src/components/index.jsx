@@ -3,9 +3,11 @@ import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { DataContextProvider } from '../hooks/DataContext';
-import theme from './theme';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+
+import theme from './styles/theme';
+import StyleResets from './styles/resets';
 
 import HomePage from '../pages/HomePage';
 import TimelinePage from '../pages/TimelinePage';
@@ -18,6 +20,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <DataContextProvider>
         <BrowserRouter>
+          <StyleResets />
           <Routes>
             <Route path='/' element={<HomePage />}>
               <Route index element={<SignIn />} />
