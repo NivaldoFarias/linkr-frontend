@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -38,14 +41,44 @@ const Hashtag = styled.div`
 const trendingHashtags = ['react', 'redux', 'nodejs', 'javascript', 'typescript'];
 
 export default function TrendingNav() {
-  const hashtags = trendingHashtags.map((hashtag, index) => {
-    return <Hashtag key={index}>{`# ${hashtag}`}</Hashtag>;
-  });
+  const [hashtags, setHashtags] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/hashtags/trending')
+      .then(({ data }) => {
+        setHashtags(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const navigate = useNavigate();
+
+  const onClickHandler = (hashtag) => {
+    navigate(`/hashtag/${hashtag}`);
+  };
+
+  const hashtagsElements = hashtags ? (
+    hashtags.map((hashtag, index) => {
+      return (
+        <Hashtag
+          onClick={() => {
+            onClickHandler(hashtag.name);
+          }}
+          key={index}
+        >{`# ${hashtag.name}`}</Hashtag>
+      );
+    })
+  ) : (
+    <></>
+  );
 
   return (
     <Wrapper>
       <Header>trending</Header>
-      <Hashtags>{hashtags}</Hashtags>
+      <Hashtags>{hashtagsElements}</Hashtags>
     </Wrapper>
   );
 }
