@@ -42,10 +42,9 @@ export default function Feed({ title, posts, canCreatePost }) {
   return (
     <Wrapper>
       <Header>{title}</Header>
-
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
-        <Posts>{postsElements};</Posts>
+        <Posts>{postsElements}</Posts>
       </Content>
     </Wrapper>
   );
