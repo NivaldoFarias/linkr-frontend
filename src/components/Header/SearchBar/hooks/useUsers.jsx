@@ -16,7 +16,7 @@ export default function useUsers(userName) {
       const response = Axios.get(`users/username/${userName}`);
       response.then(async ({ data }) => {
         const result = await Promise.all(data.users.map(async(user) => {
-          const { id, image_url, username } = user;
+          const { id, imageUrl, username } = user;
           return (
             <motion.li 
               key={id} 
@@ -25,7 +25,7 @@ export default function useUsers(userName) {
               variants={variants}
               onClick={() => browse(`/user/${ id }`)}>
               <figure>
-                <img src={image_url} alt={`${username}`}/>
+                <img src={imageUrl} alt={`${username}`}/>
                 <figcaption>{username}</figcaption>
               </figure>
             </motion.li>
