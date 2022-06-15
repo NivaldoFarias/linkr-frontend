@@ -103,7 +103,7 @@ function SignUp() {
         };
 
         const response = await axios.post(URL, body);
-        response.status === 200 ? handleSuccess(response) : handleError();
+        response.status === 200 || 201 ? handleSuccess(response) : handleError();
       } catch (error) {
         handleError(error);
         resetAll();
@@ -126,8 +126,8 @@ function SignUp() {
           message: `You're all set!`,
           buttons: [
             {
-              label: 'SIGN IN',
-              onClick: () => navigate('/sign-in'),
+              label: 'Sign in',
+              onClick: () => navigate('/'),
             },
           ],
         });
