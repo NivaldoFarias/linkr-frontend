@@ -4,7 +4,7 @@ import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import DataContext from '../../hooks/DataContext';
+import TokenContext from '../../hooks/DataContext';
 import getRandomInt from './../../utils/getRandomInt.js';
 
 import StyledLoadingDots from './../../layout/StyledLoadingDots';
@@ -20,7 +20,7 @@ function SignIn() {
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { setToken } = useContext(DataContext);
+  const { setToken } = useContext(TokenContext);
   const navigate = useNavigate();
 
   function buildSigninPage() {
