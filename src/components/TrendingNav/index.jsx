@@ -4,10 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  flex: 0 0 auto;
   margin-top: 160px;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 300px;
+  width: 30%;
   border-radius: 16px;
   * {
     color: white;

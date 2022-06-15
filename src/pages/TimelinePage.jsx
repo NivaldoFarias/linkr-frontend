@@ -1,9 +1,8 @@
-import TimelinePosts from "../components/TimelinePosts";
+import { useState } from 'react';
+import Feed from '../components/Feed';
+
 export default function TimelinePage() {
-  return (
-    <div>
-      <h1>TimelinePage</h1>
-      <TimelinePosts />
-    </div>
-  );
+  const [posts, setPosts] = useState([]);
+
+  return <Feed title={`timeline`} posts={posts} canCreatePost={true} />;
 }
