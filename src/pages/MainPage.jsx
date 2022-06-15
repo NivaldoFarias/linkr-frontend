@@ -20,7 +20,7 @@ const Main = styled.main`
 `;
 
 const Feed = styled.div`
-  width: 100%;
+  width: 611px;
   max-width: 611px;
   flex: 0 0 auto;
 `;

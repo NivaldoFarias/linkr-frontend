@@ -16,6 +16,7 @@ const theme = {
     btnShadowGreen: 'rgb(77,152,51)',
 
     text: 'rgb(112, 112, 112)',
+    post: 'rgb(183, 183, 183)',
     btnPrimary: 'rgb(24, 119, 242)',
     background: 'rgb(21, 21, 21)',
     foreground: 'rgb(51, 51, 51)',
