@@ -1,9 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import DataContext from './../../hooks/DataContext';
 import getRandomInt from './../../utils/getRandomInt.js';
 
 import StyledLoadingDots from './../../layout/StyledLoadingDots';
@@ -20,8 +19,6 @@ function SignUp() {
     imageUrl: '',
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  const { setToken } = useContext(DataContext);
 
   function buildSignUpPage() {
     return (
@@ -94,7 +91,7 @@ function SignUp() {
 
     async function handleSignup() {
       try {
-        const URL = '';
+        const URL = 'http://localhost:5000/auth/sign-up';
         const body = {
           username: formData.username,
           password: formData.password,

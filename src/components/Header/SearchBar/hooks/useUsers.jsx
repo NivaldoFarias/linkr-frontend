@@ -12,29 +12,33 @@ export default function useUsers(userName) {
   const [users, setUsers] = useState([]);
   const browse = useNavigate();
   useEffect(() => {
-    if(userName.length > 0) {
+    if (userName.length > 0) {
       const response = Axios.get(`users/username/${userName}`);
       response.then(async ({ data }) => {
-        const result = await Promise.all(data.users.map(async(user) => {
-          const { id, imageUrl, username } = user;
-          return (
-            <motion.li 
-              key={id} 
-              initial="hidden" 
-              animate="visible" 
-              variants={variants}
-              onClick={() => browse(`/user/${ id }`)}>
-              <figure>
-                <img src={imageUrl} alt={`${username}`}/>
-                <figcaption>{username}</figcaption>
-              </figure>
-            </motion.li>
-          );
-        }));
+        const result = await Promise.all(
+          data.users.map(async (user) => {
+            const { id, imageUrl, username } = user;
+            return (
+              <motion.li
+                key={id}
+                initial='hidden'
+                animate='visible'
+                variants={variants}
+                onClick={() => browse(`/user/${id}`)}
+              >
+                <figure>
+                  <img src={imageUrl} alt={`${username}`} />
+                  <figcaption>{username}</figcaption>
+                </figure>
+              </motion.li>
+            );
+          }),
+        );
         setUsers(result);
       });
       response.catch((error) => console.error(error));
     }
-  },[userName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userName]);
   return [users];
 }
