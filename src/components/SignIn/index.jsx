@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -20,6 +21,7 @@ function SignIn() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { setToken } = useContext(DataContext);
+  const navigate = useNavigate();
 
   function buildSigninPage() {
     return (
@@ -91,11 +93,12 @@ function SignIn() {
             },
           ],
         });
+        resetAll();
       }
 
       function handleSuccess(res) {
         setToken(res.token);
-        resetAll();
+        navigate('/timeline');
       }
     }
 

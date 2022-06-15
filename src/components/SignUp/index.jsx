@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -19,6 +20,8 @@ function SignUp() {
     imageUrl: '',
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const navigate = useNavigate();
 
   function buildSignUpPage() {
     return (
@@ -118,8 +121,16 @@ function SignUp() {
         });
       }
 
-      function handleSuccess(res) {
-        console.log(res);
+      function handleSuccess(_res) {
+        confirmAlert({
+          message: `You're all set!`,
+          buttons: [
+            {
+              label: 'SIGN IN',
+              onClick: () => navigate('/sign-in'),
+            },
+          ],
+        });
       }
     }
 
