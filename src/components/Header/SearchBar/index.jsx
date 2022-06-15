@@ -1,26 +1,14 @@
-import styled from 'styled-components';
+import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { DebounceInput } from 'react-debounce-input';
-
-
-const StyledInput = styled.input`
-  background-color: white;
-  height: 45px;
-  border-radius: 8px;
-  width: 100%;
-  margin: 10px;
-
-  @media only screen and (min-width: 500px) {
-    max-width: 300px;
-    margin: none;
-  }
-`;
+import useUsers from './hooks/useUsers';
+import { StyledDiv, StyledInput, StyledList } from './styles';
 
 export default function SearchBar() {
   const [userName, setUserName] = useState(''); 
   const [users] = useUsers(userName);
   return (
-    <div>
+    <StyledDiv>
       <DebounceInput
         required
         type='text'
@@ -30,10 +18,8 @@ export default function SearchBar() {
         element={StyledInput}
         minLength={3}
         debounceTimeout={300}/>
-      <AiOutlineSearch/>
-      <ul>
-        {users}
-      </ul>
-    </div>
+      <AiOutlineSearch className="magnifying-glass"/>
+      {users.length > 0 && userName.length > 0 && <StyledList>{users}</StyledList>}
+    </StyledDiv>
   );
 }

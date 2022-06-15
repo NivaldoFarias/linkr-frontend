@@ -8,10 +8,10 @@ import DataContext from '../../hooks/DataContext';
 const Wrapper = styled.main`
   height: 72px;
   width: 100%;
-  ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', '0px')};
+  ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
   padding: 10px 20px;
   background-color: ${({ theme }) => theme.colors.background};
-  * {
+  & {
     color: white;
   }
 `;
