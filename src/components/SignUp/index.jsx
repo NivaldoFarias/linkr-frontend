@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import DataContext from './../../hooks/DataContext';
 import getRandomInt from './../../utils/getRandomInt.js';
 
 import StyledLoadingDots from './../../layout/StyledLoadingDots';
@@ -21,7 +21,7 @@ function SignUp() {
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { setSession } = useContext(DataContext);
+  const navigate = useNavigate();
 
   function buildSignUpPage() {
     return (
@@ -94,7 +94,7 @@ function SignUp() {
 
     async function handleSignup() {
       try {
-        const URL = '';
+        const URL = 'http://localhost:5000/auth/sign-up';
         const body = {
           username: formData.username,
           password: formData.password,
@@ -103,7 +103,7 @@ function SignUp() {
         };
 
         const response = await axios.post(URL, body);
-        response.status === 200 ? handleSuccess(response) : handleError();
+        response.status === 200 || 201 ? handleSuccess(response) : handleError();
       } catch (error) {
         handleError(error);
         resetAll();
@@ -121,8 +121,16 @@ function SignUp() {
         });
       }
 
-      function handleSuccess(res) {
-        console.log(res);
+      function handleSuccess(_res) {
+        confirmAlert({
+          message: `You're all set!`,
+          buttons: [
+            {
+              label: 'Sign in',
+              onClick: () => navigate('/'),
+            },
+          ],
+        });
       }
     }
 

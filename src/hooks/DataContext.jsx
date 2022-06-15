@@ -2,9 +2,8 @@ import { createContext, useState, useEffect } from 'react';
 
 const DataContext = createContext();
 
-export function DataContextProvider({ children }) {
+export function DataProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
 
   const [width, setWidth] = useState(window.innerWidth);
   function handleWindowSizeChange() {
@@ -23,8 +22,6 @@ export function DataContextProvider({ children }) {
       value={{
         user,
         setUser,
-        session,
-        setSession,
         width,
         setWidth,
       }}

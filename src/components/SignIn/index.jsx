@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import DataContext from '../../hooks/DataContext';
+import TokenContext from '../../hooks/DataContext';
 import getRandomInt from './../../utils/getRandomInt.js';
 
 import StyledLoadingDots from './../../layout/StyledLoadingDots';
@@ -19,7 +20,8 @@ function SignIn() {
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { setSession } = useContext(DataContext);
+  const { setToken } = useContext(TokenContext);
+  const navigate = useNavigate();
 
   function buildSigninPage() {
     return (
@@ -68,14 +70,14 @@ function SignIn() {
 
     async function handleSignin() {
       try {
-        const URL = '';
+        const URL = 'http://localhost:5000/auth/sign-in';
         const body = {
           username: formData.username,
           password: formData.password,
         };
 
         const response = await axios.post(URL, body);
-        response.status === 200 ? handleSuccess(response.token) : handleError();
+        response.status === 200 ? handleSuccess(response.data) : handleError();
       } catch (error) {
         handleError(error);
         resetAll();
@@ -91,10 +93,12 @@ function SignIn() {
             },
           ],
         });
+        resetAll();
       }
 
-      function handleSuccess(token) {
-        setSession(token);
+      function handleSuccess(res) {
+        setToken(res.token);
+        navigate('/timeline');
       }
     }
 
