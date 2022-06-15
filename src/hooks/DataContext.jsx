@@ -4,7 +4,7 @@ const DataContext = createContext();
 
 export function DataContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
+  const [token, setToken] = useState(null);
 
   const [width, setWidth] = useState(window.innerWidth);
   function handleWindowSizeChange() {
@@ -23,8 +23,8 @@ export function DataContextProvider({ children }) {
       value={{
         user,
         setUser,
-        session,
-        setSession,
+        token,
+        setToken,
         width,
         setWidth,
       }}

@@ -21,7 +21,7 @@ function SignUp() {
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { setSession } = useContext(DataContext);
+  const { setToken } = useContext(DataContext);
 
   function buildSignUpPage() {
     return (
