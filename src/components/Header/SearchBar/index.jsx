@@ -1,18 +1,25 @@
-import styled from 'styled-components';
-
-const Bar = styled.div`
-  background-color: white;
-  height: 45px;
-  border-radius: 8px;
-  width: 100%;
-  margin: 10px;
-
-  @media only screen and (min-width: 500px) {
-    max-width: 300px;
-    margin: none;
-  }
-`;
+import { useState } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { DebounceInput } from 'react-debounce-input';
+import useUsers from './hooks/useUsers';
+import { StyledDiv, StyledInput, StyledList } from './styles';
 
 export default function SearchBar() {
-  return <Bar></Bar>;
+  const [userName, setUserName] = useState(''); 
+  const [users] = useUsers(userName);
+  return (
+    <StyledDiv>
+      <DebounceInput
+        required
+        type='text'
+        value={userName}
+        placeholder='Search for people'
+        onChange={(e) => setUserName(e.target.value)}
+        element={StyledInput}
+        minLength={3}
+        debounceTimeout={300}/>
+      <AiOutlineSearch className="magnifying-glass"/>
+      {users.length > 0 && userName.length > 0 && <StyledList>{users}</StyledList>}
+    </StyledDiv>
+  );
 }
