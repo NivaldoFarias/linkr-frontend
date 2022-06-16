@@ -70,7 +70,8 @@ function SignIn() {
 
     async function handleSignin() {
       try {
-        const URL = 'http://localhost:5000/auth/sign-in';
+        const API = process.env.REACT_APP_API_URL ?? 'http://localhost:5000';
+        const URL = `${API}/auth/sign-in`;
         const body = {
           username: formData.username,
           password: formData.password,

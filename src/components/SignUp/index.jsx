@@ -94,7 +94,8 @@ function SignUp() {
 
     async function handleSignup() {
       try {
-        const URL = 'http://localhost:5000/auth/sign-up';
+        const API = process.env.REACT_APP_API_URL ?? 'http://localhost:5000';
+        const URL = `${API}/auth/sign-up`;
         const body = {
           username: formData.username,
           password: formData.password,
