@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Axios from '../../adapters';
 
 import TokenContext from '../../hooks/DataContext';
 import getRandomInt from './../../utils/getRandomInt.js';
@@ -70,14 +70,13 @@ function SignIn() {
 
     async function handleSignin() {
       try {
-        const API = process.env.REACT_APP_API_URL ?? 'http://localhost:5000';
-        const URL = `${API}/auth/sign-in`;
+        const URL = `auth/sign-in`;
         const body = {
           username: formData.username,
           password: formData.password,
         };
 
-        const response = await axios.post(URL, body);
+        const response = await Axios.post(URL, body);
         response.status === 200 ? handleSuccess(response.data) : handleError();
       } catch (error) {
         handleError(error);

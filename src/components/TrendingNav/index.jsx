@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Axios from '../../adapters';
 
 const Wrapper = styled.div`
   margin-top: 160px;
@@ -43,8 +43,7 @@ export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/hashtags/trending')
+    Axios.get('hashtags/trending')
       .then(({ data }) => {
         setHashtags(data);
       })

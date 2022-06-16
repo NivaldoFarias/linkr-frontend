@@ -7,7 +7,7 @@ export default function HashtagPage() {
   const { hashtag } = useParams();
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    const promise = Axios.get(`/hashtags/${hashtag}/posts`).then((res) => {
+    const promise = Axios.get(`hashtags/${hashtag}/posts`).then((res) => {
       console.log(res.data);
       setPosts(res.data);
     });

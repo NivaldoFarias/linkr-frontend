@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Axios from '../../adapters/index.jsx';
 
 import getRandomInt from './../../utils/getRandomInt.js';
 
@@ -94,8 +94,7 @@ function SignUp() {
 
     async function handleSignup() {
       try {
-        const API = process.env.REACT_APP_API_URL ?? 'http://localhost:5000';
-        const URL = `${API}/auth/sign-up`;
+        const URL = `auth/sign-up`;
         const body = {
           username: formData.username,
           password: formData.password,
@@ -103,7 +102,7 @@ function SignUp() {
           imageUrl: formData.imageUrl,
         };
 
-        const response = await axios.post(URL, body);
+        const response = await Axios.post(URL, body);
         response.status === 200 || 201 ? handleSuccess(response) : handleError();
       } catch (error) {
         handleError(error);
