@@ -2,24 +2,46 @@ import styled from 'styled-components';
 import { FiHeart } from 'react-icons/fi';
 import { FcLike } from 'react-icons/fc';
 
+/**
+ * 
+ * {
+        id: 1,
+        text: 'Veja que legal!!',
+        url: 'https://www.youtube.com/watch?v=aJR7f45dBNs&ab_channel=FilipeDeschamps',
+        urlPictureUrl: 'https://i.ytimg.com/vi/aJR7f45dBNs/maxresdefault.jpg',
+        urlTitle: 'Se Você Passar Por Esses 5 Desafios, Você Aprendeu React JS',
+        urlDescription: 'Aprender a programar do zero React JS é uma experiência SENSACIONAL quando feita do jeito certo, e nesse vídeo tutorial eu vou fazer você passar por 5 desafi...',
+        userId: 5,
+        userPictureUrl: 'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
+        numberOfLikes: 12,
+        isLiked: false,
+        likesLabel: 'Ricardo e Maria +56 pessoas'
+    },
+ */
+
 export default function Post({ post }) {
   return (
-    <PostContainer>
+    <PostContainer key={post.id}>
       <Left>
-        <ProfileImage src={post.picture_url} />
-        <FcLike style={{ heigth: 50 }} />
+        <ProfileImage src={post.userPictureUrl} />
+        <FcLike />
       </Left>
       <Right>
         <UserName>{post.username}</UserName>
         <PostText>{post.text}</PostText>
-        <LinkContainer>
-          <Link href={post.url}>
+        <Link href={post.url} target='blank'>
+          <LinkContainer>
             <LinkInfo>
-              <Title>{post.title}</Title>
+              <Title>{post.urlTitle}</Title>
+              <Description>{post.urlDescription}</Description>
+              <Url>{post.url}</Url>
             </LinkInfo>
-            <PostImage src={post.image} />
-          </Link>
-        </LinkContainer>
+            <ImageContainer>
+              <PostImage src={post.urlPictureUrl} />
+            </ImageContainer>
+          </LinkContainer>
+        </Link>
+
       </Right>
     </PostContainer>
   );
@@ -40,7 +62,6 @@ const Left = styled.div`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  margin-right: 16px;
 `;
 
 const ProfileImage = styled.img`
@@ -76,7 +97,6 @@ const PostText = styled.div`
 const LinkContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
   width: 100%;
   height: 155px;
   border: ${({ theme }) => theme.styles.defaultBorder};
@@ -90,21 +110,39 @@ const Link = styled.a`
 const LinkInfo = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 0.5;
+  padding: 16px;
+  flex: 8;
 `;
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  `;
 
 const PostImage = styled.img`
   width: 153.44px;
   height: 153px;
   border-radius: 0px 12px 13px 0px;
-  object-fit: fill;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  object-fit: cover;
 `;
 const Title = styled.div`
   font-size: 17px;
-  color: ${({ theme }) => theme.colors.post};
+  color: #CECECE;
   font-family: ${({ theme }) => theme.fonts.secondary};
+  padding-bottom: 6px;
+`;
+const Description = styled.div`
+  font-size: 12px;
+  color: #9B9595;
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  margin-top: 4px;
+  padding-bottom: 6px;
+`;
+
+const Url = styled.div`
+  font-size: 12px;
+  color: #CECECE;
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  margin-top: 4px;
 `;
