@@ -1,20 +1,8 @@
-import styled from 'styled-components';
-import Logo from './Logo';
+import { useContext } from 'react';
 import SearchBar from './SearchBar';
 import Navigation from './Navigation';
-import { useContext } from 'react';
-import DataContext from '../../hooks/DataContext';
-
-const Wrapper = styled.main`
-  height: 72px;
-  width: 100%;
-  ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
-  padding: 10px 20px;
-  background-color: ${({ theme }) => theme.colors.background};
-  & {
-    color: white;
-  }
-`;
+import DataContext from '../../contexts/DataContext';
+import { Wrapper, Title } from './styles';
 
 export default function Header() {
   const { width } = useContext(DataContext);
@@ -23,11 +11,11 @@ export default function Header() {
   return (
     <>
       <Wrapper>
-        <Logo />
-        {!isMobile ? <SearchBar /> : <></>}
+        <Title>linkr</Title>
+        {!isMobile && <SearchBar />}
         <Navigation />
       </Wrapper>
-      {!isMobile ? <></> : <SearchBar />}
+      {isMobile && <SearchBar />}
     </>
   );
 }
