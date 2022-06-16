@@ -68,7 +68,7 @@ function SignIn() {
 
     async function handleSignin() {
       try {
-        const URL = '/sign-in';
+        const URL = '/auth/sign-in';
         const body = {
           username: formData.username,
           password: formData.password,
