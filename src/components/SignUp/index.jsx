@@ -5,7 +5,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from '../../adapters/index.jsx';
 
 import Axios from '../../adapters';
-import DataContext from '../../contexts/DataContext';
 import getRandomInt from '../../utils/getRandomInt.js';
 
 import StyledLoadingDots from '../../styles/StyledLoadingDots.jsx';
