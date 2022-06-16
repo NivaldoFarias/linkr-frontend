@@ -95,7 +95,11 @@ function SignUp() {
 
     async function handleSignup() {
       try {
+<<<<<<< HEAD
         const URL = '/auth/sign-up';
+=======
+        const URL = '/sign-up';
+>>>>>>> feat: new components structure
         const body = {
           username: formData.username,
           password: formData.password,
