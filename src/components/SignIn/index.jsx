@@ -1,15 +1,15 @@
 import { useState, useContext } from 'react';
-import axios from 'axios';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import DataContext from '../../hooks/DataContext';
-import getRandomInt from './../../utils/getRandomInt.js';
+import Axios from '../../adapters';
+import DataContext from '../../contexts/DataContext';
+import getRandomInt from '../../utils/getRandomInt.js';
 
-import StyledLoadingDots from './../../layout/StyledLoadingDots';
-import StyledInput from '../../layout/StyledInput';
-import StyledLink from '../../layout/StyledLink';
-import StyledButton from '../../layout/StyledButton';
+import StyledLoadingDots from '../../styles/StyledLoadingDots.jsx';
+import StyledInput from '../../styles/StyledInput.jsx';
+import StyledLink from '../../styles/StyledLink.jsx';
+import StyledButton from '../../styles/StyledButton.jsx';
 import StyledPage from './styles';
 
 function SignIn() {
@@ -68,13 +68,13 @@ function SignIn() {
 
     async function handleSignin() {
       try {
-        const URL = '';
+        const URL = '/sign-in';
         const body = {
           username: formData.username,
           password: formData.password,
         };
 
-        const response = await axios.post(URL, body);
+        const response = await Axios.post(URL, body);
         response.status === 200 ? handleSuccess(response.token) : handleError();
       } catch (error) {
         handleError(error);
