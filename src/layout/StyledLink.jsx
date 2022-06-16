@@ -11,6 +11,10 @@ const StyledLink = styled(Link)`
   outline: none;
   cursor: pointer;
   text-decoration: none;
+
+  @media screen and (min-width: 750px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export default StyledLink;

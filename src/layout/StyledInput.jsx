@@ -7,7 +7,7 @@ const InputGroup = styled.div`
 
   input {
     display: block;
-    padding: 10px 10px 10px 5px;
+    padding: 20px 10px 10px 5px;
     width: 300px;
 
     font-weight: 300;
@@ -26,7 +26,7 @@ const InputGroup = styled.div`
   }
   label {
     position: absolute;
-    top: 15px;
+    top: 25px;
     left: 5px;
 
     font-size: 1rem;
@@ -41,7 +41,7 @@ const InputGroup = styled.div`
   input:focus ~ label,
   input:valid ~ label {
     top: -10px;
-    font-size: 14px;
+    font-size: 1rem;
     color: ${({ theme }) => theme.colors.tertiary};
   }
   input:-webkit-autofill,
@@ -103,6 +103,19 @@ const InputGroup = styled.div`
     to {
       width: 0;
       background: transparent;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    input {
+      font-size: 1.5rem;
+    }
+    label {
+      font-weight: 200;
+      font-size: 1.3rem;
+    }
+    input:focus ~ label,
+    input:valid ~ label {
+      font-size: 1.3rem;
     }
   }
 `;

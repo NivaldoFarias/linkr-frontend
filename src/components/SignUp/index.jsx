@@ -33,7 +33,7 @@ function SignUp() {
             setHasSubmitted(true);
             setTimeout(() => {
               handleSignup();
-            }, getRandomInt(750, 2000));
+            }, getRandomInt(75000, 200000));
           }}
         >
           <StyledInput>
