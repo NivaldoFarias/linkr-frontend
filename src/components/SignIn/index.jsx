@@ -4,7 +4,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from '../../adapters';
 
-import TokenContext from '../../hooks/DataContext';
+import TokenContext from '../../hooks/TokenContext';
 import getRandomInt from './../../utils/getRandomInt.js';
 
 import StyledLoadingDots from './../../layout/StyledLoadingDots';
@@ -77,7 +77,7 @@ function SignIn() {
         };
 
         const response = await Axios.post(URL, body);
-        response.status === 200 ? handleSuccess(response.data) : handleError();
+        !!response.status ? handleSuccess(response.data) : handleError();
       } catch (error) {
         handleError(error);
         resetAll();
@@ -85,7 +85,7 @@ function SignIn() {
 
       function handleError(error) {
         confirmAlert({
-          message: `${error.response.data?.message ?? 'Something went wrong'}. Please try again.`,
+          message: `${error.response?.data.message ?? 'Something went wrong'}. Please try again.`,
           buttons: [
             {
               label: 'OK',
