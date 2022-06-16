@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledDiv = styled.div`
-  background: #E7E7E7;
+  background: #e7e7e7;
   border-radius: 8px;
   position: relative;
   width: 40%;
@@ -42,7 +42,7 @@ export const StyledList = styled.ul`
   max-height: 18vh;
   &::-webkit-scrollbar {
     -webkit-appearance: scrollbartrack-vertical;
-  }    
+  }
   li {
     cursor: pointer;
     figure {
@@ -68,4 +68,3 @@ export const StyledList = styled.ul`
     }
   }
 `;
-

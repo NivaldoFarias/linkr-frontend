@@ -16,7 +16,7 @@ export default function useUsers(userName) {
       const response = Axios.get(`users/username/${userName}`);
       response.then(async ({ data }) => {
         const result = await Promise.all(
-          data.users.map(async (user) => {
+          data.users.map(async (user, index) => {
             const { id, imageUrl, username } = user;
             return (
               <motion.li
@@ -24,6 +24,7 @@ export default function useUsers(userName) {
                 initial='hidden'
                 animate='visible'
                 variants={variants}
+                transition={{ delay: index * 0.05 }}
                 onClick={() => browse(`/user/${id}`)}
               >
                 <figure>
@@ -38,7 +39,6 @@ export default function useUsers(userName) {
       });
       response.catch((error) => console.error(error));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userName]);
+  }, [userName, browse]);
   return [users];
 }
