@@ -86,7 +86,7 @@ function SignIn() {
 
       function handleError(error) {
         confirmAlert({
-          message: `${error.response.data.message ?? 'Something went wrong'}. Please try again.`,
+          message: `${error.response.data?.message ?? 'Something went wrong'}. Please try again.`,
           buttons: [
             {
               label: 'OK',
