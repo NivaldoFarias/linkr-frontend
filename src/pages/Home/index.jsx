@@ -1,21 +1,7 @@
-import { useContext, useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import TokenContext from '../../hooks/TokenContext';
+import { Outlet } from 'react-router-dom';
 import StyledHome from './styles';
 
-
 export default function Home() {
-
-  const { token } = useContext(TokenContext);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (token) {
-      navigate('/timeline');
-    }
-  }, [token]);
-
   function buildHomepage() {
     return (
       <header>
