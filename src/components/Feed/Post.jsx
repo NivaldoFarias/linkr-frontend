@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-//import { FiHeart } from 'react-icons/fi';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
+import { useContext, useEffect, useState } from 'react';
+import Axios from '../../blueprints';
+import TokenContext from '../../hooks/TokenContext';
 
 /*
 {
@@ -21,8 +23,16 @@ import ReactHashtag from '@mdnm/react-hashtag';
 }
 */
 
-export default function Post({ post }) {
+export default function Post(props) {
+  const { token } = useContext(TokenContext);
+  const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
+  const [post, setPost] = useState(props.post);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLiked(props.post.userHasLiked);
+    setPost(props.post);
+  }, [props]);
 
   function goToUserPage() {
     navigate(`/user/${post.userId}`);
@@ -33,12 +43,42 @@ export default function Post({ post }) {
     navigate(`/hashtag/${cleanHashtag}`);
   }
 
+  async function likeButtonClicked() {
+    console.log('likeButtonClicked');
+    const tryToLike = !isLiked;
+    setIsLiked(tryToLike);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
+    try {
+      const response = await Axios.post(url, {}, config);
+      await updatePostData();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updatePostData() {
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    const url = `/posts/${post.id}`;
+    try {
+      const { data } = await Axios.get(url, config);
+      console.log(data);
+      setPost(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <PostContainer key={post.id}>
       <Left>
         <ProfileImage onClick={goToUserPage} src={post.userPictureUrl} />
-        <Like hasLiked={post.userHasLiked}>
-          {post.userHasLiked ? <AiFillHeart /> : <AiOutlineHeart />}
+        <Like hasLiked={isLiked} onClick={likeButtonClicked}>
+          {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
           <LikesLabel>{post.totalLikes} likes</LikesLabel>
         </Like>
       </Left>
