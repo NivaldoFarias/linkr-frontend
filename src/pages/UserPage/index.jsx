@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Axios from '../../adapters';
-import Feed from "../../components/Feed";
+
+import Axios from '../../blueprints';
+import Feed from '../../components/Feed';
 
 export default function UserPage() {
   const { userId } = useParams();
@@ -14,13 +15,17 @@ export default function UserPage() {
     promise.then(({ data }) => {
       setUserName(data.username);
       setPicture(data.imageUrl);
-      setPosts(data.posts)
+      setPosts(data.posts);
     });
     promise.catch((error) => console.log(error));
   }, [userId]);
 
   return (
-    <Feed title={`${userName}'s posts`} posts={posts} canCreatePost={false} userThumbnail={picture}/>
+    <Feed
+      title={`${userName}'s posts`}
+      posts={posts}
+      canCreatePost={false}
+      userThumbnail={picture}
+    />
   );
-
 }
