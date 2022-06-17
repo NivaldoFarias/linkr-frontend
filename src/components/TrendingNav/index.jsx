@@ -37,7 +37,7 @@ const Hashtag = styled.div`
   letter-spacing: 0.05em;
 `;
 
-const trendingHashtags = ['react', 'redux', 'nodejs', 'javascript', 'typescript'];
+//const trendingHashtags = ['react', 'redux', 'nodejs', 'javascript', 'typescript'];
 
 export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
