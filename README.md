@@ -2,8 +2,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/NivaldoFarias/linkr-frontend/tree/main/src">
-    <img src="" alt="Logo" width="120">
+  <a href="https://github.com/NivaldoFarias/linkr-frontend#readme">
+    <img src="./src/assets/logo.png" alt="Linkr logo" width="90">
   </a>
 
 <h3 align="center">Linkr | Front end</h3>
