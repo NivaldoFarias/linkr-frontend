@@ -18,10 +18,9 @@ export default function HashtagPage() {
         "Authorization": `Bearer ${token}`
       }
     }
-
     const promise = Axios.get(`/hashtags/${hashtag}/posts`, config);
     promise.then(({ data }) => {setPosts(data)})}
-    , []);
+    , [hashtag]);
 
   return (
     <Feed title={`# ${hashtag}`} posts={posts} canCreatePost={false} userThumbnail={false}/>

@@ -4,12 +4,12 @@ import Post from './Post';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   padding: 78px 0;
   gap: 43px;
+  height: 100%;
+  overflow-y: auto;
 `;
 
 
@@ -40,14 +40,12 @@ const UserThumbnail = styled.img`
 `
 
 const Content = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
 
 const Posts = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;

@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 //import { FiHeart } from 'react-icons/fi';
 import { FcLike } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
+import ReactHashtag from '@mdnm/react-hashtag';
 
-/**
- * 
- * {
+/*
+{
         id: 1,
         text: 'Veja que legal!!',
         url: 'https://www.youtube.com/watch?v=aJR7f45dBNs&ab_channel=FilipeDeschamps',
@@ -20,15 +21,41 @@ import { FcLike } from 'react-icons/fc';
  */
 
 export default function Post({ post }) {
+  const navigate = useNavigate();
+
+  function goToUserPage() {
+    navigate(`/user/${post.userId}`);
+  }
+
+  function goToHashtagPage(hashtag) {
+    const cleanHashtag = hashtag.replace('#', '');
+    navigate(`/hashtag/${cleanHashtag}`);
+  }
+
   return (
     <PostContainer key={post.id}>
       <Left>
-        <ProfileImage src={post.userPictureUrl} />
+        <ProfileImage onClick={goToUserPage} src={post.userPictureUrl} />
         <FcLike />
       </Left>
       <Right>
-        <UserName>{post.username}</UserName>
-        <PostText>{post.text}</PostText>
+        <UserName onClick={goToUserPage}>{post.username}</UserName>
+        <PostText>
+          <ReactHashtag
+            renderHashtag={(val) => (
+              <Hashtag
+                onClick={() => {
+                  goToHashtagPage(val);
+                }}
+              >
+                {val}
+              </Hashtag>
+            )}
+          >
+            {post.text}
+          </ReactHashtag>
+        </PostText>
+
         <Link href={post.url} target='blank'>
           <LinkContainer>
             <LinkInfo>
@@ -37,7 +64,7 @@ export default function Post({ post }) {
               <Url>{post.url}</Url>
             </LinkInfo>
             <ImageContainer>
-              <PostImage src={post.urlPictureUrl} />
+              <PostImage src={post.urlPicture} />
             </ImageContainer>
           </LinkContainer>
         </Link>
@@ -48,19 +75,20 @@ export default function Post({ post }) {
 
 const PostContainer = styled.div`
   width: 100%;
-  height: 276px;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 16px;
-  margin-bottom: 16px;
   padding: 18px;
   display: flex;
+  gap: 18px;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
+
 const Left = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
 `;
 
 const ProfileImage = styled.img`
@@ -69,13 +97,14 @@ const ProfileImage = styled.img`
   border-radius: 26.5px;
   object-fit: cover;
   margin-bottom: 18px;
+  cursor: pointer;
 `;
 
 const Right = styled.div`
+  height: 100%;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  flex: 8;
 `;
 
 const UserName = styled.div`
@@ -84,6 +113,7 @@ const UserName = styled.div`
   color: #ffffff;
   font-family: ${({ theme }) => theme.fonts.secondary};
   margin-bottom: 7px;
+  cursor: pointer;
 `;
 
 const PostText = styled.div`
@@ -93,55 +123,85 @@ const PostText = styled.div`
   margin-bottom: 16px;
 `;
 
+const Hashtag = styled.span`
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  cursor: pointer !important;
+`;
+
 const LinkContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
   width: 100%;
   height: 155px;
+  flex: 0 0 auto;
   border: ${({ theme }) => theme.styles.defaultBorder};
   border-radius: 11px;
   position: relative;
-`;
-const Link = styled.a`
-  text-decoration: none;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  :hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
 `;
 
 const LinkInfo = styled.div`
+  padding: 16px;
+  flex: 1 1 auto;
+  height: 100%;
+  cursor: pointer !important;
+
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  flex: 8;
+  justify-content: center;
 `;
 
 const ImageContainer = styled.div`
+  border-left: ${({ theme }) => theme.styles.defaultBorder};
+  overflow: hidden;
+  width: 155px;
+  height: 100%;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 const PostImage = styled.img`
-  width: 153.44px;
-  height: 153px;
-  border-radius: 0px 12px 13px 0px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 `;
+
 const Title = styled.div`
   font-size: 17px;
   color: #cecece;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  padding-bottom: 6px;
 `;
 const Description = styled.div`
   font-size: 12px;
   color: #9b9595;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  margin-top: 4px;
-  padding-bottom: 6px;
+  margin-top: 5px;
 `;
 
 const Url = styled.div`
   font-size: 12px;
   color: #cecece;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  margin-top: 4px;
+  margin-top: 13px;
+  width: 100%;
+  word-break: break-all;
 `;
