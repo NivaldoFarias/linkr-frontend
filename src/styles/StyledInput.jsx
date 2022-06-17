@@ -105,6 +105,21 @@ const InputGroup = styled.div`
       background: transparent;
     }
   }
+  @media screen and (min-width: 750px) {
+    input {
+      padding-top: 15px;
+      font-size: 1.5rem;
+    }
+    label {
+      top: 20px;
+      font-weight: 200;
+      font-size: 1.3rem;
+    }
+    input:focus ~ label,
+    input:valid ~ label {
+      font-size: 1.3rem;
+    }
+  }
 `;
 
 export default InputGroup;
