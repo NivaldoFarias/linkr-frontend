@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Axios from "../../adapters";
+import Axios from "../../blueprints";
 import Feed from "../../components/Feed";
 import TokenContext from "../../hooks/TokenContext";
 
