@@ -51,7 +51,7 @@ const Posts = styled.div`
   gap: 16px;
 `;
 
-export default function Feed({ title, posts, canCreatePost, userThumbnail }) {
+export default function Feed({ title, posts, canCreatePost, userThumbnail, updatePostsFunction }) {
   const postsElements = posts.map((post, index) => {
     return <Post key={index} post={post} />;
   });
@@ -63,7 +63,7 @@ export default function Feed({ title, posts, canCreatePost, userThumbnail }) {
         <Title>{title}</Title>
       </Header>
       <Content>
-        {canCreatePost ? <NewPost /> : <></>}
+        {canCreatePost ? <NewPost updatePostsFunction={updatePostsFunction} /> : <></>}
         <Posts>{postsElements}</Posts>
       </Content>
     </Wrapper>

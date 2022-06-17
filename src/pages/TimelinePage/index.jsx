@@ -9,7 +9,10 @@ export default function TimelinePage() {
 
 
   useEffect(() => {
+      updateTimeline();
+  }, []);
 
+  function updateTimeline() {
     const config = {
       headers: {
         "Authorization": `Bearer ${token}`
@@ -17,8 +20,9 @@ export default function TimelinePage() {
     }
 
     const promise = Axios.get(`/timeline`, config);
-    promise.then(({ data }) => {setPosts(data)})}
-    , []);
+    promise.then(({ data }) => {setPosts(data)})
 
-  return <Feed title={`timeline`} posts={posts} canCreatePost={true} userThumbnail={false} />;
+    return;
+  }
+  return <Feed title={`timeline`} posts={posts} canCreatePost={true} userThumbnail={false} updatePostsFunction={updateTimeline}/>;
 }
