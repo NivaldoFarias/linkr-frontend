@@ -44,12 +44,17 @@ const InputGroup = styled.div`
     font-size: 14px;
     color: ${({ theme }) => theme.colors.tertiary};
   }
+  input #placeholder {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+  }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
+  input:-webkit-autofill:active,
+  input:-webkit-autofill:first-line {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: initial !important;
+    -webkit-text-fill-color: white !important;
   }
   /* BOTTOM BARS ================================= */
   .bar {
