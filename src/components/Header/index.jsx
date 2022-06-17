@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import SearchBar from './SearchBar';
 import Navigation from './Navigation';
-import DataContext from '../../contexts/DataContext';
+import DataContext from './../../hooks/DataContext';
 import { Wrapper, Title } from './styles';
 
 export default function Header() {
