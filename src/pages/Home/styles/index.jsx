@@ -14,7 +14,6 @@ const StyledHome = styled.div`
     padding: 30px 60px;
     height: fit-content;
     width: 100%;
-    box-shadow: 0px -4px 4px rgba(255, 255, 255, 0.251);
 
     .logotype {
       font-size: 5.7rem;
@@ -23,6 +22,7 @@ const StyledHome = styled.div`
       font-family: ${({ theme }) => theme.fonts.logotype};
     }
     .motto {
+      max-width: 290px;
       width: 90%;
 
       line-height: 1.5;
@@ -30,6 +30,26 @@ const StyledHome = styled.div`
       font-size: 1.4rem;
       text-align: center;
       font-family: ${({ theme }) => theme.fonts.primary};
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
+
+    padding-left: 60px;
+
+    header {
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
+      padding-bottom: 200px;
+
+      .logotype {
+        font-size: 8rem;
+      }
+      .motto {
+        max-width: 430px;
+        font-size: 2.5rem;
+        text-align: left;
+      }
     }
   }
 `;
