@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/NivaldoFarias/linkr-frontend#readme">
-    <img src="./src/assets/logo.png" alt="Linkr logo" width="90">
+    <img src="https://github.com/NivaldoFarias/linkr-frontend/blob/main/src/assets/logo.png" alt="Linkr logo" width="100">
   </a>
 
 <h3 align="center">Linkr | Front end</h3>
