@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import DataContext from '../../hooks/DataContext';
 import Axios from '../../blueprints';
 
-const Wrapper = styled.div`
+const Wrapper = styled.aside`
   margin-top: 160px;
   background-color: ${({ theme }) => theme.colors.background};
   width: 30%;

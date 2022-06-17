@@ -1,24 +1,22 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.main`
-  display: flex;
-  flex-direction: column;
+  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'center', '0px')};
   width: 100%;
   height: 100%;
+
   background-color: ${({ theme }) => theme.colors.foreground};
-  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'center', '0px')};
 `;
 
-export const Main = styled.main`
-  flex: 1 1 auto;
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', '25px')};
-  overflow: hidden;
+export const Main = styled.section`
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'initial', '25px')};
+  height: 100%;
+  width: 100%;
 `;
 
 export const Feed = styled.div`
+  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', '15px')};
+  height: 100%;
   width: 100%;
   max-width: 611px;
-  flex: 0 0 auto;
-  height: 100%;
-  overflow: hidden;
 `;
