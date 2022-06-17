@@ -13,6 +13,7 @@ export const Main = styled.main`
   flex: 1 1 auto;
   ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', '25px')};
   overflow: hidden;
+  width: 100%;
 `;
 
 export const Feed = styled.div`

@@ -16,6 +16,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -48,6 +49,7 @@ const Posts = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 `;
 
 export default function Feed({ title, posts, canCreatePost, userThumbnail, updatePostsFunction }) {
@@ -63,7 +65,7 @@ export default function Feed({ title, posts, canCreatePost, userThumbnail, updat
       </Header>
       <Content>
         {canCreatePost ? <NewPost updatePostsFunction={updatePostsFunction} /> : <></>}
-        <Posts>{postsElements}</Posts>
+        <Posts>{posts.length > 0 ? postsElements : <h1>Não tem posts ainda</h1>}</Posts>
       </Content>
     </Wrapper>
   );

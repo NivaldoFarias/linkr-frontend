@@ -39,7 +39,7 @@ export default function Post(props) {
   }
 
   function goToHashtagPage(hashtag) {
-    const cleanHashtag = hashtag.replace('#', '');
+    const cleanHashtag = hashtag.replace('#', '').toLowerCase();
     navigate(`/hashtag/${cleanHashtag}`);
   }
 

@@ -7,7 +7,8 @@ import Axios from '../../blueprints';
 const Wrapper = styled.div`
   margin-top: 160px;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 30%;
+  width: 10%;
+  min-width: 300px;
   border-radius: 16px;
   * {
     color: white;
@@ -45,14 +46,14 @@ const Hashtag = styled.div`
 export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
 
-  const {token} = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
 
   useEffect(() => {
     const config = {
       headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    }
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     Axios.get('hashtags/trending', token)
       .then(({ data }) => {
