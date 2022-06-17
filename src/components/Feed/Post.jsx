@@ -2,10 +2,10 @@ import styled from 'styled-components';
 //import { FiHeart } from 'react-icons/fi';
 import { FcLike } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
+import ReactHashtag from '@mdnm/react-hashtag';
 
-/**
- * 
- * {
+/*
+{
         id: 1,
         text: 'Veja que legal!!',
         url: 'https://www.youtube.com/watch?v=aJR7f45dBNs&ab_channel=FilipeDeschamps',
@@ -21,11 +21,15 @@ import { useNavigate } from 'react-router-dom';
  */
 
 export default function Post({ post }) {
-
   const navigate = useNavigate();
 
   function goToUserPage() {
     navigate(`/user/${post.userId}`);
+  }
+
+  function goToHashtagPage(hashtag) {
+    const cleanHashtag = hashtag.replace('#', '');
+    navigate(`/hashtag/${cleanHashtag}`);
   }
 
   return (
@@ -35,9 +39,22 @@ export default function Post({ post }) {
         <FcLike />
       </Left>
       <Right>
-
         <UserName onClick={goToUserPage}>{post.username}</UserName>
-        <PostText>{post.text}</PostText>
+        <PostText>
+          <ReactHashtag
+            renderHashtag={(val) => (
+              <Hashtag
+                onClick={() => {
+                  goToHashtagPage(val);
+                }}
+              >
+                {val}
+              </Hashtag>
+            )}
+          >
+            {post.text}
+          </ReactHashtag>
+        </PostText>
 
         <Link href={post.url} target='blank'>
           <LinkContainer>
@@ -50,7 +67,6 @@ export default function Post({ post }) {
               <PostImage src={post.urlPicture} />
             </ImageContainer>
           </LinkContainer>
-          
         </Link>
       </Right>
     </PostContainer>
@@ -107,10 +123,15 @@ const PostText = styled.div`
   margin-bottom: 16px;
 `;
 
+const Hashtag = styled.span`
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
 const Link = styled.a`
   text-decoration: none;
   cursor: pointer !important;
-
 `;
 
 const LinkContainer = styled.div`
@@ -129,7 +150,6 @@ const LinkContainer = styled.div`
 
   cursor: pointer;
 
-
   :hover {
     background-color: rgba(255, 255, 255, 0.05);
   }
@@ -145,7 +165,6 @@ const LinkInfo = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
 
 const ImageContainer = styled.div`
   border-left: ${({ theme }) => theme.styles.defaultBorder};
@@ -166,9 +185,6 @@ const PostImage = styled.img`
   object-fit: cover;
 `;
 
-
-
-
 const Title = styled.div`
   font-size: 17px;
   color: #cecece;
@@ -188,5 +204,4 @@ const Url = styled.div`
   margin-top: 13px;
   width: 100%;
   word-break: break-all;
-
 `;
