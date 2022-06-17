@@ -4,7 +4,6 @@ import Feed from "../../components/Feed";
 import TokenContext from '../../hooks/TokenContext';
 
 export default function TimelinePage() {
-
   const [posts, setPosts] = useState([]);
   const {token} = useContext(TokenContext);
 
@@ -21,7 +20,5 @@ export default function TimelinePage() {
     promise.then(({ data }) => {setPosts(data)})}
     , []);
 
-  return (
-    <Feed title={`timeline`} posts={posts} canCreatePost={true} userThumbnail={false}/>
-  );
+  return <Feed title={`timeline`} posts={posts} canCreatePost={true} userThumbnail={false} />;
 }

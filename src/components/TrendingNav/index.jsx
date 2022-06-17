@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Axios from '../../adapters';
 import TokenContext from '../../hooks/TokenContext';
+import Axios from '../../blueprints';
 
 const Wrapper = styled.div`
   margin-top: 160px;

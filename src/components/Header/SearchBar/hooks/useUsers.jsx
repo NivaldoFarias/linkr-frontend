@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion/dist/framer-motion';
-import Axios from '../../../../adapters';
 import TokenContext from '../../../../hooks/TokenContext';
+
+import Axios from '../../../../blueprints';
 
 const variants = {
   visible: { opacity: 1 },
