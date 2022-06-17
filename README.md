@@ -47,13 +47,11 @@ In this section I included all Youtube content I used or refered to while studyi
 
 ### Contributors
 
-<br />
-
 <a href="https://github.com/NivaldoFarias/linkr-frontend/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=NivaldoFarias/linkr-frontend" height="60px"/>
+  <img src="https://contrib.rocks/image?repo=NivaldoFarias/linkr-frontend" />
 </a>
 
-##### Made with [contrib.rocks](https://contrib.rocks)
+###### Made with [contrib.rocks](https://contrib.rocks)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
