@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Axios from '../../adapters';
 import Feed from "../../components/Feed";
+import TokenContext from '../../hooks/TokenContext';
 
 export default function UserPage() {
   const { userId } = useParams();
@@ -9,8 +10,17 @@ export default function UserPage() {
   const [picture, setPicture] = useState('');
   const [posts, setPosts] = useState([]);
 
+  const {token} = useContext(TokenContext);
+
   useEffect(() => {
-    const promise = Axios.get(`/users/${userId}/posts`);
+
+    const config = {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+
+    const promise = Axios.get(`/users/${userId}/posts`, config);
     promise.then(({ data }) => {
       setUserName(data.username);
       setPicture(data.imageUrl);

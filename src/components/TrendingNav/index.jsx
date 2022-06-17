@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Axios from '../../adapters';
+import TokenContext from '../../hooks/TokenContext';
 
 const Wrapper = styled.div`
   margin-top: 160px;
@@ -42,8 +43,16 @@ const Hashtag = styled.div`
 export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
 
+  const {token} = useContext(TokenContext);
+
   useEffect(() => {
-    Axios.get('hashtags/trending')
+    const config = {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+
+    Axios.get('hashtags/trending', token)
       .then(({ data }) => {
         setHashtags(data);
       })
