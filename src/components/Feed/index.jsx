@@ -12,12 +12,11 @@ const Wrapper = styled.div`
   overflow-y: auto;
 `;
 
-
 const Header = styled.div`
-display: flex;
-align-items: center;
-justify-content: flex-start;
-`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
 
 const Title = styled.h1`
   font-family: Oswald;
@@ -37,7 +36,7 @@ const UserThumbnail = styled.img`
   justify-content: center;
   margin-right: 20px;
   object-fit: cover;
-`
+`;
 
 const Content = styled.div`
   display: flex;

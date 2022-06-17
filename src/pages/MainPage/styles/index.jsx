@@ -16,7 +16,7 @@ export const Main = styled.main`
 `;
 
 export const Feed = styled.div`
-  width: 611px;
+  width: 100%;
   max-width: 611px;
   flex: 0 0 auto;
   height: 100%;

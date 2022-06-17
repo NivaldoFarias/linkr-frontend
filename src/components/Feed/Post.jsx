@@ -1,27 +1,38 @@
 import styled from 'styled-components';
-//import { FiHeart } from 'react-icons/fi';
-import { FcLike } from 'react-icons/fc';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
+import { useContext, useEffect, useState } from 'react';
+import Axios from '../../blueprints';
+import TokenContext from '../../hooks/TokenContext';
 
 /*
 {
-        id: 1,
-        text: 'Veja que legal!!',
-        url: 'https://www.youtube.com/watch?v=aJR7f45dBNs&ab_channel=FilipeDeschamps',
-        urlPictureUrl: 'https://i.ytimg.com/vi/aJR7f45dBNs/maxresdefault.jpg',
-        urlTitle: 'Se Você Passar Por Esses 5 Desafios, Você Aprendeu React JS',
-        urlDescription: 'Aprender a programar do zero React JS é uma experiência SENSACIONAL quando feita do jeito certo, e nesse vídeo tutorial eu vou fazer você passar por 5 desafi...',
-        userId: 5,
-        userPictureUrl: 'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
-        numberOfLikes: 12,
-        isLiked: false,
-        likesLabel: 'Ricardo e Maria +56 pessoas'
-    },
- */
+  id: "34"
+  text: "Olha o github de jesus!! #jesus #github"
+  totalLikes: 0
+  url: "https://github.com/jesus/"
+  urlDescription: "Jesus has 51 repositories available. Follow their code on GitHub."
+  urlPicture: "https://avatars.githubusercontent.com/u/23031?v=4?s=400"
+  urlTitle: "Jesus - Overview"
+  userHasLiked: false
+  userId: "3"
+  userPictureUrl: "https://img.freepik.com/vetores-gratis/avatar-de-midia-social-jovem-ruiva-moderna_506604-471.jpg"
+  username: "magabi"
+  usersWhoLiked: [] // máximo 2
+}
+*/
 
-export default function Post({ post }) {
+export default function Post(props) {
+  const { token } = useContext(TokenContext);
+  const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
+  const [post, setPost] = useState(props.post);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLiked(props.post.userHasLiked);
+    setPost(props.post);
+  }, [props]);
 
   function goToUserPage() {
     navigate(`/user/${post.userId}`);
@@ -32,11 +43,44 @@ export default function Post({ post }) {
     navigate(`/hashtag/${cleanHashtag}`);
   }
 
+  async function likeButtonClicked() {
+    console.log('likeButtonClicked');
+    const tryToLike = !isLiked;
+    setIsLiked(tryToLike);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
+    try {
+      const response = await Axios.post(url, {}, config);
+      await updatePostData();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updatePostData() {
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    const url = `/posts/${post.id}`;
+    try {
+      const { data } = await Axios.get(url, config);
+      console.log(data);
+      setPost(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <PostContainer key={post.id}>
       <Left>
         <ProfileImage onClick={goToUserPage} src={post.userPictureUrl} />
-        <FcLike />
+        <Like hasLiked={isLiked} onClick={likeButtonClicked}>
+          {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
+          <LikesLabel>{post.totalLikes} likes</LikesLabel>
+        </Like>
       </Left>
       <Right>
         <UserName onClick={goToUserPage}>{post.username}</UserName>
@@ -204,4 +248,29 @@ const Url = styled.div`
   margin-top: 13px;
   width: 100%;
   word-break: break-all;
+`;
+
+const Like = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 16px;
+  gap: 4px;
+
+  svg {
+    color: ${({ hasLiked }) => {
+      return hasLiked ? '#AC0000' : '#ffffff';
+    }};
+  }
+`;
+
+const LikesLabel = styled.div`
+  font-family: Lato;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: white;
 `;
