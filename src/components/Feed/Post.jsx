@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 //import { FiHeart } from 'react-icons/fi';
 import { FcLike } from 'react-icons/fc';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 
@@ -20,15 +21,22 @@ import { FcLike } from 'react-icons/fc';
  */
 
 export default function Post({ post }) {
+
+  const navigate = useNavigate();
+
+  function goToUserPage() {
+    navigate(`/user/${post.userId}`);
+  }
+
   return (
     <PostContainer key={post.id}>
       <Left>
-        <ProfileImage src={post.userPictureUrl} />
+        <ProfileImage onClick={goToUserPage} src={post.userPictureUrl} />
         <FcLike />
       </Left>
       <Right>
 
-        <UserName>{post.username}</UserName>
+        <UserName onClick={goToUserPage}>{post.username}</UserName>
         <PostText>{post.text}</PostText>
 
         <Link href={post.url} target='blank'>
@@ -73,6 +81,7 @@ const ProfileImage = styled.img`
   border-radius: 26.5px;
   object-fit: cover;
   margin-bottom: 18px;
+  cursor: pointer;
 `;
 
 const Right = styled.div`
@@ -88,6 +97,7 @@ const UserName = styled.div`
   color: #ffffff;
   font-family: ${({ theme }) => theme.fonts.secondary};
   margin-bottom: 7px;
+  cursor: pointer;
 `;
 
 const PostText = styled.div`
