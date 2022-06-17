@@ -1,58 +1,56 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import DataContext from '../../hooks/DataContext';
-import TokenContext from '../../hooks/TokenContext';
 
 import { Wrapper, PostForm } from './styles';
 import Axios from '../../blueprints';
 
 const mockAvatar = 'https://avatars.githubusercontent.com/u/90518458?v=4';
 
-
-export default function NewPost({updatePostsFunction}) {
+export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
-  const { user } = useContext(DataContext);
-  const { token } = useContext(TokenContext);
-  const navigate = useNavigate();
+  const { user, token } = useContext(DataContext);
+  //const navigate = useNavigate();
 
-  async function handleSendNewPost(e){
+  async function handleSendNewPost(e) {
     e.preventDefault();
     try {
-      await Axios.post("/posts/", 
-          {url, text: description}, 
-          {headers: { Authorization: `Bearer ${token}` }}
+      await Axios.post(
+        '/posts/',
+        { url, text: description },
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       updatePostsFunction();
     } catch (e) {
-      console.log("Não foi posssivel criar um novo post", e);
-      setUrl("");
-      setDescription("");
-      alert("Não foi posssivel criar um novo post");
+      console.log('Não foi posssivel criar um novo post', e);
+      setUrl('');
+      setDescription('');
+      alert('Não foi posssivel criar um novo post');
     }
   }
 
-  return( 
-    <Wrapper >
-      <img src={user?.imageUrl || mockAvatar} alt="user"></img>
+  return (
+    <Wrapper>
+      <img src={user?.imageUrl || mockAvatar} alt='user'></img>
       <PostForm onSubmit={handleSendNewPost}>
         <h3>What are you going to share today?</h3>
-        <input 
-          type="url" 
-          name="url_share" 
+        <input
+          type='url'
+          name='url_share'
           placeholder='http://...'
           value={url}
-          onChange={(e)=>{
+          onChange={(e) => {
             setUrl(e.target.value);
           }}
           required
         />
-        <input 
-          type="text" 
-          name='description' 
+        <input
+          type='text'
+          name='description'
           placeholder='Awesome article about #javascript'
           value={description}
-          onChange={(e)=>{
+          onChange={(e) => {
             setDescription(e.target.value);
           }}
           required
@@ -60,7 +58,6 @@ export default function NewPost({updatePostsFunction}) {
 
         <button>Publish</button>
       </PostForm>
-
     </Wrapper>
   );
 }

@@ -1,12 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import TokenContext from '../../hooks/TokenContext';
+import DataContext from '../../hooks/DataContext';
 import StyledHome from './styles';
 
-
 export default function Home() {
-
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(DataContext);
 
   const navigate = useNavigate();
 

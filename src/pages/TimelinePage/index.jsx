@@ -1,28 +1,37 @@
 import { useContext, useEffect, useState } from 'react';
 import Axios from '../../blueprints';
-import Feed from "../../components/Feed";
-import TokenContext from '../../hooks/TokenContext';
+import Feed from '../../components/Feed';
+import DataContext from '../../hooks/DataContext';
 
 export default function TimelinePage() {
   const [posts, setPosts] = useState([]);
-  const {token} = useContext(TokenContext);
-
+  const { token } = useContext(DataContext);
 
   useEffect(() => {
-      updateTimeline();
+    updateTimeline();
   }, []);
 
   function updateTimeline() {
     const config = {
       headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    }
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     const promise = Axios.get(`/timeline`, config);
-    promise.then(({ data }) => {setPosts(data)})
+    promise.then(({ data }) => {
+      setPosts(data);
+    });
 
     return;
   }
-  return <Feed title={`timeline`} posts={posts} canCreatePost={true} userThumbnail={false} updatePostsFunction={updateTimeline}/>;
+  return (
+    <Feed
+      title={`timeline`}
+      posts={posts}
+      canCreatePost={true}
+      userThumbnail={false}
+      updatePostsFunction={updateTimeline}
+    />
+  );
 }

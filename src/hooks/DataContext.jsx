@@ -1,9 +1,11 @@
 import { useState, useEffect, createContext } from 'react';
+import { useLocalStorage } from './useLocalStorage';
 
 const DataContext = createContext();
 
 export function DataProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useLocalStorage('user', null);
+  const [token, setToken] = useLocalStorage('token', null);
   const [width, setWidth] = useState(window.innerWidth);
 
   function handleWindowSizeChange() {
@@ -22,6 +24,8 @@ export function DataProvider({ children }) {
       value={{
         user,
         setUser,
+        token,
+        setToken,
         width,
         setWidth,
       }}
