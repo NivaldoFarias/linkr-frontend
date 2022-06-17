@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import Axios from '../../adapters';
 
+import Axios from '../../adapters';
 import TokenContext from '../../hooks/TokenContext';
 import getRandomInt from '../../utils/getRandomInt.js';
 

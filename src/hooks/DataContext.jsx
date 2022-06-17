@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import DataContext from '../../contexts/DataContext';
+import { useState, useEffect, createContext } from 'react';
 
-export default function DataContextProvider({ children }) {
+const DataContext = createContext();
+
+export function DataContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
 
   function handleWindowSizeChange() {
@@ -22,8 +22,6 @@ export default function DataContextProvider({ children }) {
       value={{
         user,
         setUser,
-        session,
-        setSession,
         width,
         setWidth,
       }}
@@ -32,3 +30,5 @@ export default function DataContextProvider({ children }) {
     </DataContext.Provider>
   );
 }
+
+export default DataContext;

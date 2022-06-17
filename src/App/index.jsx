@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import DataContextProvider from '../components/DataContextProvider';
+import {DataContextProvider} from './../hooks/DataContext';
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
 

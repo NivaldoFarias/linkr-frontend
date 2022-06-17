@@ -7,7 +7,7 @@ import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import { MdOutlineLogout } from 'react-icons/md';
 
 import TokenContext from './../../../hooks/TokenContext';
-import DataContext from '../../../hooks/DataContext';
+import DataContext from './../../../contexts/DataContext';
 import StyledNav from './styles';
 
 export default function Navigation() {
