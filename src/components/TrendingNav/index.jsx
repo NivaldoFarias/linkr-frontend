@@ -42,8 +42,6 @@ const Hashtag = styled.div`
   }
 `;
 
-//const trendingHashtags = ['react', 'redux', 'nodejs', 'javascript', 'typescript'];
-
 export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
 
