@@ -4,13 +4,14 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Axios from '../../adapters';
 
+import Axios from '../../adapters';
 import TokenContext from '../../hooks/TokenContext';
-import getRandomInt from './../../utils/getRandomInt.js';
+import getRandomInt from '../../utils/getRandomInt.js';
 
-import StyledLoadingDots from './../../layout/StyledLoadingDots';
-import StyledInput from '../../layout/StyledInput';
-import StyledLink from '../../layout/StyledLink';
-import StyledButton from '../../layout/StyledButton';
+import StyledLoadingDots from '../../styles/StyledLoadingDots.jsx';
+import StyledInput from '../../styles/StyledInput.jsx';
+import StyledLink from '../../styles/StyledLink.jsx';
+import StyledButton from '../../styles/StyledButton.jsx';
 import StyledPage from './styles';
 
 function SignIn() {
@@ -70,7 +71,7 @@ function SignIn() {
 
     async function handleSignin() {
       try {
-        const URL = `auth/sign-in`;
+        const URL = '/auth/sign-in';
         const body = {
           username: formData.username,
           password: formData.password,

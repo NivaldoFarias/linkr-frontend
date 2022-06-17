@@ -22,10 +22,6 @@ const StyledButton = styled.button`
   &:hover {
     filter: brightness(2);
   }
-
-  @media screen and (min-width: 750px) {
-    font-size: 2.3rem;
-  }
 `;
 
 export default StyledButton;

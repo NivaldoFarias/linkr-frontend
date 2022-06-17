@@ -7,7 +7,7 @@ const InputGroup = styled.div`
 
   input {
     display: block;
-    padding: 20px 10px 10px 5px;
+    padding: 10px 10px 10px 5px;
     width: 300px;
 
     font-weight: 300;
@@ -26,7 +26,7 @@ const InputGroup = styled.div`
   }
   label {
     position: absolute;
-    top: 25px;
+    top: 15px;
     left: 5px;
 
     font-size: 1rem;
@@ -41,7 +41,7 @@ const InputGroup = styled.div`
   input:focus ~ label,
   input:valid ~ label {
     top: -10px;
-    font-size: 1rem;
+    font-size: 14px;
     color: ${({ theme }) => theme.colors.tertiary};
   }
   input:-webkit-autofill,
@@ -49,7 +49,7 @@ const InputGroup = styled.div`
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: white !important;
+    -webkit-text-fill-color: initial !important;
   }
   /* BOTTOM BARS ================================= */
   .bar {
@@ -103,19 +103,6 @@ const InputGroup = styled.div`
     to {
       width: 0;
       background: transparent;
-    }
-  }
-  @media screen and (min-width: 750px) {
-    input {
-      font-size: 1.5rem;
-    }
-    label {
-      font-weight: 200;
-      font-size: 1.3rem;
-    }
-    input:focus ~ label,
-    input:valid ~ label {
-      font-size: 1.3rem;
     }
   }
 `;
