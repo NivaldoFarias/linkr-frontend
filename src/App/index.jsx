@@ -14,26 +14,29 @@ import TimelinePage from '../pages/TimelinePage';
 import UserPage from '../pages/UserPage';
 import HashtagPage from '../pages/HashtagPage';
 import MainPage from '../pages/MainPage';
+import { TokenProvider } from '../hooks/TokenContext';
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <DataContextProvider>
-        <BrowserRouter>
-          <StyleResets />
-          <Routes>
-            <Route path='/' element={<Home />}>
-              <Route index element={<SignIn />} />
-              <Route path='/sign-up' element={<SignUp />} />
-            </Route>
-            <Route element={<MainPage />}>
-              <Route path='/timeline' element={<TimelinePage />} />
-              <Route path='/user/:userId' element={<UserPage />} />
-              <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </DataContextProvider>
+      <TokenProvider>
+        <DataContextProvider>
+          <BrowserRouter>
+            <StyleResets />
+            <Routes>
+              <Route path='/' element={<Home />}>
+                <Route index element={<SignIn />} />
+                <Route path='/sign-up' element={<SignUp />} />
+              </Route>
+              <Route element={<MainPage />}>
+                <Route path='/timeline' element={<TimelinePage />} />
+                <Route path='/user/:userId' element={<UserPage />} />
+                <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </DataContextProvider>
+      </TokenProvider>
     </ThemeProvider>
   );
 }
