@@ -5,7 +5,7 @@ import useUsers from './hooks/useUsers';
 import { StyledDiv, StyledInput, StyledList } from './styles';
 
 export default function SearchBar() {
-  const [userName, setUserName] = useState(''); 
+  const [userName, setUserName] = useState('');
   const [users] = useUsers(userName);
   return (
     <StyledDiv>
@@ -17,8 +17,9 @@ export default function SearchBar() {
         onChange={(e) => setUserName(e.target.value)}
         element={StyledInput}
         minLength={3}
-        debounceTimeout={300}/>
-      <AiOutlineSearch className="magnifying-glass"/>
+        debounceTimeout={300}
+      />
+      <AiOutlineSearch className='magnifying-glass' />
       {users.length > 0 && userName.length > 0 && <StyledList>{users}</StyledList>}
     </StyledDiv>
   );
