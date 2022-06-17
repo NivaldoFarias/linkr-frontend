@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Axios from '../../adapters';
+import Axios from '../../blueprints';
 
 const Wrapper = styled.div`
   margin-top: 160px;

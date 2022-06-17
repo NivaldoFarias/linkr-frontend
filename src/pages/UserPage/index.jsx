@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Axios from '../../adapters';
+import Axios from '../../blueprints';
 
 export default function UserPage() {
   const { userId } = useParams();

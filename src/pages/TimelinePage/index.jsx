@@ -1,4 +1,5 @@
 import TimelinePosts from '../../components/TimelinePosts';
+
 export default function TimelinePage() {
   return (
     <div>
