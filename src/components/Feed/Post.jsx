@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FiHeart } from 'react-icons/fi';
+//import { FiHeart } from 'react-icons/fi';
 import { FcLike } from 'react-icons/fc';
 
 /**
@@ -41,7 +41,6 @@ export default function Post({ post }) {
             </ImageContainer>
           </LinkContainer>
         </Link>
-
       </Right>
     </PostContainer>
   );
@@ -118,7 +117,7 @@ const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  `;
+`;
 
 const PostImage = styled.img`
   width: 153.44px;
@@ -128,13 +127,13 @@ const PostImage = styled.img`
 `;
 const Title = styled.div`
   font-size: 17px;
-  color: #CECECE;
+  color: #cecece;
   font-family: ${({ theme }) => theme.fonts.secondary};
   padding-bottom: 6px;
 `;
 const Description = styled.div`
   font-size: 12px;
-  color: #9B9595;
+  color: #9b9595;
   font-family: ${({ theme }) => theme.fonts.secondary};
   margin-top: 4px;
   padding-bottom: 6px;
@@ -142,7 +141,7 @@ const Description = styled.div`
 
 const Url = styled.div`
   font-size: 12px;
-  color: #CECECE;
+  color: #cecece;
   font-family: ${({ theme }) => theme.fonts.secondary};
   margin-top: 4px;
 `;

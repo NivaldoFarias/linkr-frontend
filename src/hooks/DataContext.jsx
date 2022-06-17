@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from 'react';
 
 const DataContext = createContext();
 
-export function DataContextProvider({ children }) {
+export function DataProvider({ children }) {
   const [user, setUser] = useState(null);
   const [width, setWidth] = useState(window.innerWidth);
 
