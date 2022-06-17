@@ -12,17 +12,19 @@ const Wrapper = styled.aside`
 `;
 
 const Header = styled.div`
+  padding: 12px 16px;
+
   font-family: ${({ theme }) => theme.fonts.primary};
   font-size: 27px;
   font-weight: 700;
   line-height: 40px;
-  padding: 12px 16px;
+
   border-bottom: ${({ theme }) => theme.styles.defaultBorder};
 `;
 
 const Hashtags = styled.div`
   padding: 22px 16px;
-  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-start', '5px')};
+  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '5px')};
 `;
 
 const Hashtag = styled.div`
