@@ -4,13 +4,10 @@ import Header from '../../components/Header';
 import TrendingNav from '../../components/TrendingNav';
 import DataContext from './../../hooks/DataContext';
 import { Wrapper, Main, Feed } from './styles';
-import TokenContext from '../../hooks/TokenContext';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function MainPage() {
-  const { width } = useContext(DataContext);
-  const { token, setToken } = useContext(TokenContext);
+  const { width, token } = useContext(DataContext);
 
   const navigate = useNavigate();
 

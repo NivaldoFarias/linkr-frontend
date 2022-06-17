@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
 import { useContext, useEffect, useState } from 'react';
 import Axios from '../../blueprints';
-import TokenContext from '../../hooks/TokenContext';
+import DataContext from '../../hooks/DataContext';
 
 /*
 {
@@ -24,7 +24,7 @@ import TokenContext from '../../hooks/TokenContext';
 */
 
 export default function Post(props) {
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
   const navigate = useNavigate();

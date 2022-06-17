@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import TokenContext from '../../hooks/TokenContext';
+import DataContext from '../../hooks/DataContext';
 import Axios from '../../blueprints';
 
 const Wrapper = styled.div`
@@ -46,7 +46,7 @@ const Hashtag = styled.div`
 export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
 
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(DataContext);
 
   useEffect(() => {
     const config = {

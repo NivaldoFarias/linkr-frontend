@@ -4,7 +4,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import Axios from '../../blueprints';
-import TokenContext from '../../hooks/TokenContext';
+import DataContext from './../../hooks/DataContext';
 import getRandomInt from '../../utils/getRandomInt.js';
 
 import StyledLoadingDots from '../../styles/StyledLoadingDots.jsx';
@@ -20,7 +20,8 @@ function SignIn() {
   });
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const { setToken } = useContext(TokenContext);
+  const { setUser } = useContext(DataContext);
+  const { setToken } = useContext(DataContext);
   const navigate = useNavigate();
 
   function buildSigninPage() {
@@ -98,6 +99,7 @@ function SignIn() {
 
       function handleSuccess(res) {
         setToken(res.token);
+        setUser({ username: res.username, imageUrl: res.imageUrl });
         navigate('/timeline');
       }
     }
