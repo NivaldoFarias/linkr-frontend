@@ -1,4 +1,4 @@
-import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles';
+import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/';
 import NewPost from './NewPost/';
 import Post from './Post/';
 

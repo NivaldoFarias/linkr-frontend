@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import ReactHashtag from '@mdnm/react-hashtag';
 
-import PostContainer from './styles';
+import PostContainer from './styles/';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
 
