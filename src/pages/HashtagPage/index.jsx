@@ -5,8 +5,8 @@ import Feed from '../../components/Feed';
 import DataContext from '../../hooks/DataContext';
 
 export default function HashtagPage() {
-  const { hashtag } = useParams();
   const [posts, setPosts] = useState([]);
+  const hashtag = useParams().hashtag.toLowerCase();
 
   const { token } = useContext(DataContext);
 

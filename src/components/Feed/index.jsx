@@ -15,7 +15,7 @@ export default function Feed({ title, posts, canCreatePost, userThumbnail, updat
       </Header>
       <Content>
         {canCreatePost ? <NewPost updatePostsFunction={updatePostsFunction} /> : <></>}
-        <Posts>{postsElements}</Posts>
+        <Posts>{posts.length > 0 ? postsElements : <h1>Não tem posts ainda</h1>}</Posts>
       </Content>
     </Wrapper>
   );
