@@ -7,23 +7,6 @@ import PostContainer from './styles/';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
 
-/*
-{
-  id: "34"
-  text: "Olha o github de jesus!! #jesus #github"
-  totalLikes: 0
-  url: "https://github.com/jesus/"
-  urlDescription: "Jesus has 51 repositories available. Follow their code on GitHub."
-  urlPicture: "https://avatars.githubusercontent.com/u/23031?v=4?s=400"
-  urlTitle: "Jesus - Overview"
-  userHasLiked: false
-  userId: "3"
-  userPictureUrl: "https://img.freepik.com/vetores-gratis/avatar-de-midia-social-jovem-ruiva-moderna_506604-471.jpg"
-  username: "magabi"
-  usersWhoLiked: [] // máximo 2
-}
-*/
-
 export default function Post(props) {
   const { token } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
@@ -55,7 +38,7 @@ export default function Post(props) {
     };
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
-      const response = await Axios.post(url, {}, config);
+      await Axios.post(url, {}, config);
       await updatePostData();
     } catch (error) {
       console.log(error);
@@ -83,36 +66,36 @@ export default function Post(props) {
           onClick={goToUserPage}
           src={post.userPictureUrl}
         />
-        <div
-          className={`left-container__likes ${isLiked ? 'red-heart' : ''}`}
-          hasLiked={isLiked}
-          onClick={likeButtonClicked}
-        >
-          {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
-          <div className='left-container__likes__label'>{post.totalLikes} likes</div>
+        <div className='left-container__likes' hasLiked={isLiked} onClick={likeButtonClicked}>
+          {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
+          <div className='left-container__likes__label'>
+            <strong>{processLikes()}</strong>
+            {processLikesLabel()}
+          </div>
         </div>
       </div>
       <div className='right-container'>
-        <div className='left-container__username' onClick={goToUserPage}>
-          {post.username}
+        <div className='post-header'>
+          <div className='post-header__username' onClick={goToUserPage}>
+            {post.username}
+          </div>
+          <div className='post-header__text'>
+            <ReactHashtag
+              renderHashtag={(val) => (
+                <div
+                  className='hashtag'
+                  onClick={() => {
+                    goToHashtagPage(val);
+                  }}
+                >
+                  {val}
+                </div>
+              )}
+            >
+              {post.text}
+            </ReactHashtag>
+          </div>
         </div>
-        <div className='left-container__text'>
-          <ReactHashtag
-            renderHashtag={(val) => (
-              <div
-                className='hashtag'
-                onClick={() => {
-                  goToHashtagPage(val);
-                }}
-              >
-                {val}
-              </div>
-            )}
-          >
-            {post.text}
-          </ReactHashtag>
-        </div>
-
         <a className='link' href={post.url} target='blank'>
           <div className='link__container'>
             <div className='link-info'>
@@ -121,11 +104,19 @@ export default function Post(props) {
               <div className='link-info__url'>{post.url}</div>
             </div>
             <div className='link-image'>
-              <img src={post.urlPicture} alt='url website default header' />
+              <img src={post.urlPictureUrl} alt='' />
             </div>
           </div>
         </a>
       </div>
     </PostContainer>
   );
+
+  function processLikesLabel() {
+    return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
+  }
+
+  function processLikes() {
+    return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
+  }
 }

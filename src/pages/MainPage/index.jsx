@@ -15,6 +15,7 @@ export default function MainPage() {
     if (!token) {
       navigate('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (
