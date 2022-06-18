@@ -14,6 +14,7 @@ export default function Post(props) {
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
 
+  const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
   const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -35,14 +36,10 @@ export default function Post(props) {
     console.log('likeButtonClicked');
     const tryToLike = !isLiked;
     setIsLiked(tryToLike);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
-      await Axios.post(url, {}, config);
+      await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
       console.log(error);
@@ -50,10 +47,9 @@ export default function Post(props) {
   }
 
   async function updatePostData() {
-    const config = { headers: { Authorization: `Bearer ${token}` } };
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.get(url, config);
+      const { data } = await Axios.get(url, CONFIG);
       console.log(data);
       setPost(data);
     } catch (err) {
@@ -62,10 +58,9 @@ export default function Post(props) {
   }
 
   async function handleDeletePost() {
-    const config = { headers: { Authorization: `Bearer ${token}` } };
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.delete(url, config);
+      const { data } = await Axios.delete(url, CONFIG);
 
       //IMPLEMENTS DELETE-ROUTE
 
@@ -84,7 +79,7 @@ export default function Post(props) {
           onClick={goToUserPage}
           src={post.userPictureUrl}
         />
-        <div className='left-container__likes' hasLiked={isLiked} onClick={likeButtonClicked}>
+        <div className='left-container__likes' onClick={likeButtonClicked}>
           {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
           <div className='left-container__likes__label'>
             <strong>{processLikes()}</strong>
@@ -106,8 +101,12 @@ export default function Post(props) {
             <div className='modal-container'>
               <h2>Are you sure you want to delete this post?</h2>
               <div>
-                <button onClick={closeModal}>No, go back</button>
-                <button onClick={handleDeletePost}>Yes, delete it</button>
+                <button onClick={closeModal} className='return-btn'>
+                  Return
+                </button>
+                <button onClick={handleDeletePost} className='delete-btn'>
+                  Yes, delete it
+                </button>
               </div>
             </div>
           </Modal>

@@ -61,31 +61,6 @@ const PostContainer = styled.div`
       ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
       width: 100%;
     }
-    .modal-container {
-      text-align: center;
-      color: white;
-
-      h2 {
-        font-size: 24px;
-        font-weight: 700;
-        margin-bottom: 32px;
-      }
-      > div {
-        ${({ theme }) => theme.mixins.flexbox('row', 'center', 'initial', '28px')};
-      }
-      button {
-        padding: 8px 16px;
-        background-color: white;
-        color: ${({ theme }) => theme.colors.btnPrimary};
-        font-size: 16px;
-        font-weight: 700;
-        border: none;
-        :last-child {
-          background-color: ${({ theme }) => theme.colors.btnPrimary};
-          color: white;
-        }
-      }
-    }
     .post-header {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '12px')};
       position: relative;

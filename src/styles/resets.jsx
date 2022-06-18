@@ -68,9 +68,46 @@ const StyledResets = createGlobalStyle`
         right: 8px;
         font-size: 1.6em;
         cursor: pointer;
+        &:hover {
+          filter: brightness(2);
+        }
 
         * {
           pointer-events: none;
+        }
+      }
+    }
+    .modal-container {
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '50px')};
+      height: 100%;
+
+      text-align: center;
+      font-family: ${({ theme }) => theme.fonts.secondary};
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      > div {
+        ${({ theme }) => theme.mixins.flexbox('row', 'center', 'initial', '28px')};
+      }
+      button {
+        padding: 8px 16px;
+        color: ${({ theme }) => theme.colors.btnPrimary};
+        font-size: 1rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          filter: brightness(1.3);
+        }
+        &.return-btn {
+          background-color: transparent;
+        }
+        &.delete-btn {
+          background-color: ${({ theme }) => theme.colors.btnPrimary};
+          color: white;
         }
       }
     }
