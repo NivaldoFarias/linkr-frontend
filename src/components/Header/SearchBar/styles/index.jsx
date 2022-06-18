@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 
 export const StyledDiv = styled.div`
-  background: #e7e7e7;
-  border-radius: 8px;
+  background: ${({ theme }) => theme.colors.backgroundGray};
+  border-radius: ${({ theme }) => theme.styles.borderRadius};
   position: relative;
   width: 40%;
   .magnifying-glass {
-    position: absolute;
-    top: 11px;
-    right: 15px;
-    color: #c6c6c6;
+    ${({ theme }) => theme.mixins.position('absolute', '11px', '15px', 'auto', 'auto')};
+    color: ${({ theme }) => theme.colors.magnifyingIcon};
     width: 21px;
     height: 21px;
     z-index: 3;
@@ -21,11 +19,12 @@ export const StyledDiv = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  background-color: #ffffff;
+  ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
+  background-color: ${({ theme }) => theme.colors.white};
   height: 45px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.styles.borderRadius};
   width: 100%;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.black};
   z-index: 1;
   border: none;
   text-indent: 17px;
@@ -33,12 +32,10 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledList = styled.ul`
-  display: flex;
-  flex-flow: column nowrap;
+  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-start', '16px')}
   overflow-y: scroll;
   width: 100%;
   padding: 10px 17px 23px 17px;
-  gap: 16px;
   max-height: 18vh;
   &::-webkit-scrollbar {
     -webkit-appearance: scrollbartrack-vertical;
@@ -46,10 +43,8 @@ export const StyledList = styled.ul`
   li {
     cursor: pointer;
     figure {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      justify-content: flex-start;
+      ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'center', '0px')};
+      flex-wrap: nowrap;
       img {
         width: 39px;
         height: 39px;
@@ -58,12 +53,12 @@ export const StyledList = styled.ul`
         margin-right: 12px;
       }
       figcaption {
-        font-family: 'Lato';
+        font-family: ${({ theme }) => theme.colors.secondary};
         font-style: normal;
         font-weight: 400;
         font-size: 19px;
         line-height: 23px;
-        color: #515151;
+        color: ${({ theme }) => theme.colors.mediumBlack};
       }
     }
   }
