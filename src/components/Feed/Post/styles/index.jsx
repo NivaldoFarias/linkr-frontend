@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
 const PostContainer = styled.div`
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 16px;
+  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '18px')};
   padding: 18px;
-  display: flex;
-  gap: 18px;
-  justify-content: flex-start;
-  align-items: flex-start;
+  width: 100%;
+
+  border-radius: 16px;
+  background-color: ${({ theme }) => theme.colors.background};
 
   .left-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
@@ -48,24 +46,27 @@ const PostContainer = styled.div`
     ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
     height: 100%;
 
-    &__username {
-      font-size: 19px;
-      margin-bottom: 4px;
-      color: #ffffff;
-      font-family: ${({ theme }) => theme.fonts.secondary};
-      margin-bottom: 7px;
-      cursor: pointer;
-    }
-    &__text {
-      font-size: 17px;
-      color: ${({ theme }) => theme.colors.post};
-      font-family: ${({ theme }) => theme.fonts.secondary};
+    .post-header {
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '12px')};
       margin-bottom: 16px;
+      width: 100%;
 
-      .hashtag {
-        color: white;
-        font-weight: bold;
+      &__username {
+        font-size: 1.3rem;
+        color: #ffffff;
+        font-family: ${({ theme }) => theme.fonts.secondary};
         cursor: pointer;
+      }
+      &__text {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.colors.post};
+        font-family: ${({ theme }) => theme.fonts.secondary};
+
+        .hashtag {
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
+        }
       }
     }
     .link {
