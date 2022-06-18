@@ -1,4 +1,5 @@
 import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { IoCloseSharp } from 'react-icons/io5';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
@@ -94,24 +95,14 @@ export default function Post(props) {
       <div className='right-container'>
         <div className='delete-post'>
           <Modal
+            className='modal'
+            portalClassName='modal-portal'
+            overlayClassName='overlay'
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
-            style={{
-              content: {
-                top: '50%',
-                left: '50%',
-                right: '0',
-                bottom: '0',
-                margin: '0 auto',
-                transform: 'translate(-50%, -50%)',
-                background: `#333333`,
-                borderRadius: '50px',
-                padding: '38px 44px 65px',
-                maxWidth: '430px',
-              },
-            }}
             ariaHideApp={false}
           >
+            <IoCloseSharp className='close-modal-btn' onClick={closeModal} />
             <div className='modal-container'>
               <h2>Are you sure you want to delete this post?</h2>
               <div>
