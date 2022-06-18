@@ -21,7 +21,7 @@ export default function App() {
       <MouseProvider>
         <DataProvider>
           <BrowserRouter>
-            <StyleResets />
+            <StyledResets />
             <Routes>
               <Route path='/' element={<Home />}>
                 <Route index element={<SignIn />} />

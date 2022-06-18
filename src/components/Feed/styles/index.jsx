@@ -15,6 +15,8 @@ const Header = styled.div`
 
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.logotype};
+  text-align: left;
+  width: 100%;
   font-size: 43px;
   font-weight: 700;
   line-height: 64px;
