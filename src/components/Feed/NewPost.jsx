@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
 import DataContext from '../../hooks/DataContext';
 
 import { Wrapper, PostForm } from './styles';
@@ -10,11 +9,14 @@ const mockAvatar = 'https://avatars.githubusercontent.com/u/90518458?v=4';
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
+  const [fieldVisibility, setfieldVisibility] = useState(false);
+
   const { user, token } = useContext(DataContext);
-  //const navigate = useNavigate();
 
   async function handleSendNewPost(e) {
     e.preventDefault();
+    setfieldVisibility(true);
+
     try {
       await Axios.post(
         '/posts/',
@@ -22,11 +24,14 @@ export default function NewPost({ updatePostsFunction }) {
         { headers: { Authorization: `Bearer ${token}` } },
       );
       updatePostsFunction();
+      setfieldVisibility(false);
+
     } catch (e) {
       console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
       setDescription('');
-      alert('Não foi posssivel criar um novo post');
+      alert('Houve um erro ao publicar seu link');
+      setfieldVisibility(false);
     }
   }
 
@@ -44,6 +49,7 @@ export default function NewPost({ updatePostsFunction }) {
             setUrl(e.target.value);
           }}
           required
+          disabled={fieldVisibility}
         />
         <input
           type='text'
@@ -54,9 +60,12 @@ export default function NewPost({ updatePostsFunction }) {
             setDescription(e.target.value);
           }}
           required
+          disabled={fieldVisibility}
         />
 
-        <button>Publish</button>
+        <button disabled={fieldVisibility}>
+          {!fieldVisibility ? "Publish" : "Publishing..."}
+        </button>
       </PostForm>
     </Wrapper>
   );

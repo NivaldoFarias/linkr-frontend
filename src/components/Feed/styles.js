@@ -31,7 +31,7 @@ export const PostForm = styled.form`
 
     input {
         display: flex;
-        background-color: #EFEFEF;
+        background-color: ${({theme})=> theme.colors.inputBackground};
         border-radius: 5px;
         border: none;
         padding: 8px 12px;
@@ -49,6 +49,11 @@ export const PostForm = styled.form`
         color: white;
         font-size: 14px;
         font-weight: 700;
-        background-color: #1877F2;
+        background-color: ${({theme})=> theme.colors.btnPrimary};
+        transition: 300ms;
+
+        :hover {
+            opacity: 0.8;
+        }
     }
 `;
