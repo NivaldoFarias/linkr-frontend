@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion/dist/framer-motion';
 import DataContext from '../../../../hooks/DataContext';
@@ -14,13 +14,14 @@ export default function useUsers(userName) {
   const [users, setUsers] = useState([]);
   const { token } = useContext(DataContext);
   const browse = useNavigate();
-  useEffect(() => {
-    const config = {
+  const config = useMemo(() => {
+    return({
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    };
-
+    });
+  },[token]);
+  useEffect(() => {
     if (userName.length > 0) {
       const response = Axios.get(`users/username/${userName}`, config);
       response.then(async ({ data }) => {
@@ -34,8 +35,7 @@ export default function useUsers(userName) {
                 animate='visible'
                 variants={variants}
                 transition={{ delay: index * 0.05 }}
-                onClick={() => browse(`/user/${id}`)}
-              >
+                onClick={() => browse(`/user/${id}`)}>
                 <figure>
                   <img src={imageUrl} alt={`${username}`} />
                   <figcaption>{username}</figcaption>
@@ -48,6 +48,6 @@ export default function useUsers(userName) {
       });
       response.catch((error) => console.error(error));
     }
-  }, [userName, browse]);
-  return [users];
+  }, [userName, browse, config]);
+  return [users, setUsers];
 }

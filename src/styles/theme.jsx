@@ -10,10 +10,15 @@ const theme = {
 
     darkGreen: 'rgb(163,216,150)',
     regularGreen: 'rgb(193,226,190)',
+    white: 'rgb(255,255,255)',
+    black: 'rgb(0,0,0)',
     lightGreen: 'rgb(214,235,195)',
     lighterGreen: 'rgb(230,248,209)',
     btnGreen: 'rgb(118,185,71)',
     btnShadowGreen: 'rgb(77,152,51)',
+    backgroundGray: 'rgb(231,231,231)',
+    magnifyingIcon: 'rgb(198,198,198)',
+    mediumBlack: 'rgb(81,81,81)',
 
     text: 'rgb(112, 112, 112)',
     post: 'rgb(183, 183, 183)',
