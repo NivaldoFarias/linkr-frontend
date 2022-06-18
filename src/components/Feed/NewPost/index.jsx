@@ -8,13 +8,13 @@ import fallbackAvatar from '../../../assets/fallback-avatar.png';
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
-  const [fieldVisibility, setfieldVisibility] = useState(false);
+  const [fieldVisibility, setFieldVisibility] = useState(false);
 
   const { user, token } = useContext(DataContext);
 
   async function handleSendNewPost(e) {
     e.preventDefault();
-    setfieldVisibility(true);
+    setFieldVisibility(true);
 
     try {
       await Axios.post(
@@ -23,13 +23,13 @@ export default function NewPost({ updatePostsFunction }) {
         { headers: { Authorization: `Bearer ${token}` } },
       );
       updatePostsFunction();
-      setfieldVisibility(false);
+      setFieldVisibility(false);
     } catch (e) {
       console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
       setDescription('');
       alert('Houve um erro ao publicar seu link');
-      setfieldVisibility(false);
+      setFieldVisibility(false);
     }
   }
 
