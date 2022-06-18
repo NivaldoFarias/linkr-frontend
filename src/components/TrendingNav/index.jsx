@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Axios from '../../adapters';
+import DataContext from '../../hooks/DataContext';
+import Axios from '../../blueprints';
 
 const Wrapper = styled.div`
   margin-top: 160px;
   background-color: ${({ theme }) => theme.colors.background};
-  width: 30%;
+  width: 10%;
+  min-width: 300px;
   border-radius: 16px;
   * {
     color: white;
@@ -35,15 +37,25 @@ const Hashtag = styled.div`
   letter-spacing: 0.05em;
   text-align: left;
   letter-spacing: 0.05em;
+  cursor: pointer;
+  :hover {
+    color: ${({ theme }) => theme.colors.secondary};
+  }
 `;
-
-const trendingHashtags = ['react', 'redux', 'nodejs', 'javascript', 'typescript'];
 
 export default function TrendingNav() {
   const [hashtags, setHashtags] = useState(null);
 
+  const { token } = useContext(DataContext);
+
   useEffect(() => {
-    Axios.get('hashtags/trending')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    Axios.get('hashtags/trending', token)
       .then(({ data }) => {
         setHashtags(data);
       })

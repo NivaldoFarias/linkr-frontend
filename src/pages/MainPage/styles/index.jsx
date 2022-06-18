@@ -12,10 +12,14 @@ export const Wrapper = styled.main`
 export const Main = styled.main`
   flex: 1 1 auto;
   ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', '25px')};
+  overflow: hidden;
+  width: 100%;
 `;
 
 export const Feed = styled.div`
-  width: 611px;
+  width: 100%;
   max-width: 611px;
   flex: 0 0 auto;
+  height: 100%;
+  overflow: hidden;
 `;

@@ -1,34 +1,105 @@
 import styled from 'styled-components';
-import { FiHeart } from 'react-icons/fi';
-import { FcLike } from 'react-icons/fc';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import ReactHashtag from '@mdnm/react-hashtag';
+import { useContext, useEffect, useState } from 'react';
+import Axios from '../../blueprints';
+import DataContext from '../../hooks/DataContext';
 
-/**
- * 
- * {
-        id: 1,
-        text: 'Veja que legal!!',
-        url: 'https://www.youtube.com/watch?v=aJR7f45dBNs&ab_channel=FilipeDeschamps',
-        urlPictureUrl: 'https://i.ytimg.com/vi/aJR7f45dBNs/maxresdefault.jpg',
-        urlTitle: 'Se Você Passar Por Esses 5 Desafios, Você Aprendeu React JS',
-        urlDescription: 'Aprender a programar do zero React JS é uma experiência SENSACIONAL quando feita do jeito certo, e nesse vídeo tutorial eu vou fazer você passar por 5 desafi...',
-        userId: 5,
-        userPictureUrl: 'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
-        numberOfLikes: 12,
-        isLiked: false,
-        likesLabel: 'Ricardo e Maria +56 pessoas'
-    },
- */
+/*
+{
+  id: "34"
+  text: "Olha o github de jesus!! #jesus #github"
+  totalLikes: 0
+  url: "https://github.com/jesus/"
+  urlDescription: "Jesus has 51 repositories available. Follow their code on GitHub."
+  urlPicture: "https://avatars.githubusercontent.com/u/23031?v=4?s=400"
+  urlTitle: "Jesus - Overview"
+  userHasLiked: false
+  userId: "3"
+  userPictureUrl: "https://img.freepik.com/vetores-gratis/avatar-de-midia-social-jovem-ruiva-moderna_506604-471.jpg"
+  username: "magabi"
+  usersWhoLiked: [] // máximo 2
+}
+*/
 
-export default function Post({ post }) {
+export default function Post(props) {
+  const { token } = useContext(DataContext);
+  const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
+  const [post, setPost] = useState(props.post);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLiked(props.post.userHasLiked);
+    setPost(props.post);
+  }, [props]);
+
+  function goToUserPage() {
+    navigate(`/user/${post.userId}`);
+  }
+
+  function goToHashtagPage(hashtag) {
+    const cleanHashtag = hashtag.replace('#', '').toLowerCase();
+    navigate(`/hashtag/${cleanHashtag}`);
+  }
+
+  async function likeButtonClicked() {
+    console.log('likeButtonClicked');
+    const tryToLike = !isLiked;
+    setIsLiked(tryToLike);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
+    try {
+      const response = await Axios.post(url, {}, config);
+      await updatePostData();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updatePostData() {
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    const url = `/posts/${post.id}`;
+    try {
+      const { data } = await Axios.get(url, config);
+      console.log(data);
+      setPost(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <PostContainer key={post.id}>
       <Left>
-        <ProfileImage src={post.userPictureUrl} />
-        <FcLike />
+        <ProfileImage onClick={goToUserPage} src={post.userPictureUrl} />
+        <Like hasLiked={isLiked} onClick={likeButtonClicked}>
+          {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
+          <LikesLabel>{post.totalLikes} likes</LikesLabel>
+        </Like>
       </Left>
       <Right>
-        <UserName>{post.username}</UserName>
-        <PostText>{post.text}</PostText>
+        <UserName onClick={goToUserPage}>{post.username}</UserName>
+        <PostText>
+          <ReactHashtag
+            renderHashtag={(val) => (
+              <Hashtag
+                onClick={() => {
+                  goToHashtagPage(val);
+                }}
+              >
+                {val}
+              </Hashtag>
+            )}
+          >
+            {post.text}
+          </ReactHashtag>
+        </PostText>
+
         <Link href={post.url} target='blank'>
           <LinkContainer>
             <LinkInfo>
@@ -37,11 +108,10 @@ export default function Post({ post }) {
               <Url>{post.url}</Url>
             </LinkInfo>
             <ImageContainer>
-              <PostImage src={post.urlPictureUrl} />
+              <PostImage src={post.urlPicture} />
             </ImageContainer>
           </LinkContainer>
         </Link>
-
       </Right>
     </PostContainer>
   );
@@ -49,19 +119,20 @@ export default function Post({ post }) {
 
 const PostContainer = styled.div`
   width: 100%;
-  height: 276px;
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 16px;
-  margin-bottom: 16px;
   padding: 18px;
   display: flex;
+  gap: 18px;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
+
 const Left = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
 `;
 
 const ProfileImage = styled.img`
@@ -70,13 +141,14 @@ const ProfileImage = styled.img`
   border-radius: 26.5px;
   object-fit: cover;
   margin-bottom: 18px;
+  cursor: pointer;
 `;
 
 const Right = styled.div`
+  height: 100%;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  flex: 8;
 `;
 
 const UserName = styled.div`
@@ -85,6 +157,7 @@ const UserName = styled.div`
   color: #ffffff;
   font-family: ${({ theme }) => theme.fonts.secondary};
   margin-bottom: 7px;
+  cursor: pointer;
 `;
 
 const PostText = styled.div`
@@ -94,55 +167,110 @@ const PostText = styled.div`
   margin-bottom: 16px;
 `;
 
+const Hashtag = styled.span`
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  cursor: pointer !important;
+`;
+
 const LinkContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
   width: 100%;
   height: 155px;
+  flex: 0 0 auto;
   border: ${({ theme }) => theme.styles.defaultBorder};
   border-radius: 11px;
   position: relative;
-`;
-const Link = styled.a`
-  text-decoration: none;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  :hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
 `;
 
 const LinkInfo = styled.div`
+  padding: 16px;
+  flex: 1 1 auto;
+  height: 100%;
+  cursor: pointer !important;
+
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  flex: 8;
+  justify-content: center;
 `;
 
 const ImageContainer = styled.div`
+  border-left: ${({ theme }) => theme.styles.defaultBorder};
+  overflow: hidden;
+  width: 155px;
+  height: 100%;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  `;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
 
 const PostImage = styled.img`
-  width: 153.44px;
-  height: 153px;
-  border-radius: 0px 12px 13px 0px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 `;
+
 const Title = styled.div`
   font-size: 17px;
-  color: #CECECE;
+  color: #cecece;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  padding-bottom: 6px;
 `;
 const Description = styled.div`
   font-size: 12px;
-  color: #9B9595;
+  color: #9b9595;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  margin-top: 4px;
-  padding-bottom: 6px;
+  margin-top: 5px;
 `;
 
 const Url = styled.div`
   font-size: 12px;
-  color: #CECECE;
+  color: #cecece;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  margin-top: 4px;
+  margin-top: 13px;
+  width: 100%;
+  word-break: break-all;
+`;
+
+const Like = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-top: 16px;
+  gap: 4px;
+
+  svg {
+    color: ${({ hasLiked }) => {
+      return hasLiked ? '#AC0000' : '#ffffff';
+    }};
+  }
+`;
+
+const LikesLabel = styled.div`
+  font-family: Lato;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: white;
 `;

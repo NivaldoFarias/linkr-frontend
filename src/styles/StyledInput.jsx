@@ -44,12 +44,17 @@ const InputGroup = styled.div`
     font-size: 14px;
     color: ${({ theme }) => theme.colors.tertiary};
   }
+  input #placeholder {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+  }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
+  input:-webkit-autofill:active,
+  input:-webkit-autofill:first-line {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: initial !important;
+    -webkit-text-fill-color: white !important;
   }
   /* BOTTOM BARS ================================= */
   .bar {
@@ -103,6 +108,21 @@ const InputGroup = styled.div`
     to {
       width: 0;
       background: transparent;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    input {
+      padding-top: 15px;
+      font-size: 1.5rem;
+    }
+    label {
+      top: 20px;
+      font-weight: 200;
+      font-size: 1.3rem;
+    }
+    input:focus ~ label,
+    input:valid ~ label {
+      font-size: 1.3rem;
     }
   }
 `;

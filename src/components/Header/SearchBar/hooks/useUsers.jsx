@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion/dist/framer-motion';
-import Axios from '../../../../adapters';
+import DataContext from '../../../../hooks/DataContext';
+
+import Axios from '../../../../blueprints';
 
 const variants = {
   visible: { opacity: 1 },
@@ -10,10 +12,17 @@ const variants = {
 
 export default function useUsers(userName) {
   const [users, setUsers] = useState([]);
+  const { token } = useContext(DataContext);
   const browse = useNavigate();
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     if (userName.length > 0) {
-      const response = Axios.get(`users/username/${userName}`);
+      const response = Axios.get(`users/username/${userName}`, config);
       response.then(async ({ data }) => {
         const result = await Promise.all(
           data.users.map(async (user, index) => {

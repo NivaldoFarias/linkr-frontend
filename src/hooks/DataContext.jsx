@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
-import DataContext from '../../contexts/DataContext';
+import { useState, useEffect, createContext } from 'react';
+import { useLocalStorage } from './useLocalStorage';
 
-export default function DataContextProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
+const DataContext = createContext();
+
+export function DataProvider({ children }) {
+  const [user, setUser] = useLocalStorage('user', null);
+  const [token, setToken] = useLocalStorage('token', null);
   const [width, setWidth] = useState(window.innerWidth);
 
   function handleWindowSizeChange() {
@@ -22,8 +24,8 @@ export default function DataContextProvider({ children }) {
       value={{
         user,
         setUser,
-        session,
-        setSession,
+        token,
+        setToken,
         width,
         setWidth,
       }}
@@ -32,3 +34,5 @@ export default function DataContextProvider({ children }) {
     </DataContext.Provider>
   );
 }
+
+export default DataContext;

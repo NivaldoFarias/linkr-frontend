@@ -1,12 +1,21 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../../components/Header';
 import TrendingNav from '../../components/TrendingNav';
-import DataContext from '../../contexts/DataContext';
+import DataContext from './../../hooks/DataContext';
 import { Wrapper, Main, Feed } from './styles';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainPage() {
-  const { width } = useContext(DataContext);
+  const { width, token } = useContext(DataContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/');
+    }
+  }, [token]);
 
   return (
     <Wrapper>

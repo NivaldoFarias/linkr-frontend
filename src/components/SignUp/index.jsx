@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import Axios from '../../adapters';
+import Axios from '../../blueprints';
 import getRandomInt from '../../utils/getRandomInt.js';
 
 import StyledLoadingDots from '../../styles/StyledLoadingDots.jsx';

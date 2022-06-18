@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import DataContextProvider from '../components/DataContextProvider';
+import { DataProvider } from './../hooks/DataContext';
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
 
@@ -18,7 +18,7 @@ import MainPage from '../pages/MainPage';
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <DataContextProvider>
+      <DataProvider>
         <BrowserRouter>
           <StyleResets />
           <Routes>
@@ -33,7 +33,7 @@ export default function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </DataContextProvider>
+      </DataProvider>
     </ThemeProvider>
   );
 }
