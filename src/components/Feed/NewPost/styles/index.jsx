@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: flex;
-  gap: 18px;
+  ${({ theme }) => theme.mixins.flexbox('row', 'initial', 'initial', '18px')};
   padding: 16px 18px;
   width: 100%;
   background-color: #ffffff;
@@ -22,15 +21,15 @@ export const PostForm = styled.form`
 
   h3 {
     margin-bottom: 8px;
-    font-family: Lato;
+    font-family: ${({ theme }) => theme.fonts.secondary};
     font-weight: 300;
     font-size: 20px;
   }
 
   input {
     display: flex;
-    background-color: #efefef;
-    border-radius: 5px;
+    background-color: ${({ theme }) => theme.colors.inputBackground};
+    border-radius: ${({ theme }) => theme.mixins.borderRadius};
     border: none;
     padding: 8px 12px;
 
@@ -46,10 +45,15 @@ export const PostForm = styled.form`
     margin: 0 0 0 auto;
     padding: 8px 33px;
     border: none;
-    border-radius: 5px;
+    border-radius: ${({ theme }) => theme.mixins.borderRadius};
     color: white;
     font-size: 14px;
     font-weight: 700;
-    background-color: #1877f2;
+    background-color: ${({ theme }) => theme.colors.btnPrimary};
+    transition: 300ms;
+
+    :hover {
+      opacity: 0.8;
+    }
   }
 `;
