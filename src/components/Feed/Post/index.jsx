@@ -3,6 +3,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
+import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
 
 import PostContainer from './styles/';
@@ -69,8 +70,31 @@ export default function Post(props) {
     }
   }
 
+  function likesLabel (){
+    const { userHasLiked, totalLikes, usersWhoLiked } = post;
+    
+    if(userHasLiked){
+      if(totalLikes === 1){
+        return "You"
+    } else if(totalLikes < 3){
+        return `You and ${usersWhoLiked[0].username}`
+    } else if(totalLikes > 2){
+        return `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
+    }
+  } else {
+    if(totalLikes === 1){
+      return `${usersWhoLiked[0].username}`
+    } else if(totalLikes === 2){
+      return `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`
+    } else if(totalLikes > 2){
+      return `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`
+    }
+  }
+  }
+
   return (
     <PostContainer key={post.id}>
+      <ReactTooltip type="light" place="bottom" effect="solid"/>
       <div className='left-container'>
         <img
           className='left-container__image'
@@ -80,7 +104,7 @@ export default function Post(props) {
         />
         <div className='left-container__likes' onClick={likeButtonClicked}>
           {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
-          <div className='left-container__likes__label'>
+          <div data-tip={likesLabel()} className='left-container__likes__label'>
             <strong>{processLikes()}</strong>
             {processLikesLabel()}
           </div>

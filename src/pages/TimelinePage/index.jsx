@@ -3,8 +3,6 @@ import Axios from '../../blueprints';
 import Feed from '../../components/Feed';
 import DataContext from '../../hooks/DataContext';
 
-import { mockPosts } from '../../mocks/Posts';
-
 export default function TimelinePage() {
   const [posts, setPosts] = useState([]);
   const { token } = useContext(DataContext);
@@ -30,7 +28,7 @@ export default function TimelinePage() {
   return (
     <Feed
       title={`timeline`}
-      posts={posts.length ? posts : mockPosts}
+      posts={posts}
       canCreatePost={true}
       userThumbnail={false}
       updatePostsFunction={updateTimeline}
