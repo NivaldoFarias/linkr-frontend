@@ -10,7 +10,7 @@ import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
 
 export default function Post(props) {
-  const { token } = useContext(DataContext);
+  const { token, user } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
 
@@ -63,7 +63,6 @@ export default function Post(props) {
       const { data } = await Axios.delete(url, CONFIG);
 
       //IMPLEMENTS DELETE-ROUTE
-
       // setPost(data);
     } catch (err) {
       console.log(err);
@@ -114,22 +113,26 @@ export default function Post(props) {
         <div className='post-header'>
           <div className='post-header__username'>
             <p onClick={goToUserPage}>{post.username}</p>
-            <div className='actions-container'>
-              <AiFillEdit />
-              <AiFillDelete onClick={openModal} />
-            </div>
+            {post.userId === user.id ? (
+              <div className='actions-container'>
+                <AiFillEdit />
+                <AiFillDelete onClick={openModal} />
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <div className='post-header__text'>
             <ReactHashtag
               renderHashtag={(val) => (
-                <div
+                <span
                   className='hashtag'
                   onClick={() => {
                     goToHashtagPage(val);
                   }}
                 >
                   {val}
-                </div>
+                </span>
               )}
             >
               {post.text}

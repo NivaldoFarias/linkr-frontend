@@ -11,6 +11,7 @@ const PostContainer = styled.div`
   .left-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
     height: 100%;
+    width: 50px;
 
     &__image {
       width: 50px;
@@ -95,7 +96,7 @@ const PostContainer = styled.div`
         font-size: 1rem;
         color: ${({ theme }) => theme.colors.post};
         font-family: ${({ theme }) => theme.fonts.secondary};
-
+        width: 100%;
         .hashtag {
           color: white;
           font-weight: bold;
@@ -126,7 +127,6 @@ const PostContainer = styled.div`
           ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', '7px')};
           padding: 20px 16px 14px;
           height: 100%;
-          max-width: 350px;
 
           cursor: pointer;
 
