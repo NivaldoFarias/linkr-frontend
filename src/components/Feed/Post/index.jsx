@@ -66,13 +66,13 @@ export default function Post(props) {
           onClick={goToUserPage}
           src={post.userPictureUrl}
         />
-        <div
-          className={`left-container__likes ${isLiked ? 'red-heart' : ''}`}
-          hasLiked={isLiked}
-          onClick={likeButtonClicked}
-        >
-          {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
-          <div className='left-container__likes__label'>{post.totalLikes} likes</div>
+        <div className='left-container__likes' hasLiked={isLiked} onClick={likeButtonClicked}>
+          {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
+          <div className='left-container__likes__label'>
+            {post.totalLikes > 0
+              ? `${post.totalLikes} like${post.totalLikes === 1 ? '' : 's'}`
+              : ''}
+          </div>
         </div>
       </div>
       <div className='right-container'>

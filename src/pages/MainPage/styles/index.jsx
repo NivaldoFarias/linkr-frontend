@@ -2,9 +2,11 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.main`
   ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'center', '0px')};
+  padding-bottom: 30px;
   width: 100%;
   height: 100%;
 
+  overflow-y: hidden;
   background-color: ${({ theme }) => theme.colors.foreground};
 `;
 

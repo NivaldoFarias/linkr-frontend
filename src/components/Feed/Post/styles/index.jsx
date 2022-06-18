@@ -22,11 +22,15 @@ const PostContainer = styled.div`
     }
     &__likes {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '4px')};
-      margin-top: 16px;
 
-      svg {
+      > svg {
         color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
 
+        * {
+          pointer-events: none;
+        }
         &.red-heart {
           color: rgb(172, 0, 0);
         }
@@ -52,7 +56,7 @@ const PostContainer = styled.div`
       width: 100%;
 
       &__username {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: #ffffff;
         font-family: ${({ theme }) => theme.fonts.secondary};
         cursor: pointer;
