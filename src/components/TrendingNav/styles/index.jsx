@@ -6,7 +6,7 @@ const Wrapper = styled.aside`
   width: 30%;
   max-width: 360px;
 
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   border-radius: 16px;
   background-color: ${({ theme }) => theme.colors.background};
 `;

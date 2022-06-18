@@ -17,22 +17,24 @@ import MainPage from '../pages/MainPage';
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <DataProvider>
-        <BrowserRouter>
-          <StyledResets />
-          <Routes>
-            <Route path='/' element={<Home />}>
-              <Route index element={<SignIn />} />
-              <Route path='/sign-up' element={<SignUp />} />
-            </Route>
-            <Route element={<MainPage />}>
-              <Route path='/timeline' element={<TimelinePage />} />
-              <Route path='/user/:userId' element={<UserPage />} />
-              <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </DataProvider>
+      <MouseProvider>
+        <DataProvider>
+          <BrowserRouter>
+            <StyledResets />
+            <Routes>
+              <Route path='/' element={<Home />}>
+                <Route index element={<SignIn />} />
+                <Route path='/sign-up' element={<SignUp />} />
+              </Route>
+              <Route element={<MainPage />}>
+                <Route path='/timeline' element={<TimelinePage />} />
+                <Route path='/user/:userId' element={<UserPage />} />
+                <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </DataProvider>
+      </MouseProvider>
     </ThemeProvider>
   );
 }

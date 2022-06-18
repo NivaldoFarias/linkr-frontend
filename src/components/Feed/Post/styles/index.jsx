@@ -5,10 +5,7 @@ const PostContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 16px;
   padding: 18px;
-  display: flex;
-  gap: 18px;
-  justify-content: flex-start;
-  align-items: flex-start;
+  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '18px')};
 
   .left-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
@@ -17,7 +14,7 @@ const PostContainer = styled.div`
     &__image {
       width: 50px;
       height: 50px;
-      border-radius: 26.5px;
+      border-radius: 50%;
       object-fit: cover;
       margin-bottom: 18px;
       cursor: pointer;
@@ -34,43 +31,43 @@ const PostContainer = styled.div`
         }
       }
       &__label {
-        font-family: Lato;
+        font-family: ${({ theme }) => theme.fonts.secondary};
         font-size: 11px;
         font-weight: 400;
         line-height: 13px;
         letter-spacing: 0em;
         text-align: center;
-        color: white;
+        color: ${({ theme }) => theme.colors.white};
       }
     }
   }
   .right-container {
-    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
+    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
     height: 100%;
+    color: ${({ theme }) => theme.colors.post};
 
     &__username {
       font-size: 19px;
       margin-bottom: 4px;
-      color: #ffffff;
       font-family: ${({ theme }) => theme.fonts.secondary};
       margin-bottom: 7px;
       cursor: pointer;
+      color: ${({ theme }) => theme.colors.white};
     }
     &__text {
       font-size: 17px;
-      color: ${({ theme }) => theme.colors.post};
       font-family: ${({ theme }) => theme.fonts.secondary};
       margin-bottom: 16px;
 
       .hashtag {
-        color: white;
+        color: ${({ theme }) => theme.colors.white};
         font-weight: bold;
         cursor: pointer;
       }
     }
     .link {
       text-decoration: none;
-      cursor: pointer !important;
+      cursor: pointer;
 
       &__container {
         ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
@@ -80,7 +77,6 @@ const PostContainer = styled.div`
         border-radius: 11px;
         position: relative;
         overflow: hidden;
-
         cursor: pointer;
 
         :hover {
@@ -90,7 +86,7 @@ const PostContainer = styled.div`
           padding: 16px;
           ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', 'initial')};
           height: 100%;
-          cursor: pointer !important;
+          cursor: pointer;
 
           &__title {
             font-size: 17px;

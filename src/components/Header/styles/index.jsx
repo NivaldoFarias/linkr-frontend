@@ -7,7 +7,7 @@ export const Wrapper = styled.header`
   padding: 10px 20px;
   background-color: ${({ theme }) => theme.colors.background};
   & {
-    color: white;
+    color: ${({ theme }) => theme.colors.white};
   }
 `;
 

@@ -93,10 +93,10 @@ export default function Post(props) {
         </div>
       </div>
       <div className='right-container'>
-        <div className='left-container__username' onClick={goToUserPage}>
+        <div className='right-container__username' onClick={goToUserPage}>
           {post.username}
         </div>
-        <div className='left-container__text'>
+        <div className='right-container__text'>
           <ReactHashtag
             renderHashtag={(val) => (
               <div
