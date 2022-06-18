@@ -57,16 +57,39 @@ const PostContainer = styled.div`
     ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
     height: 100%;
 
+    .delete-post {
+      ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
+      width: 100%;
+    }
     .post-header {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '12px')};
+      position: relative;
+
       margin-bottom: 16px;
       width: 100%;
 
       &__username {
-        font-size: 1.2rem;
-        color: #ffffff;
-        font-family: ${({ theme }) => theme.fonts.secondary};
-        cursor: pointer;
+        p {
+          font-size: 1.2rem;
+          color: #ffffff;
+          font-family: ${({ theme }) => theme.fonts.secondary};
+          cursor: pointer;
+        }
+        .actions-container {
+          ${({ theme }) => theme.mixins.position('absolute', '10px', '15px', 'initial', 'initial')};
+          ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
+
+          font-size: 1rem;
+          color: white;
+
+          > svg {
+            cursor: pointer;
+
+            * {
+              pointer-events: none;
+            }
+          }
+        }
       }
       &__text {
         font-size: 1rem;

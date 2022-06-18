@@ -1,7 +1,9 @@
+import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { IoCloseSharp } from 'react-icons/io5';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import ReactHashtag from '@mdnm/react-hashtag';
+import Modal from 'react-modal';
 
 import PostContainer from './styles/';
 import DataContext from '../../../hooks/DataContext';
@@ -11,6 +13,9 @@ export default function Post(props) {
   const { token } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
+
+  const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
+  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,14 +36,10 @@ export default function Post(props) {
     console.log('likeButtonClicked');
     const tryToLike = !isLiked;
     setIsLiked(tryToLike);
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
-      await Axios.post(url, {}, config);
+      await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
       console.log(error);
@@ -46,12 +47,24 @@ export default function Post(props) {
   }
 
   async function updatePostData() {
-    const config = { headers: { Authorization: `Bearer ${token}` } };
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.get(url, config);
+      const { data } = await Axios.get(url, CONFIG);
       console.log(data);
       setPost(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleDeletePost() {
+    const url = `/posts/${post.id}`;
+    try {
+      const { data } = await Axios.delete(url, CONFIG);
+
+      //IMPLEMENTS DELETE-ROUTE
+
+      // setPost(data);
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +79,7 @@ export default function Post(props) {
           onClick={goToUserPage}
           src={post.userPictureUrl}
         />
-        <div className='left-container__likes' hasLiked={isLiked} onClick={likeButtonClicked}>
+        <div className='left-container__likes' onClick={likeButtonClicked}>
           {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
           <div className='left-container__likes__label'>
             <strong>{processLikes()}</strong>
@@ -75,9 +88,36 @@ export default function Post(props) {
         </div>
       </div>
       <div className='right-container'>
+        <div className='delete-post'>
+          <Modal
+            className='modal'
+            portalClassName='modal-portal'
+            overlayClassName='overlay'
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            ariaHideApp={false}
+          >
+            <IoCloseSharp className='close-modal-btn' onClick={closeModal} />
+            <div className='modal-container'>
+              <h2>Are you sure you want to delete this post?</h2>
+              <div>
+                <button onClick={closeModal} className='return-btn'>
+                  Return
+                </button>
+                <button onClick={handleDeletePost} className='delete-btn'>
+                  Yes, delete it
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </div>
         <div className='post-header'>
-          <div className='post-header__username' onClick={goToUserPage}>
-            {post.username}
+          <div className='post-header__username'>
+            <p onClick={goToUserPage}>{post.username}</p>
+            <div className='actions-container'>
+              <AiFillEdit />
+              <AiFillDelete onClick={openModal} />
+            </div>
           </div>
           <div className='post-header__text'>
             <ReactHashtag
@@ -111,6 +151,14 @@ export default function Post(props) {
       </div>
     </PostContainer>
   );
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   function processLikesLabel() {
     return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
