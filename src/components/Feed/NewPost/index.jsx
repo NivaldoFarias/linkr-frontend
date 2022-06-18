@@ -1,11 +1,7 @@
 import { useContext, useState } from 'react';
 import DataContext from '../../../hooks/DataContext';
 
-<<<<<<< HEAD:src/components/Feed/NewPost/index.jsx
-import { Wrapper, PostForm } from './styles';
-=======
 import { Wrapper, PostForm } from './styles/';
->>>>>>> 154816bbb7a0281290f311bbfd9ce610a8b65b15:src/components/Feed/NewPost.jsx
 import Axios from '../../../blueprints';
 
 const mockAvatar = 'https://avatars.githubusercontent.com/u/90518458?v=4';
