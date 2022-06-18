@@ -16,11 +16,9 @@ export const Wrapper = styled.div`
 `;
 
 export const PostForm = styled.form`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
+  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '5px')};
   margin-top: 5px;
-  gap: 5px;
+  width: 100%;
 
   h3 {
     margin-bottom: 8px;
@@ -35,10 +33,13 @@ export const PostForm = styled.form`
     border-radius: 5px;
     border: none;
     padding: 8px 12px;
+
+    cursor: text;
   }
 
   input:nth-child(3) {
     padding-bottom: 40px;
+    cursor: text;
   }
 
   button {

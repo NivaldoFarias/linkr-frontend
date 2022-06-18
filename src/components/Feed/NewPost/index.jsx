@@ -1,10 +1,9 @@
 import { useContext, useState } from 'react';
-import DataContext from '../../hooks/DataContext';
+import DataContext from '../../../hooks/DataContext';
 
-import { Wrapper, PostForm } from './styles';
-import Axios from '../../blueprints';
-
-const mockAvatar = 'https://avatars.githubusercontent.com/u/90518458?v=4';
+import { Wrapper, PostForm } from './styles/';
+import Axios from '../../../blueprints';
+import fallbackAvatar from '../../../assets/fallback-avatar.png';
 
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
@@ -25,7 +24,6 @@ export default function NewPost({ updatePostsFunction }) {
       );
       updatePostsFunction();
       setfieldVisibility(false);
-
     } catch (e) {
       console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
@@ -37,7 +35,7 @@ export default function NewPost({ updatePostsFunction }) {
 
   return (
     <Wrapper>
-      <img src={user?.imageUrl || mockAvatar} alt='user'></img>
+      <img src={user?.imageUrl || fallbackAvatar} alt='user'></img>
       <PostForm onSubmit={handleSendNewPost}>
         <h3>What are you going to share today?</h3>
         <input
@@ -63,9 +61,7 @@ export default function NewPost({ updatePostsFunction }) {
           disabled={fieldVisibility}
         />
 
-        <button disabled={fieldVisibility}>
-          {!fieldVisibility ? "Publish" : "Publishing..."}
-        </button>
+        <button disabled={fieldVisibility}>{!fieldVisibility ? 'Publish' : 'Publishing...'}</button>
       </PostForm>
     </Wrapper>
   );

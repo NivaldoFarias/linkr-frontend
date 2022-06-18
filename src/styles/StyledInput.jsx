@@ -12,11 +12,11 @@ const InputGroup = styled.div`
 
     font-weight: 300;
     font-size: 1.2rem;
-    color: white;
+    color: ${({ theme }) => theme.colors.primary};
 
     border: none;
     background-color: transparent;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.tertiary};
   }
   input:hover {
     cursor: text;
@@ -32,7 +32,7 @@ const InputGroup = styled.div`
     font-size: 1rem;
     font-weight: 300;
 
-    color: white;
+    color: ${({ theme }) => theme.colors.primary};
 
     pointer-events: none;
     transition: 0.2s ease all;
@@ -46,7 +46,7 @@ const InputGroup = styled.div`
   }
   input #placeholder {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: white !important;
+    -webkit-text-fill-color: ${({ theme }) => theme.colors.primary} !important;
   }
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -54,7 +54,7 @@ const InputGroup = styled.div`
   input:-webkit-autofill:active,
   input:-webkit-autofill:first-line {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: white !important;
+    -webkit-text-fill-color: ${({ theme }) => theme.colors.primary} !important;
   }
   /* BOTTOM BARS ================================= */
   .bar {

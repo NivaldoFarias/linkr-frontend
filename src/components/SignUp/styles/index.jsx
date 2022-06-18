@@ -6,7 +6,7 @@ const StyledPage = styled.section`
   height: 100%;
   width: 100%;
 
-  background-color: ${({ theme }) => theme.colors.foreground};
+  background-color: ${({ theme }) => theme.colors.altTertiary};
 
   .signup-form {
     ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '40px')}

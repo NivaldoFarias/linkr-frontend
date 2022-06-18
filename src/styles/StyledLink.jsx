@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const StyledLink = styled(Link)`
   ${({ theme }) => theme.mixins.flexbox('initial', 'center', 'center', 'initial')};
 
-  color: white;
+  color: ${({ theme }) => theme.colors.secondary};
   font-size: 0.8rem;
   font-family: ${({ theme }) => theme.fonts.primary};
 

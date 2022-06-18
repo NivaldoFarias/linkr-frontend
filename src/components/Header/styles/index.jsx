@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.main`
+export const Wrapper = styled.header`
   height: 72px;
   width: 100%;
   ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
