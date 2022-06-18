@@ -147,7 +147,7 @@ export default function Post(props) {
               <div className='link-info__url'>{post.url}</div>
             </div>
             <div className='link-image'>
-              <img src={post.urlPictureUrl} alt='' />
+              <img src={post.urlPicture} alt='' />
             </div>
           </div>
         </a>

@@ -55,8 +55,9 @@ const PostContainer = styled.div`
     }
   }
   .right-container {
-    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
+    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
     height: 100%;
+    width: 100%;
 
     .delete-post {
       ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
@@ -107,6 +108,8 @@ const PostContainer = styled.div`
     .link {
       text-decoration: none;
       cursor: pointer !important;
+      width: 100%;
+      height: 155px;
 
       &__container {
         ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
@@ -158,8 +161,11 @@ const PostContainer = styled.div`
           }
         }
         .link-image {
-          ${({ theme }) => theme.mixins.flexbox('column', 'column', 'center', 'initial')};
-          max-width: 155px;
+          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
+
+          flex: 0 0 auto;
+
+          width: 155px;
           height: 100%;
 
           overflow: hidden;
@@ -169,7 +175,7 @@ const PostContainer = styled.div`
           > img {
             width: 100%;
             height: 100%;
-            object-fit: scale-down;
+            object-fit: cover;
           }
         }
       }
