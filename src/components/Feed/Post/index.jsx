@@ -1,7 +1,8 @@
+import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import ReactHashtag from '@mdnm/react-hashtag';
+import Modal from 'react-modal';
 
 import PostContainer from './styles/';
 import DataContext from '../../../hooks/DataContext';
@@ -11,6 +12,8 @@ export default function Post(props) {
   const { token } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
+
+  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,6 +60,20 @@ export default function Post(props) {
     }
   }
 
+  async function handleDeletePost() {
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    const url = `/posts/${post.id}`;
+    try {
+      const { data } = await Axios.delete(url, config);
+
+      //IMPLEMENTS DELETE-ROUTE
+
+      // setPost(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <PostContainer key={post.id}>
       <div className='left-container'>
@@ -75,9 +92,42 @@ export default function Post(props) {
         </div>
       </div>
       <div className='right-container'>
+        <div className='delete-post'>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={{
+              content: {
+                top: '50%',
+                left: '50%',
+                right: '0',
+                bottom: '0',
+                margin: '0 auto',
+                transform: 'translate(-50%, -50%)',
+                background: `#333333`,
+                borderRadius: '50px',
+                padding: '38px 44px 65px',
+                maxWidth: '430px',
+              },
+            }}
+            ariaHideApp={false}
+          >
+            <div className='modal-container'>
+              <h2>Are you sure you want to delete this post?</h2>
+              <div>
+                <button onClick={closeModal}>No, go back</button>
+                <button onClick={handleDeletePost}>Yes, delete it</button>
+              </div>
+            </div>
+          </Modal>
+        </div>
         <div className='post-header'>
-          <div className='post-header__username' onClick={goToUserPage}>
-            {post.username}
+          <div className='post-header__username'>
+            <p onClick={goToUserPage}>{post.username}</p>
+            <div className='actions-container'>
+              <AiFillEdit />
+              <AiFillDelete onClick={openModal} />
+            </div>
           </div>
           <div className='post-header__text'>
             <ReactHashtag
@@ -111,6 +161,14 @@ export default function Post(props) {
       </div>
     </PostContainer>
   );
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   function processLikesLabel() {
     return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
