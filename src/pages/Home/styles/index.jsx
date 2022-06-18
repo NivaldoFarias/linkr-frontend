@@ -6,8 +6,8 @@ const StyledHome = styled.div`
   height: 100vh;
   width: 100vw;
 
-  color: white;
-  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.altTertiary};
+  background-color: ${({ theme }) => theme.colors.primary};
 
   header {
     ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
@@ -15,11 +15,21 @@ const StyledHome = styled.div`
     height: fit-content;
     width: 100%;
 
-    .logotype {
-      font-size: 5.7rem;
-      line-height: 0.8;
-      letter-spacing: 4px;
-      font-family: ${({ theme }) => theme.fonts.logotype};
+    .logo-container {
+      ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
+      height: fit-content;
+      width: 100%;
+      max-width: 305px;
+
+      &__text {
+        font-size: 5.5rem;
+        line-height: 0.8;
+        letter-spacing: 4px;
+        font-family: ${({ theme }) => theme.fonts.logotype};
+      }
+      &__logo {
+        width: 80px;
+      }
     }
     .motto {
       max-width: 290px;
@@ -33,17 +43,29 @@ const StyledHome = styled.div`
     }
   }
 
+  @media screen and (min-width: 750px) and (max-width: 950px) {
+    padding-left: 20px !important;
+  }
   @media screen and (min-width: 750px) {
     ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
 
     padding-left: 60px;
 
     header {
-      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '10px')};
       padding-bottom: 200px;
 
-      .logotype {
-        font-size: 8rem;
+      .logo-container {
+        max-width: 430px;
+
+        &__text {
+          padding-bottom: 10px;
+          align-self: flex-end;
+          font-size: 8rem;
+        }
+        &__logo {
+          width: 140px;
+        }
       }
       .motto {
         max-width: 430px;
