@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import NewPost from './NewPost';
-import Post from './Post';
+import Post from './Post/ index';
 
 const Wrapper = styled.div`
   width: 100%;
