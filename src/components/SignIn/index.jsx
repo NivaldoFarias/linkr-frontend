@@ -5,12 +5,9 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import Axios from '../../blueprints';
 import DataContext from './../../hooks/DataContext';
-import getRandomInt from '../../utils/getRandomInt.js';
+import getRandomInt from '../../utils/getRandomInt';
 
-import StyledLoadingDots from '../../styles/StyledLoadingDots.jsx';
-import StyledInput from '../../styles/StyledInput.jsx';
-import StyledLink from '../../styles/StyledLink.jsx';
-import StyledButton from '../../styles/StyledButton.jsx';
+import { StyledLoadingDots, StyledInput, StyledLink, StyledButton } from './../../styles/';
 import StyledPage from './styles';
 
 function SignIn() {

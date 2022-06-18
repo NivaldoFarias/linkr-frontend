@@ -7,7 +7,7 @@ const StyledButton = styled.button`
   height: fit-content;
   width: 100%;
 
-  color: white;
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 2em;
   font-weight: 500;
   letter-spacing: 2px;
