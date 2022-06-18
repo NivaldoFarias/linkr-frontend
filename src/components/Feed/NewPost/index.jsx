@@ -3,17 +3,19 @@ import DataContext from '../../../hooks/DataContext';
 
 import { Wrapper, PostForm } from './styles/';
 import Axios from '../../../blueprints';
-
-const mockAvatar = 'https://avatars.githubusercontent.com/u/90518458?v=4';
+import fallbackAvatar from '../../../assets/fallback-avatar.png';
 
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
+  const [fieldVisibility, setFieldVisibility] = useState(false);
+
   const { user, token } = useContext(DataContext);
-  //const navigate = useNavigate();
 
   async function handleSendNewPost(e) {
     e.preventDefault();
+    setFieldVisibility(true);
+
     try {
       await Axios.post(
         '/posts/',
@@ -21,17 +23,19 @@ export default function NewPost({ updatePostsFunction }) {
         { headers: { Authorization: `Bearer ${token}` } },
       );
       updatePostsFunction();
+      setFieldVisibility(false);
     } catch (e) {
       console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
       setDescription('');
-      alert('Não foi posssivel criar um novo post');
+      alert('Houve um erro ao publicar seu link');
+      setFieldVisibility(false);
     }
   }
 
   return (
     <Wrapper>
-      <img src={user?.imageUrl || mockAvatar} alt='user'></img>
+      <img src={user?.imageUrl || fallbackAvatar} alt='user'></img>
       <PostForm onSubmit={handleSendNewPost}>
         <h3>What are you going to share today?</h3>
         <input
@@ -43,6 +47,7 @@ export default function NewPost({ updatePostsFunction }) {
             setUrl(e.target.value);
           }}
           required
+          disabled={fieldVisibility}
         />
         <input
           type='text'
@@ -53,9 +58,10 @@ export default function NewPost({ updatePostsFunction }) {
             setDescription(e.target.value);
           }}
           required
+          disabled={fieldVisibility}
         />
 
-        <button>Publish</button>
+        <button disabled={fieldVisibility}>{!fieldVisibility ? 'Publish' : 'Publishing...'}</button>
       </PostForm>
     </Wrapper>
   );
