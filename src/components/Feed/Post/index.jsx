@@ -71,8 +71,26 @@ export default function Post(props) {
     }
   }
 
-  function likesLabel (posts){
-    return 'hello world'
+  function likesLabel (){
+    const { userHasLiked, totalLikes, usersWhoLiked } = post;
+    
+    if(userHasLiked){
+      if(totalLikes === 1){
+        return "You"
+    } else if(totalLikes < 3){
+        return `You and ${usersWhoLiked[0].username}`
+    } else if(totalLikes > 2){
+        return `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
+    }
+  } else {
+    if(totalLikes === 1){
+      return `${usersWhoLiked[0].username}`
+    } else if(totalLikes === 2){
+      return `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`
+    } else if(totalLikes > 2){
+      return `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`
+    }
+  }
   }
 
   return (
@@ -87,7 +105,7 @@ export default function Post(props) {
         />
         <div className='left-container__likes' onClick={likeButtonClicked}>
           {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
-          <div data-tip={likesLabel(post)} className='left-container__likes__label'>
+          <div data-tip={likesLabel()} className='left-container__likes__label'>
             <strong>{processLikes()}</strong>
             {processLikesLabel()}
           </div>
