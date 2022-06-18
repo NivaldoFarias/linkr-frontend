@@ -3,6 +3,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
+import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
 
 import PostContainer from './styles/';
@@ -70,8 +71,13 @@ export default function Post(props) {
     }
   }
 
+  function likesLabel (posts){
+    return 'hello world'
+  }
+
   return (
     <PostContainer key={post.id}>
+      <ReactTooltip type="light" place="bottom" effect="solid"/>
       <div className='left-container'>
         <img
           className='left-container__image'
@@ -81,7 +87,7 @@ export default function Post(props) {
         />
         <div className='left-container__likes' onClick={likeButtonClicked}>
           {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
-          <div className='left-container__likes__label'>
+          <div data-tip={likesLabel(post)} className='left-container__likes__label'>
             <strong>{processLikes()}</strong>
             {processLikesLabel()}
           </div>
