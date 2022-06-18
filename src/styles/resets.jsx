@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
-const StyledResets = createGlobalStyle`
+const StyleResets = createGlobalStyle`
   ${reset}
   
   * {
@@ -38,4 +38,4 @@ const StyledResets = createGlobalStyle`
   }
 `;
 
-export default StyledResets;
+export default StyleResets;

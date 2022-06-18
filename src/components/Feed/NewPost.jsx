@@ -1,8 +1,9 @@
 import { useContext, useState } from 'react';
-import DataContext from '../../../hooks/DataContext';
+//import { useNavigate } from 'react-router-dom';
+import DataContext from '../../hooks/DataContext';
 
-import { Wrapper, PostForm } from './styles/';
-import Axios from '../../../blueprints';
+import { Wrapper, PostForm } from './styles';
+import Axios from '../../blueprints';
 
 const mockAvatar = 'https://avatars.githubusercontent.com/u/90518458?v=4';
 

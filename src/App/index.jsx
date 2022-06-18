@@ -6,7 +6,8 @@ import { DataProvider } from './../hooks/DataContext';
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
 
-import { theme, StyledResets } from './../styles/';
+import theme from '../styles/theme';
+import StyleResets from '../styles/resets';
 
 import Home from '../pages/Home';
 import TimelinePage from '../pages/TimelinePage';
@@ -19,7 +20,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <DataProvider>
         <BrowserRouter>
-          <StyledResets />
+          <StyleResets />
           <Routes>
             <Route path='/' element={<Home />}>
               <Route index element={<SignIn />} />
