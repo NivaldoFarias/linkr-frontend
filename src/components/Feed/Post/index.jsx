@@ -69,9 +69,8 @@ export default function Post(props) {
         <div className='left-container__likes' hasLiked={isLiked} onClick={likeButtonClicked}>
           {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
           <div className='left-container__likes__label'>
-            {post.totalLikes > 0
-              ? `${post.totalLikes} like${post.totalLikes === 1 ? '' : 's'}`
-              : ''}
+            <strong>{processLikes()}</strong>
+            {processLikesLabel()}
           </div>
         </div>
       </div>
@@ -112,4 +111,12 @@ export default function Post(props) {
       </div>
     </PostContainer>
   );
+
+  function processLikesLabel() {
+    return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
+  }
+
+  function processLikes() {
+    return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
+  }
 }

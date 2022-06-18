@@ -21,7 +21,7 @@ const PostContainer = styled.div`
       cursor: pointer;
     }
     &__likes {
-      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '4px')};
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '8px')};
 
       > svg {
         color: white;
@@ -36,13 +36,20 @@ const PostContainer = styled.div`
         }
       }
       &__label {
-        font-family: Lato;
-        font-size: 11px;
-        font-weight: 400;
-        line-height: 13px;
-        letter-spacing: 0em;
-        text-align: center;
+        width: 100%;
+        max-width: 80px;
+
         color: white;
+        font-weight: 400;
+        font-size: 0.7rem;
+        font-family: ${({ theme }) => theme.fonts.secondary};
+
+        text-align: center;
+        word-spacing: -1px;
+
+        strong {
+          font-weight: 700;
+        }
       }
     }
   }
@@ -79,47 +86,57 @@ const PostContainer = styled.div`
 
       &__container {
         ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
-        width: 100%;
-        height: 155px;
-        border: ${({ theme }) => theme.styles.defaultBorder};
-        border-radius: 11px;
         position: relative;
-        overflow: hidden;
+        min-height: 155px;
+        height: 100%;
+        width: 100%;
 
         cursor: pointer;
+        overflow: hidden;
+        border-radius: 11px;
+        border: ${({ theme }) => theme.styles.defaultBorder};
 
         :hover {
           background-color: rgba(255, 255, 255, 0.05);
         }
         .link-info {
-          padding: 16px;
-          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', 'initial')};
+          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', '7px')};
+          padding: 20px 16px 14px;
           height: 100%;
-          cursor: pointer !important;
+          max-width: 350px;
 
+          cursor: pointer;
+
+          * {
+            pointer-events: none;
+          }
           &__title {
-            font-size: 17px;
             color: #cecece;
+            font-size: 1rem;
+            line-height: 1.2rem;
             font-family: ${({ theme }) => theme.fonts.secondary};
           }
           &__description {
-            font-size: 12px;
             color: #9b9595;
+            font-size: 0.7rem;
             font-family: ${({ theme }) => theme.fonts.secondary};
-            margin-top: 5px;
+            user-select: auto;
           }
           &__url {
-            font-size: 12px;
-            color: #cecece;
-            font-family: ${({ theme }) => theme.fonts.secondary};
-            margin-top: 13px;
+            margin-top: 6px;
             width: 100%;
+
+            color: #cecece;
+            font-size: 0.6rem;
+            font-family: ${({ theme }) => theme.fonts.secondary};
+
+            user-select: auto;
             word-break: break-all;
           }
         }
         .link-image {
           ${({ theme }) => theme.mixins.flexbox('column', 'column', 'center', 'initial')};
-          width: 155px;
+          max-width: 155px;
           height: 100%;
 
           overflow: hidden;
@@ -129,7 +146,7 @@ const PostContainer = styled.div`
           > img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: scale-down;
           }
         }
       }

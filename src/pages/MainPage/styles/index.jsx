@@ -20,5 +20,5 @@ export const Feed = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', '15px')};
   height: 100%;
   width: 100%;
-  max-width: 611px;
+  max-width: 625px;
 `;

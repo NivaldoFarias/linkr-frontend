@@ -11,7 +11,7 @@ export const mockPosts = [
     username: 'Juvenal',
     userPictureUrl:
       'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
-    numberOfLikes: 12,
+    totalLikes: 12,
     isLiked: false,
     likesLabel: 'Ricardo e Maria +56 pessoas',
   },
@@ -27,7 +27,7 @@ export const mockPosts = [
     username: 'Juvenal',
     userPictureUrl:
       'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
-    numberOfLikes: 12,
+    totalLikes: 1,
     isLiked: false,
     likesLabel: 'Ricardo e Maria +56 pessoas',
   },
@@ -43,7 +43,7 @@ export const mockPosts = [
     username: 'Juvencio',
     userPictureUrl:
       'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
-    numberOfLikes: 12,
+    totalLikes: 2,
     isLiked: false,
     likesLabel: 'Ricardo e Maria +56 pessoas',
   },
@@ -59,7 +59,7 @@ export const mockPosts = [
     username: 'Jussara',
     userPictureUrl:
       'https://play-lh.googleusercontent.com/8s3MKbQ-ymtRXFsYr8hrXdBDFJDfOVlQhtk6dKA4rwjlL2EOtq5d5tDscL8gOV2v_g=w526-h296-rw',
-    numberOfLikes: 12,
+    totalLikes: 0,
     isLiked: false,
     likesLabel: 'Ricardo e Maria +56 pessoas',
   },
