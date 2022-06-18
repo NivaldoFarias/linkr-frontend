@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Axios from '../../blueprints';
 import Feed from '../../components/Feed';
 import DataContext from '../../hooks/DataContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function TimelinePage() {
   const [posts, setPosts] = useState([]);
@@ -22,10 +23,19 @@ export default function TimelinePage() {
     promise.then(({ data }) => {
       setPosts(data);
     });
+    promise.catch(function(error){
+      toast.error('An error occured while trying to fetch the posts, please refresh the page')
+      console.log(error);
+    });
 
     return;
   }
   return (
+    <>
+    <Toaster
+      position="top-right"
+      reverseOrder={false}
+    />
     <Feed
       title={`timeline`}
       posts={posts}
@@ -33,5 +43,6 @@ export default function TimelinePage() {
       userThumbnail={false}
       updatePostsFunction={updateTimeline}
     />
+    </>
   );
 }
