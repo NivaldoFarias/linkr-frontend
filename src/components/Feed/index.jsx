@@ -1,6 +1,7 @@
 import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/';
 import NewPost from './NewPost/';
 import Post from './Post/';
+import EmptyPosts from './EmptyPosts/';
 
 export default function Feed({ title, posts, canCreatePost, userThumbnail, updatePostsFunction }) {
   const postsElements = posts.map((post, index) => {
@@ -15,7 +16,7 @@ export default function Feed({ title, posts, canCreatePost, userThumbnail, updat
       </Header>
       <Content>
         {canCreatePost ? <NewPost updatePostsFunction={updatePostsFunction} /> : <></>}
-        <Posts>{posts.length > 0 ? postsElements : <h1>Não tem posts ainda</h1>}</Posts>
+        <Posts>{posts.length > 0 ? postsElements : <EmptyPosts/>}</Posts>
       </Content>
     </Wrapper>
   );

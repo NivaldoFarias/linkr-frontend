@@ -3,8 +3,6 @@ import Axios from '../../blueprints';
 import Feed from '../../components/Feed';
 import DataContext from '../../hooks/DataContext';
 
-//import { mockPosts } from '../../mocks/Posts';
-
 export default function TimelinePage() {
   const [posts, setPosts] = useState([]);
   const { token } = useContext(DataContext);
