@@ -18,6 +18,8 @@ export default function Post(props) {
   const [post, setPost] = useState(props.post);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [textEdit, setTextEdit] = useState(post.text);
+
   const [editText, setEditText] = useState(props.post.text || '');
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
@@ -84,6 +86,35 @@ export default function Post(props) {
     } catch (err) {
       handleError('Unable to delete post');
       setIsOpen(false);
+    }
+  }
+
+  async function handleEditPost() {
+    const url = `/posts/${post.id}`;
+    console.log('hello', textEdit);
+    try {
+      await Axios.patch(url, { text: textEdit }, CONFIG);
+      props.updatePostsFunction();
+      setIsEditing(false);
+    } catch (err) {
+      alert('Não foi possivel editar!');
+      console.log(err);
+    }
+  }
+
+  async function handleHableEdit() {
+    setIsEditing(!isEditing);
+    setTextEdit(post.text);
+  }
+
+  function keyFunctions(e) {
+    if (e.keyCode === 27) {
+      setIsEditing(false);
+      setTextEdit(post.text);
+    }
+
+    if (e.key === 'Enter') {
+      handleEditPost();
     }
   }
 

@@ -64,7 +64,7 @@ const PostContainer = styled.div`
       width: 100%;
     }
     .post-header {
-      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '12px')};
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex', '12px')};
       position: relative;
 
       margin-bottom: 16px;
