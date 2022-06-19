@@ -24,6 +24,8 @@ export default function NewPost({ updatePostsFunction }) {
       );
       updatePostsFunction();
       setFieldVisibility(false);
+      setUrl('');
+      setDescription('');
     } catch (e) {
       console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
