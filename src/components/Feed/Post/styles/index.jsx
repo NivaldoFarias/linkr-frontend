@@ -104,7 +104,18 @@ const PostContainer = styled.div`
           cursor: pointer;
         }
       }
+      &__edit {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.colors.editPost};
+        font-family: ${({ theme }) => theme.fonts.secondary};
+        width: 100%;
+        border-radius: 7px;
+        padding: 8px;
+        border: none;
+        font-weight: 400;
+      }
     }
+
     .link {
       text-decoration: none;
       cursor: pointer !important;

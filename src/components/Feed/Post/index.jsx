@@ -57,7 +57,6 @@ export default function Post(props) {
     const url = `/posts/${post.id}`;
     try {
       const { data } = await Axios.get(url, CONFIG);
-      await updatePostData();
       setPost(data);
     } catch (err) {
       handleError(err);
@@ -67,7 +66,7 @@ export default function Post(props) {
   async function editPostData() {
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.put(url, { text: editText }, CONFIG);
+      await Axios.put(url, { text: editText }, CONFIG);
     } catch (err) {
       handleError(err);
     }
@@ -237,9 +236,13 @@ export default function Post(props) {
 
   async function handleEditPostButtonClicked() {
     if (isEditing) {
-      await editPostData();
-      setIsEditing(false);
-      await updatePostData();
+      try {
+        await editPostData();
+        await updatePostData();
+        setIsEditing(false);
+      } catch (error) {
+        handleError(error);
+      }
     } else {
       setIsEditing(true);
     }
