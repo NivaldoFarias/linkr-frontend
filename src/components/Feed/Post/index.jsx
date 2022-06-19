@@ -15,7 +15,6 @@ export default function Post(props) {
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
   const [modalIsOpen, setIsOpen] = useState(false);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(props.post.text);
 
@@ -54,8 +53,8 @@ export default function Post(props) {
   async function updatePostData() {
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.get(url, CONFIG);
-      console.log(data);
+      const {data} = await Axios.get(url, CONFIG);
+      await updatePostData();
       setPost(data);
     } catch (err) {
       console.log(err);
@@ -78,10 +77,12 @@ export default function Post(props) {
   async function handleDeletePost() {
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.delete(url, CONFIG);
-      //IMPLEMENTS DELETE-ROUTE
-      // setPost(data);
+      await Axios.delete(url, CONFIG);
+      setIsOpen(false);
+      props.updatePostsFunction();
     } catch (err) {
+      setIsOpen(false);
+      alert("Não foi possivel excluir o post.");
       console.log(err);
     }
   }
