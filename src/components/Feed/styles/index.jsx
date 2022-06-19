@@ -13,18 +13,18 @@ const Header = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: ${({theme}) => theme.fonts.primary};
+  font-family: ${({ theme }) => theme.fonts.primary};
   font-size: 43px;
   font-weight: 700;
   line-height: 64px;
-  color: ${({theme}) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 const UserThumbnail = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: ${({theme}) => theme.colors.thumbnailBackground};
+  background-color: ${({ theme }) => theme.colors.thumbnailBackground};
   ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '0px')};
   margin-right: 20px;
   object-fit: cover;
@@ -35,7 +35,7 @@ const Content = styled.div`
 `;
 
 const Posts = styled.div`
-${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '16px')};
+  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '16px')};
 `;
 
 export { Wrapper, Header, Title, UserThumbnail, Content, Posts };

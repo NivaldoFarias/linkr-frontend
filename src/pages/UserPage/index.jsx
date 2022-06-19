@@ -12,19 +12,21 @@ export default function UserPage() {
   const { token } = useContext(DataContext);
 
   const config = useMemo(() => {
-    return({
+    return {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
-  },[token]);
+    };
+  }, [token]);
 
   useEffect(() => {
     const promise = Axios.get(`/users/${userId}/posts`, config);
     promise.then(async ({ data }) => {
-      const result = await Promise.all(data.posts.map(async (post) => {
-        return({...post, userPictureUrl: data.imageUrl, userId}); 
-      }));
+      const result = await Promise.all(
+        data.posts.map(async (post) => {
+          return { ...post, userPictureUrl: data.imageUrl, userId };
+        }),
+      );
       setUserName(data.username);
       setPicture(data.imageUrl);
       setPosts(result);
