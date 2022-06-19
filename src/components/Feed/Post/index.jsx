@@ -14,9 +14,9 @@ export default function Post(props) {
   const { token } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
-  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,8 +50,8 @@ export default function Post(props) {
   async function updatePostData() {
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.get(url, CONFIG);
-      console.log(data);
+      const {data} = await Axios.get(url, CONFIG);
+      await updatePostData();
       setPost(data);
     } catch (err) {
       console.log(err);
@@ -61,12 +61,13 @@ export default function Post(props) {
   async function handleDeletePost() {
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.delete(url, CONFIG);
+      await Axios.delete(url, CONFIG);
+      setIsOpen(false);
+      props.updatePostsFunction();
 
-      //IMPLEMENTS DELETE-ROUTE
-
-      // setPost(data);
     } catch (err) {
+      setIsOpen(false);
+      alert("Não foi possivel excluir o post.");
       console.log(err);
     }
   }
