@@ -1,10 +1,12 @@
-import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import { IoCloseSharp } from 'react-icons/io5';
 import { useContext, useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
 import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
+
+import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { IoCloseSharp } from 'react-icons/io5';
 
 import PostContainer from './styles/';
 import DataContext from '../../../hooks/DataContext';
@@ -16,7 +18,7 @@ export default function Post(props) {
   const [post, setPost] = useState(props.post);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(props.post.text);
+  const [editText, setEditText] = useState(props.post.text || '');
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
   const navigate = useNavigate();
@@ -37,7 +39,6 @@ export default function Post(props) {
   }
 
   async function likeButtonClicked() {
-    console.log('likeButtonClicked');
     const tryToLike = !isLiked;
     setIsLiked(tryToLike);
 
@@ -46,18 +47,18 @@ export default function Post(props) {
       await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
   async function updatePostData() {
     const url = `/posts/${post.id}`;
     try {
-      const {data} = await Axios.get(url, CONFIG);
+      const { data } = await Axios.get(url, CONFIG);
       await updatePostData();
       setPost(data);
     } catch (err) {
-      console.log(err);
+      handleError(err);
     }
   }
 
@@ -66,11 +67,12 @@ export default function Post(props) {
     try {
       const { data } = await Axios.put(url, { text: editText }, CONFIG);
     } catch (err) {
-      console.log(err);
+      handleError(err);
     }
   }
 
   function handleEditPostInputChange(e) {
+    e.preventDefault();
     setEditText(e.target.value);
   }
 
@@ -81,10 +83,23 @@ export default function Post(props) {
       setIsOpen(false);
       props.updatePostsFunction();
     } catch (err) {
+      handleError('Unable to delete post');
       setIsOpen(false);
-      alert("Não foi possivel excluir o post.");
-      console.log(err);
     }
+  }
+
+  function handleError(error) {
+    confirmAlert({
+      message: `${
+        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
+      }. Please try again.`,
+      buttons: [
+        {
+          label: 'OK',
+          onClick: () => null,
+        },
+      ],
+    });
   }
 
   function likesLabel() {
@@ -141,9 +156,11 @@ export default function Post(props) {
   );
 
   const postTextEdit = (
-    <textarea className='post-header__edit' onChange={handleEditPostInputChange}>
-      {editText}
-    </textarea>
+    <textarea
+      className='post-header__edit'
+      onChange={handleEditPostInputChange}
+      value={editText}
+    ></textarea>
   );
 
   const postUrl = (
