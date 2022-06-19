@@ -19,7 +19,7 @@ export default function Post(props) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [textEdit, setTextEdit] = useState(post.text);
-  
+
   const [editText, setEditText] = useState(props.post.text || '');
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
@@ -89,15 +89,15 @@ export default function Post(props) {
     }
   }
 
-  async function handleEditPost(){
+  async function handleEditPost() {
     const url = `/posts/${post.id}`;
-    console.log("hello",textEdit);
+    console.log('hello', textEdit);
     try {
-      await Axios.patch(url, {text: textEdit }, CONFIG);
+      await Axios.patch(url, { text: textEdit }, CONFIG);
       props.updatePostsFunction();
       setIsEditing(false);
     } catch (err) {
-      alert("Não foi possivel editar!");
+      alert('Não foi possivel editar!');
       console.log(err);
     }
   }
@@ -107,14 +107,14 @@ export default function Post(props) {
     setTextEdit(post.text);
   }
 
-  function keyFunctions(e){
-    if(e.keyCode === 27){
+  function keyFunctions(e) {
+    if (e.keyCode === 27) {
       setIsEditing(false);
       setTextEdit(post.text);
     }
 
-    if(e.key === 'Enter') {
-      handleEditPost()
+    if (e.key === 'Enter') {
+      handleEditPost();
     }
   }
 
@@ -273,44 +273,6 @@ export default function Post(props) {
             ) : (
               <></>
             )}
-          </div>
-          <div className='post-header__text'>
-            { isEditing === true
-              ? <input 
-                  value={textEdit} 
-                  type='textarea'
-                  name='url_share'
-                  onChange={(e) => {
-                    setTextEdit(e.target.value);
-                  }}
-                  onKeyDown={keyFunctions}
-                  required
-                  style={{
-                    display: 'flex',
-                    flex: '1',
-                    flexWrap: 'wrap',
-                    padding: "4px 8px",
-                    minWidth: '100%',
-                    border: 'none',
-                    borderRadius: '4px'
-                  }}
-                />
-              :<ReactHashtag
-                renderHashtag={(val) => (
-                  <div
-                    className='hashtag'
-                    onClick={() => {
-                      goToHashtagPage(val);
-                    }}
-                  >
-                    {val}
-                  </div>
-                )}
-              >
-                {post.text}
-              </ReactHashtag>
-            }
-
           </div>
           {isEditing ? postTextEdit : postText}
         </div>
