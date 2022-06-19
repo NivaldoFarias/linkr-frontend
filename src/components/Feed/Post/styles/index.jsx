@@ -6,7 +6,7 @@ const PostContainer = styled.div`
   width: 100%;
 
   border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.primary};
 
   .left-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};

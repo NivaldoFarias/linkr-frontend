@@ -7,6 +7,7 @@ import fallbackAvatar from '../../../assets/fallback-avatar.png';
 
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
+  const [btnClick, setBtnClick] = useState(false);
   const [description, setDescription] = useState('');
   const [fieldVisibility, setFieldVisibility] = useState(false);
 
@@ -15,7 +16,6 @@ export default function NewPost({ updatePostsFunction }) {
   async function handleSendNewPost(e) {
     e.preventDefault();
     setFieldVisibility(true);
-
     try {
       await Axios.post(
         '/posts/',
@@ -63,7 +63,13 @@ export default function NewPost({ updatePostsFunction }) {
           disabled={fieldVisibility}
         />
 
-        <button disabled={fieldVisibility}>{!fieldVisibility ? 'Publish' : 'Publishing...'}</button>
+        <button
+          className={btnClick ? 'clicked' : ''}
+          onClick={() => setBtnClick(!btnClick)}
+          disabled={fieldVisibility}
+        >
+          {!fieldVisibility ? 'Publish' : 'Publishing...'}
+        </button>
       </PostForm>
     </Wrapper>
   );

@@ -5,7 +5,7 @@ export const Wrapper = styled.header`
   width: 100%;
   ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
   padding: 10px 20px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.primary};
   & {
     color: white;
   }

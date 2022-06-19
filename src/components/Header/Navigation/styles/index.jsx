@@ -32,6 +32,7 @@ const StyledNav = styled.nav`
     height: fit-content;
     width: 100%;
 
+    color: ${({ theme }) => theme.colors.primary};
     background-color: transparent;
 
     > * {

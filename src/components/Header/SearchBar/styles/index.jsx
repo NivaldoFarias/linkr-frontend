@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 export const StyledDiv = styled.div`
-  background: ${({ theme }) => theme.colors.backgroundGray};
+  background-color: ${({ theme }) => theme.colors.backgroundGray};
   border-radius: ${({ theme }) => theme.styles.borderRadius};
   position: relative;
   width: 40%;
   .magnifying-glass {
     ${({ theme }) => theme.mixins.position('absolute', '11px', '15px', 'auto', 'auto')};
-    color: ${({ theme }) => theme.colors.magnifyingIcon};
-    width: 21px;
-    height: 21px;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 1.5rem;
     z-index: 3;
   }
 
@@ -20,11 +19,11 @@ export const StyledDiv = styled.div`
 
 export const StyledInput = styled.input`
   ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.altTertiary};
   height: 45px;
   border-radius: ${({ theme }) => theme.styles.borderRadius};
   width: 100%;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.primary};
   z-index: 1;
   border: none;
   text-indent: 17px;
