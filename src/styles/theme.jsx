@@ -16,6 +16,7 @@ const theme = {
 
     text: 'rgb(112, 112, 112)',
     post: 'lightgray',
+    editPost: 'rgb(76, 76, 76)',
     btnPrimary: 'rgb(24, 119, 242)',
     inputBackground: 'rgb(239, 239, 239)',
     background: 'rgb(21, 21, 21)',
