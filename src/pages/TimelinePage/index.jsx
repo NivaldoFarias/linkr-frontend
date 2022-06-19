@@ -20,14 +20,13 @@ export default function TimelinePage() {
         Authorization: `Bearer ${token}`,
       },
     };
-
     const promise = Axios.get(`/timeline`, config);
     promise.then(({ data }) => {
       setPosts(data);
       setLoading(false);
     });
-    promise.catch(function(error){
-      toast.error('An error occured while trying to fetch the posts, please refresh the page')
+    promise.catch(function (error) {
+      toast.error('An error occured while trying to fetch the posts, please refresh the page');
       console.log(error);
     });
 
@@ -35,18 +34,18 @@ export default function TimelinePage() {
   }
   return (
     <>
-    <Toaster position="top-right" reverseOrder={false}/>
-    {loading 
-      ?
-      <Loading />
-      :
-      <Feed
-      title={`timeline`}
-      posts={posts}
-      canCreatePost={true}
-      userThumbnail={false}
-      updatePostsFunction={updateTimeline}
-    />}
+      <Toaster position='top-right' reverseOrder={false} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Feed
+          title={`timeline`}
+          posts={posts}
+          canCreatePost={true}
+          userThumbnail={false}
+          updatePostsFunction={updateTimeline}
+        />
+      )}
     </>
   );
 }
