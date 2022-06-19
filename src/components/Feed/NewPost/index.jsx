@@ -13,28 +13,6 @@ export default function NewPost({ updatePostsFunction }) {
 
   const { user, token } = useContext(DataContext);
 
-  async function handleSendNewPost(e) {
-    e.preventDefault();
-    setFieldVisibility(true);
-    try {
-      await Axios.post(
-        '/posts/',
-        { url, text: description },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      updatePostsFunction();
-      setFieldVisibility(false);
-      setUrl('');
-      setDescription('');
-    } catch (e) {
-      console.log('Não foi posssivel criar um novo post', e);
-      setUrl('');
-      setDescription('');
-      alert('Houve um erro ao publicar seu link');
-      setFieldVisibility(false);
-    }
-  }
-
   return (
     <Wrapper>
       <img src={user?.imageUrl || fallbackAvatar} alt='user'></img>
@@ -65,7 +43,8 @@ export default function NewPost({ updatePostsFunction }) {
 
         <button
           className={btnClick ? 'clicked' : ''}
-          onClick={() => setBtnClick(!btnClick)}
+          onClick={toggleBtn}
+          type='submit'
           disabled={fieldVisibility}
         >
           {!fieldVisibility ? 'Publish' : 'Publishing...'}
@@ -73,4 +52,34 @@ export default function NewPost({ updatePostsFunction }) {
       </PostForm>
     </Wrapper>
   );
+
+  async function handleSendNewPost(e) {
+    e.preventDefault();
+    setFieldVisibility(true);
+    try {
+      await Axios.post(
+        '/posts/',
+        { url, text: description },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      updatePostsFunction();
+      setFieldVisibility(false);
+      setUrl('');
+      setDescription('');
+    } catch (e) {
+      console.log('Não foi posssivel criar um novo post', e);
+      setUrl('');
+      setDescription('');
+      alert('Houve um erro ao publicar seu link');
+      setFieldVisibility(false);
+    }
+  }
+
+  function toggleBtn() {
+    setBtnClick(true);
+
+    setTimeout(() => {
+      setBtnClick(false);
+    }, 200);
+  }
 }
