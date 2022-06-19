@@ -6,6 +6,7 @@ const PostContainer = styled.div`
   width: 100%;
 
   border-radius: 16px;
+  border: 1px solid ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.primary};
 
   .left-container {
@@ -14,12 +15,14 @@ const PostContainer = styled.div`
     width: 50px;
 
     &__image {
+      margin-bottom: 18px;
       width: 50px;
       height: 50px;
-      border-radius: 26.5px;
-      object-fit: cover;
-      margin-bottom: 18px;
       cursor: pointer;
+
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid ${({ theme }) => theme.colors.altTertiary};
     }
     &__likes {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '8px')};
@@ -40,7 +43,7 @@ const PostContainer = styled.div`
         width: 100%;
         max-width: 80px;
 
-        color: white;
+        color: ${({ theme }) => theme.colors.gradient};
         font-weight: 400;
         font-size: 0.7rem;
         font-family: ${({ theme }) => theme.fonts.secondary};
@@ -72,44 +75,47 @@ const PostContainer = styled.div`
 
       &__username {
         p {
-          font-size: 1.2rem;
-          color: #ffffff;
-          font-family: ${({ theme }) => theme.fonts.secondary};
           cursor: pointer;
-        }
-        .actions-container {
-          ${({ theme }) => theme.mixins.position('absolute', '10px', '15px', 'initial', 'initial')};
-          ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
-
-          font-size: 1rem;
-          color: white;
-
-          > svg {
-            cursor: pointer;
-
-            * {
-              pointer-events: none;
-            }
-          }
+          font-size: 1.3rem;
+          font-weight: 700;
+          color: ${({ theme }) => theme.colors.gradient};
+          font-family: ${({ theme }) => theme.fonts.secondary};
         }
       }
       &__text {
+        width: 100%;
         font-size: 1rem;
         color: ${({ theme }) => theme.colors.post};
         font-family: ${({ theme }) => theme.fonts.secondary};
-        width: 100%;
+
         .hashtag {
-          color: white;
+          color: ${({ theme }) => theme.colors.gradient};
           font-weight: bold;
           cursor: pointer;
         }
       }
+      .actions-container {
+        ${({ theme }) => theme.mixins.position('absolute', '10px', '15px', 'initial', 'initial')};
+        ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
+
+        font-size: 1rem;
+        color: ${({ theme }) => theme.colors.gradient};
+
+        > svg {
+          cursor: pointer;
+
+          * {
+            pointer-events: none;
+          }
+        }
+      }
     }
     .link {
-      text-decoration: none;
-      cursor: pointer !important;
-      width: 100%;
       height: 155px;
+      width: 100%;
+
+      cursor: pointer;
+      text-decoration: none;
 
       &__container {
         ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
@@ -120,14 +126,15 @@ const PostContainer = styled.div`
 
         cursor: pointer;
         overflow: hidden;
-        border-radius: 11px;
-        border: ${({ theme }) => theme.styles.defaultBorder};
+        border-radius: 16px;
+        border-left: 1px solid ${({ theme }) => theme.colors.altTertiary};
+        border-right: 1px solid ${({ theme }) => theme.colors.altTertiary};
 
         :hover {
           background-color: rgba(255, 255, 255, 0.05);
         }
         .link-info {
-          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', '7px')};
+          ${({ theme }) => theme.mixins.flexbox('column', 'space-evenly', 'initial', '7px')};
           padding: 20px 16px 14px;
           height: 100%;
 
@@ -137,7 +144,7 @@ const PostContainer = styled.div`
             pointer-events: none;
           }
           &__title {
-            color: #cecece;
+            color: ${({ theme }) => theme.colors.post};
             font-size: 1rem;
             line-height: 1.2rem;
             font-family: ${({ theme }) => theme.fonts.secondary};
@@ -152,7 +159,7 @@ const PostContainer = styled.div`
             margin-top: 6px;
             width: 100%;
 
-            color: #cecece;
+            color: ${({ theme }) => theme.colors.post};
             font-size: 0.6rem;
             font-family: ${({ theme }) => theme.fonts.secondary};
 
@@ -161,21 +168,29 @@ const PostContainer = styled.div`
           }
         }
         .link-image {
-          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
+          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '10px')};
 
-          flex: 0 0 auto;
-
-          width: 155px;
+          min-width: 155px;
           height: 100%;
 
           overflow: hidden;
-          border-left: ${({ theme }) => theme.styles.defaultBorder};
-          background-color: ${({ theme }) => theme.colors.background};
+          border-left: 0.5px solid ${({ theme }) => theme.colors.altTertiary};
+          background-color: transparent;
 
           > img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+          }
+          &__not-supported-icon {
+            font-size: 3.6rem;
+            color: ${({ theme }) => theme.colors.tertiary};
+          }
+          &__not-supported-text {
+            font-size: 1rem;
+            font-weight: bold;
+            color: ${({ theme }) => theme.colors.tertiary};
+            font-family: ${({ theme }) => theme.fonts.secondary};
           }
         }
       }

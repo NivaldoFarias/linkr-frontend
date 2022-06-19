@@ -10,6 +10,11 @@ export const StyledDiv = styled.div`
     color: ${({ theme }) => theme.colors.primary};
     font-size: 1.5rem;
     z-index: 3;
+    cursor: pointer;
+
+    * {
+      pointer-events: none;
+    }
   }
 
   @media only screen and (max-width: 500px) {
@@ -19,7 +24,7 @@ export const StyledDiv = styled.div`
 
 export const StyledInput = styled.input`
   ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
-  background-color: ${({ theme }) => theme.colors.altTertiary};
+  background-color: rgb(255, 248, 241);
   height: 45px;
   border-radius: ${({ theme }) => theme.styles.borderRadius};
   width: 100%;
@@ -27,7 +32,7 @@ export const StyledInput = styled.input`
   z-index: 1;
   border: none;
   text-indent: 17px;
-  cursor: pointer;
+  cursor: text;
 `;
 
 export const StyledList = styled.ul`

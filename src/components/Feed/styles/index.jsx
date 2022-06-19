@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '43px')};
+  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '24px')};
 
   width: 100%;
-  margin-top: 78px;
+  margin-top: 38px;
   height: 100%;
   overflow-y: auto;
 `;
@@ -15,11 +15,13 @@ const Header = styled.div`
 
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.primary};
-  text-align: left;
   width: 100%;
-  font-size: 43px;
+
+  font-size: 3.5rem;
   font-weight: 700;
   line-height: 64px;
+  letter-spacing: 2px;
+
   color: ${({ theme }) => theme.colors.primary}; ;
 `;
 
@@ -31,24 +33,24 @@ const UserThumbnail = styled.img`
 
   object-fit: cover;
   border-radius: 50%;
-  background-color: rgb(255, 248, 241);
+  background-color: ${({ theme }) => theme.colors.gradient};
 `;
 
 const Content = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '30px')};
   padding: 36px 24px;
 
-  border-left: 1px solid ${({ theme }) => theme.colors.primary};
-  border-right: 1px solid ${({ theme }) => theme.colors.primary};
+  border-left: ${({ theme }) => theme.styles.defaultBorder};
+  border-right: ${({ theme }) => theme.styles.defaultBorder};
 
   background: linear-gradient(
     to top,
-    rgba(253, 235, 220, 1) 0%,
-    rgba(255, 248, 241, 1) 3%,
-    rgba(255, 248, 241, 1) 97%,
-    rgba(253, 235, 220, 1) 100%
+    ${({ theme }) => theme.colors.altTertiary} 0%,
+    ${({ theme }) => theme.colors.gradient} 3%,
+    ${({ theme }) => theme.colors.gradient} 97%,
+    ${({ theme }) => theme.colors.altTertiary} 100%
   );
-  background-color: rgb(255, 248, 241);
+  background-color: ${({ theme }) => theme.colors.gradient};
 `;
 
 const Posts = styled.div`

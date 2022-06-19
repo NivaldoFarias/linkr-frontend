@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -33,7 +34,7 @@ export const PostForm = styled.form`
 
   input {
     display: flex;
-    background-color: rgb(255, 248, 241);
+    background-color: ${({ theme }) => theme.colors.gradient};
     border-radius: ${({ theme }) => theme.styles.borderRadius};
     border: none;
     padding: 8px 12px;

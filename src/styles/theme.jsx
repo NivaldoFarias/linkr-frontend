@@ -12,8 +12,10 @@ const theme = {
     lowContrastSecondary: 'rgb(248, 158, 55)',
     lowContrastTertiary: 'rgb(184, 98, 0)',
 
+    gradient: 'rgb(255, 248, 241)',
+
     text: 'rgb(112, 112, 112)',
-    post: 'rgb(183, 183, 183)',
+    post: 'lightgray',
     btnPrimary: 'rgb(24, 119, 242)',
     inputBackground: 'rgb(239, 239, 239)',
     background: 'rgb(21, 21, 21)',
@@ -45,7 +47,7 @@ const theme = {
     },
   },
   styles: {
-    defaultBorder: '1px solid rgb(77, 77, 77)',
+    defaultBorder: '1px solid rgb(76, 30, 79)',
     borderRadius: '5px',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
   },
