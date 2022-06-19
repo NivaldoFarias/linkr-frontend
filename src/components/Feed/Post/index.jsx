@@ -1,6 +1,6 @@
 import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { IoCloseSharp } from 'react-icons/io5';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
 import ReactTooltip from 'react-tooltip';
@@ -15,6 +15,11 @@ export default function Post(props) {
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [post, setPost] = useState(props.post);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [textEdit, setTextEdit] = useState(post.text);
+  const inputRef = useRef();
+
+  
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
   const navigate = useNavigate();
@@ -22,6 +27,7 @@ export default function Post(props) {
   useEffect(() => {
     setIsLiked(props.post.userHasLiked);
     setPost(props.post);
+
   }, [props]);
 
   function goToUserPage() {
@@ -69,6 +75,35 @@ export default function Post(props) {
       setIsOpen(false);
       alert("Não foi possivel excluir o post.");
       console.log(err);
+    }
+  }
+
+  async function handleEditPost(){
+    const url = `/posts/${post.id}`;
+    console.log("hello",textEdit);
+    try {
+      await Axios.patch(url, {text: textEdit }, CONFIG);
+      props.updatePostsFunction();
+      setIsEditing(false);
+    } catch (err) {
+      alert("Não foi possivel editar!");
+      console.log(err);
+    }
+  }
+
+  async function handleHableEdit() {
+    setIsEditing(!isEditing);
+    setTextEdit(post.text);
+  }
+
+  function keyFunctions(e){
+    if(e.keyCode === 27){
+      setIsEditing(false);
+      setTextEdit(post.text);
+    }
+
+    if(e.key === 'Enter') {
+      handleEditPost()
     }
   }
 
@@ -140,25 +175,47 @@ export default function Post(props) {
           <div className='post-header__username'>
             <p onClick={goToUserPage}>{post.username}</p>
             <div className='actions-container'>
-              <AiFillEdit />
+              <AiFillEdit onClick={handleHableEdit}/>
               <AiFillDelete onClick={openModal} />
             </div>
           </div>
           <div className='post-header__text'>
-            <ReactHashtag
-              renderHashtag={(val) => (
-                <div
-                  className='hashtag'
-                  onClick={() => {
-                    goToHashtagPage(val);
+            { isEditing === true
+              ? <input 
+                  value={textEdit} 
+                  type='textarea'
+                  name='url_share'
+                  onChange={(e) => {
+                    setTextEdit(e.target.value);
                   }}
-                >
-                  {val}
-                </div>
-              )}
-            >
-              {post.text}
-            </ReactHashtag>
+                  onKeyDown={keyFunctions}
+                  required
+                  style={{
+                    display: 'flex',
+                    flex: '1',
+                    flexWrap: 'wrap',
+                    padding: "4px 8px",
+                    minWidth: '100%',
+                    border: 'none',
+                    borderRadius: '4px'
+                  }}
+                  ref={inputRef}
+                />
+              :<ReactHashtag
+                renderHashtag={(val) => (
+                  <div
+                    className='hashtag'
+                    onClick={() => {
+                      goToHashtagPage(val);
+                    }}
+                  >
+                    {val}
+                  </div>
+                )}
+              >
+                {post.text}
+              </ReactHashtag>
+            }
           </div>
         </div>
         <a className='link' href={post.url} target='blank'>
