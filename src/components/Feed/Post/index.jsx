@@ -10,6 +10,8 @@ import PostContainer from './styles/';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
 
+// NEED REFACTOR
+
 export default function Post(props) {
   const { token, user } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
@@ -53,7 +55,7 @@ export default function Post(props) {
   async function updatePostData() {
     const url = `/posts/${post.id}`;
     try {
-      const {data} = await Axios.get(url, CONFIG);
+      const { data } = await Axios.get(url, CONFIG);
       await updatePostData();
       setPost(data);
     } catch (err) {
@@ -82,7 +84,7 @@ export default function Post(props) {
       props.updatePostsFunction();
     } catch (err) {
       setIsOpen(false);
-      alert("Não foi possivel excluir o post.");
+      alert('Não foi possivel excluir o post.');
       console.log(err);
     }
   }
