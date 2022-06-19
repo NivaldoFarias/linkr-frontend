@@ -23,6 +23,7 @@ const PostContainer = styled.div`
     }
     &__likes {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '8px')};
+      cursor: pointer;
 
       > svg {
         color: white;
@@ -71,6 +72,8 @@ const PostContainer = styled.div`
       width: 100%;
 
       &__username {
+        ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '12px')};
+
         p {
           font-size: 1.2rem;
           color: #ffffff;
@@ -78,14 +81,19 @@ const PostContainer = styled.div`
           cursor: pointer;
         }
         .actions-container {
-          ${({ theme }) => theme.mixins.position('absolute', '10px', '15px', 'initial', 'initial')};
-          ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
-
+          ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '3px')};
           font-size: 1rem;
           color: white;
 
           > svg {
+            width: 1.5rem;
+            height: 1.5rem;
             cursor: pointer;
+            padding: 3px;
+            border-radius: 3px;
+            :hover {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
 
             * {
               pointer-events: none;
@@ -102,6 +110,9 @@ const PostContainer = styled.div`
           color: white;
           font-weight: bold;
           cursor: pointer;
+          :hover {
+            color: ${({ theme }) => theme.colors.tertiary};
+          }
         }
       }
       &__edit {
