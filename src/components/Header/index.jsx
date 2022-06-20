@@ -15,13 +15,8 @@ export default function Header() {
   return (
     <>
       <Wrapper>
-        <div
-          className='logo-container'
-          onClick={() => {
-            navigate('/timeline');
-          }}
-        >
-          <img src={logo} alt='Linkr logo' />
+        <div className='logo-container' onClick={navigateToTimeline}>
+          <img src={logo} alt='Linkr logo' onClick={navigateToTimeline} />
           <Title>linkr</Title>
         </div>
         {!isMobile && <SearchBar />}
@@ -30,4 +25,8 @@ export default function Header() {
       {isMobile && <SearchBar />}
     </>
   );
+
+  function navigateToTimeline() {
+    navigate('/timeline');
+  }
 }

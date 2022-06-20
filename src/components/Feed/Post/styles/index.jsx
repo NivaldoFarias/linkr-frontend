@@ -92,6 +92,11 @@ const PostContainer = styled.div`
           color: ${({ theme }) => theme.colors.gradient};
           font-weight: bold;
           cursor: pointer;
+          transition: color 200ms ease-in-out;
+
+          &:hover {
+            color: ${({ theme }) => theme.colors.tertiary};
+          }
         }
       }
       .actions-container {
@@ -137,8 +142,8 @@ const PostContainer = styled.div`
         cursor: pointer;
         overflow: hidden;
         border-radius: 16px;
-        border-left: 1px solid ${({ theme }) => theme.colors.altTertiary};
-        border-right: 1px solid ${({ theme }) => theme.colors.altTertiary};
+        border-left: 2px solid ${({ theme }) => theme.colors.altTertiary};
+        border-right: 2px solid ${({ theme }) => theme.colors.altTertiary};
 
         * {
           pointer-events: none;

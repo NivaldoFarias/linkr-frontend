@@ -12,6 +12,9 @@ export const Wrapper = styled.header`
     height: 100%;
     width: fit-content;
 
+    > * {
+      cursor: pointer;
+    }
     > img {
       width: 45px;
     }

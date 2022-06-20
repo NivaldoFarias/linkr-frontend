@@ -9,9 +9,10 @@ import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-ico
 import { MdOutlineImageNotSupported } from 'react-icons/md';
 import { IoCloseSharp } from 'react-icons/io5';
 
-import PostContainer from './styles/';
+import getRandomInt from '../../../utils/getRandomInt';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
+import PostContainer from './styles/';
 
 export default function Post(props) {
   const { token, user } = useContext(DataContext);
@@ -266,7 +267,7 @@ export default function Post(props) {
   }
 
   return (
-    <PostContainer key={post.id}>
+    <PostContainer key={Number(post.id) * getRandomInt(1, 10000)}>
       <ReactTooltip type='light' place='bottom' effect='solid' />
       <div className='left-container'>
         <img
