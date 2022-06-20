@@ -14,6 +14,8 @@ import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
 import PostContainer from './styles/';
 
+// NEED REFACTOR
+
 export default function Post(props) {
   const { token, user } = useContext(DataContext);
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
@@ -87,18 +89,6 @@ export default function Post(props) {
     setEditText(e.target.value);
   }
 
-  async function handleDeletePost() {
-    const url = `/posts/${post.id}`;
-    try {
-      await Axios.delete(url, CONFIG);
-      setIsOpen(false);
-      props.updatePostsFunction();
-    } catch (err) {
-      handleError('Unable to delete post');
-      setIsOpen(false);
-    }
-  }
-
   function handleError(error) {
     confirmAlert({
       message: `${
@@ -129,92 +119,6 @@ export default function Post(props) {
     return label;
   }
 
-  const likes = (
-    <div className='left-container__likes' onClick={likeButtonClicked}>
-      {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
-      <div data-tip={likesLabel()} className='left-container__likes__label'>
-        <strong>{processLikes()}</strong>
-        {processLikesLabel()}
-      </div>
-    </div>
-  );
-
-  const postText = (
-    <div className='post-header__text'>
-      <ReactHashtag
-        renderHashtag={(val) => (
-          <span
-            className='hashtag'
-            key={Number(post.id) * getRandomInt(1, 10000)}
-            onClick={() => {
-              goToHashtagPage(val);
-            }}
-          >
-            {val}
-          </span>
-        )}
-      >
-        {post.text}
-      </ReactHashtag>
-    </div>
-  );
-
-  const postTextEdit = (
-    <textarea
-      className='post-header__edit'
-      onChange={handleEditPostInputChange}
-      value={editText}
-    ></textarea>
-  );
-
-  const postUrl = (
-    <a className='link' href={post.url} target='blank'>
-      <div className='link__container'>
-        <div className='link-info'>
-          <div className='link-info__title'>{post.urlTitle}</div>
-          <div className='link-info__description'>{post.urlDescription}</div>
-          <div className='link-info__url'>{post.url}</div>
-        </div>
-        <div className='link-image'>
-          {regex.test(post.urlPicture) ? (
-            <img src={post.urlPicture} alt='link header' />
-          ) : (
-            <>
-              <MdOutlineImageNotSupported className='link-image__not-supported-icon' />
-              <p className='link-image__not-supported-text'>Not supported</p>
-            </>
-          )}
-        </div>
-      </div>
-    </a>
-  );
-
-  const deletePost = (
-    <div className='delete-post'>
-      <Modal
-        className='modal'
-        portalClassName='modal-portal'
-        overlayClassName='overlay'
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        ariaHideApp={false}
-      >
-        <IoCloseSharp className='close-modal-btn' onClick={closeModal} />
-        <div className='modal-container'>
-          <h2>Are you sure you want to delete this post?</h2>
-          <div>
-            <button onClick={closeModal} className='return-btn'>
-              Return
-            </button>
-            <button onClick={handleDeletePost} className='delete-btn'>
-              Yes, delete it
-            </button>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
-
   async function handleEditPostButtonClicked() {
     if (isEditing) {
       try {
@@ -228,6 +132,12 @@ export default function Post(props) {
       setIsEditing(true);
     }
   }
+
+  const likes = buildLikes();
+  const postText = buildPostText();
+  const postTextEdit = buildPostTextEdit();
+  const postUrl = buildPostUrl();
+  const deletePost = buildDeletePost();
 
   return (
     <PostContainer>
@@ -262,12 +172,120 @@ export default function Post(props) {
     </PostContainer>
   );
 
-  function openModal() {
-    setIsOpen(true);
+  function buildLikes() {
+    return (
+      <div className='left-container__likes' onClick={likeButtonClicked}>
+        {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
+        <div data-tip={likesLabel()} className='left-container__likes__label'>
+          <strong>{processLikes()}</strong>
+          {processLikesLabel()}
+        </div>
+      </div>
+    );
   }
 
-  function closeModal() {
-    setIsOpen(false);
+  function buildPostText() {
+    return (
+      <div className='post-header__text'>
+        <ReactHashtag
+          renderHashtag={(val) => (
+            <span
+              className='hashtag'
+              key={Number(post.id) * getRandomInt(1, 10000)}
+              onClick={() => {
+                goToHashtagPage(val);
+              }}
+            >
+              {val}
+            </span>
+          )}
+        >
+          {post.text}
+        </ReactHashtag>
+      </div>
+    );
+  }
+
+  function buildPostTextEdit() {
+    return (
+      <textarea
+        className='post-header__edit'
+        onChange={handleEditPostInputChange}
+        value={editText}
+      ></textarea>
+    );
+  }
+
+  function buildPostUrl() {
+    return (
+      <a className='link' href={post.url} target='blank'>
+        <div className='link__container'>
+          <div className='link-info'>
+            <div className='link-info__title'>{post.urlTitle}</div>
+            <div className='link-info__description'>{post.urlDescription}</div>
+            <div className='link-info__url'>{post.url}</div>
+          </div>
+          <div className='link-image'>
+            {regex.test(post.urlPicture) ? (
+              <img src={post.urlPicture} alt='link header' />
+            ) : (
+              <>
+                <MdOutlineImageNotSupported className='link-image__not-supported-icon' />
+                <p className='link-image__not-supported-text'>Not supported</p>
+              </>
+            )}
+          </div>
+        </div>
+      </a>
+    );
+  }
+
+  function buildDeletePost() {
+    return (
+      <div className='delete-post'>
+        <Modal
+          className='modal'
+          portalClassName='modal-portal'
+          overlayClassName='overlay'
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          ariaHideApp={false}
+        >
+          <IoCloseSharp className='close-modal-btn' onClick={closeModal} />
+          <div className='modal-container'>
+            <h2>Are you sure you want to delete this post?</h2>
+            <div>
+              <button onClick={closeModal} className='return-btn'>
+                Return
+              </button>
+              <button onClick={handleDeletePost} className='delete-btn'>
+                Yes, delete it
+              </button>
+            </div>
+          </div>
+        </Modal>
+      </div>
+    );
+
+    async function handleDeletePost() {
+      const url = `/posts/${post.id}`;
+      try {
+        await Axios.delete(url, CONFIG);
+        setIsOpen(false);
+        props.updatePostsFunction();
+      } catch (err) {
+        handleError('Unable to delete post');
+        setIsOpen(false);
+      }
+    }
+
+    function closeModal() {
+      setIsOpen(false);
+    }
+  }
+
+  function openModal() {
+    setIsOpen(true);
   }
 
   function processLikesLabel() {
