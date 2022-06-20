@@ -71,27 +71,23 @@ export default function Post(props) {
     }
   }
 
-  function likesLabel (){
+  function likesLabel() {
     const { userHasLiked, totalLikes, usersWhoLiked } = post;
-    
-    if(userHasLiked){
-      if(totalLikes === 1){
-        return "You"
-    } else if(totalLikes < 3){
-        return `You and ${usersWhoLiked[0].username}`
-    } else if(totalLikes > 2){
-        return `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
-    }
-  } else {
-    if(totalLikes === 1){
-      return `${usersWhoLiked[0].username}`
-    } else if(totalLikes === 2){
-      return `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`
-    } else if(totalLikes > 2){
-      return `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`
-    }
-  }
-  }
+    let label = userHasLiked ? (
+        totalLikes === 1 ?
+            'You' :
+            totalLikes < 3 ?
+                `You and ${usersWhoLiked[0].username}` :
+                `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
+    ) : (
+        totalLikes === 1 ?
+            `${usersWhoLiked[0].username}` :
+            totalLikes === 2 ?
+                `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}` :
+                `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`
+    )
+    return label;
+}
 
   return (
     <PostContainer key={post.id}>
