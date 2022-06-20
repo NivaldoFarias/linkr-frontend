@@ -5,15 +5,18 @@ import ReactHashtag from '@mdnm/react-hashtag';
 import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
 
-import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
 import { IoCloseSharp } from 'react-icons/io5';
 
 import getRandomInt from '../../../utils/getRandomInt';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
-import PostContainer from './styles/';
+
 import { StyledLoadingDots } from '../../../styles';
+import PostContainer from './styles/';
+
+import Likes from './Likes';
 
 // NEED REFACTOR
 
@@ -54,19 +57,6 @@ export default function Post(props) {
     navigate(`/hashtag/${cleanHashtag}`);
   }
 
-  async function likeButtonClicked() {
-    const tryToLike = !isLiked;
-    setIsLiked(tryToLike);
-
-    const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
-    try {
-      await Axios.post(url, {}, CONFIG);
-      await updatePostData();
-    } catch (error) {
-      handleError(error);
-    }
-  }
-
   async function updatePostData() {
     const url = `/posts/${post.id}`;
     try {
@@ -105,28 +95,6 @@ export default function Post(props) {
     });
   }
 
-  function likesLabel() {
-    const { userHasLiked, totalLikes, usersWhoLiked } = post;
-
-    return userHasLiked
-      ? totalLikes === 1
-        ? 'You'
-        : totalLikes < 3
-        ? `You and ${usersWhoLiked[0]?.username}`
-        : `You, ${usersWhoLiked[0]?.username} and other ${totalLikes - 2}`
-      : totalLikes === 1
-      ? `${usersWhoLiked[0]?.username}`
-      : totalLikes === 2
-      ? `${usersWhoLiked[0]?.username} and ${usersWhoLiked[1]?.username}`
-      : `${
-          usersWhoLiked[0]?.username && usersWhoLiked[1]?.username
-            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and other ${
-                totalLikes - 2
-              }`
-            : 'No likes yet'
-        }`;
-  }
-
   async function handleEditPostButtonClicked() {
     if (isEditing) {
       try {
@@ -141,7 +109,6 @@ export default function Post(props) {
     }
   }
 
-  const likes = buildLikes();
   const postText = buildPostText();
   const postTextEdit = buildPostTextEdit();
   const postUrl = buildPostUrl();
@@ -157,7 +124,12 @@ export default function Post(props) {
           onClick={goToUserPage}
           src={post.userPictureUrl}
         />
-        {likes}
+        <Likes
+          isLiked={isLiked}
+          setIsLiked={setIsLiked}
+          post={post}
+          updatePostData={updatePostData}
+        />
       </div>
       <div className='right-container'>
         {deletePost}
@@ -179,18 +151,6 @@ export default function Post(props) {
       </div>
     </PostContainer>
   );
-
-  function buildLikes() {
-    return (
-      <div className='left-container__likes' onClick={likeButtonClicked}>
-        {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
-        <div data-tip={likesLabel()} className='left-container__likes__label'>
-          <strong>{processLikes()}</strong>
-          {processLikesLabel()}
-        </div>
-      </div>
-    );
-  }
 
   function buildPostText() {
     return (
@@ -303,13 +263,5 @@ export default function Post(props) {
 
   function openModal() {
     setIsOpen(true);
-  }
-
-  function processLikesLabel() {
-    return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
-  }
-
-  function processLikes() {
-    return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
   }
 }
