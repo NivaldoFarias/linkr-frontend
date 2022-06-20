@@ -17,6 +17,7 @@ import { StyledLoadingDots } from '../../../styles';
 import PostContainer from './styles/';
 
 import Likes from './Likes';
+import PostText from './PostText';
 
 // NEED REFACTOR
 
@@ -109,7 +110,6 @@ export default function Post(props) {
     }
   }
 
-  const postText = buildPostText();
   const postTextEdit = buildPostTextEdit();
   const postUrl = buildPostUrl();
   const deletePost = buildDeletePost();
@@ -145,34 +145,12 @@ export default function Post(props) {
               <></>
             )}
           </div>
-          {isEditing ? postTextEdit : postText}
+          {isEditing ? postTextEdit : <PostText post={post} />}
         </div>
         {postUrl}
       </div>
     </PostContainer>
   );
-
-  function buildPostText() {
-    return (
-      <div className='post-header__text'>
-        <ReactHashtag
-          renderHashtag={(val) => (
-            <span
-              className='hashtag'
-              key={Number(post.id) * getRandomInt(1, 10000)}
-              onClick={() => {
-                goToHashtagPage(val);
-              }}
-            >
-              {val}
-            </span>
-          )}
-        >
-          {post.text}
-        </ReactHashtag>
-      </div>
-    );
-  }
 
   function buildPostTextEdit() {
     return (
