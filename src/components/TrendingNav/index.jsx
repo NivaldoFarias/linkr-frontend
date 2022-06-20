@@ -4,22 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Wrapper, Header, Hashtags, Hashtag } from './styles';
 import DataContext from '../../hooks/DataContext';
 import Axios from '../../blueprints';
+import { MainPageContext } from '../../hooks/MainPageContext';
 
 export default function TrendingNav() {
-  const [hashtags, setHashtags] = useState(null);
-
-  const { token } = useContext(DataContext);
-
-  useEffect(() => {
-    Axios.get('hashtags/trending', token)
-      .then(({ data }) => {
-        setHashtags(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { hashtags } = useContext(MainPageContext);
 
   const navigate = useNavigate();
 
@@ -35,7 +23,8 @@ export default function TrendingNav() {
             onClickHandler(hashtag.name);
           }}
           key={index}
-        >{`# ${hashtag.name}`}</Hashtag>
+          className={scaleHashtag(Number(hashtag.likes_count), Number(hashtag.posts_count))}
+        >{`#${hashtag.name}`}</Hashtag>
       );
     })
   ) : (
@@ -48,4 +37,16 @@ export default function TrendingNav() {
       <Hashtags>{hashtagsElements}</Hashtags>
     </Wrapper>
   );
+
+  function scaleHashtag(likesCount, postsCount) {
+    const weigthedValue = likesCount * 2 + postsCount * 1.3;
+
+    if (weigthedValue >= 0 && weigthedValue < 5) {
+      return 'scale-small';
+    } else if (weigthedValue > 5 && weigthedValue < 15) {
+      return 'scale-medium';
+    } else {
+      return 'scale-large';
+    }
+  }
 }

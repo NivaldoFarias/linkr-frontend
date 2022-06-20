@@ -7,6 +7,7 @@ import { Wrapper, Main, Feed } from './styles';
 import { useNavigate } from 'react-router-dom';
 import MouseContext from '../../hooks/MouseContext';
 import Axios from '../../blueprints';
+import MainPageProvider from '../../hooks/MainPageContext';
 
 export default function MainPage() {
   const { width, token, setUser } = useContext(DataContext);
@@ -22,18 +23,19 @@ export default function MainPage() {
         setUser(res.data.user);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (
-    <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
-      <Header />
-      <Main>
-        <Feed>
-          <Outlet />
-        </Feed>
-        {width > 600 && <TrendingNav />}
-      </Main>
-    </Wrapper>
+    <MainPageProvider>
+      <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
+        <Header />
+        <Main>
+          <Feed>
+            <Outlet />
+          </Feed>
+          {width > 600 && <TrendingNav />}
+        </Main>
+      </Wrapper>
+    </MainPageProvider>
   );
 }

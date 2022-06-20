@@ -2,12 +2,9 @@ import styled from 'styled-components';
 
 const Wrapper = styled.aside`
   margin-top: 100px;
-  height: 460px;
   width: 30%;
   max-width: 360px;
-
   border-radius: 16px;
-  background-color: transparent;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
@@ -23,8 +20,11 @@ const Header = styled.div`
 `;
 
 const Hashtags = styled.div`
+  max-height: 340px;
+  overflow-y: auto;
   padding: 22px 16px;
-  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '5px')};
+  width: 100%;
+  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-start', '5px')};
 `;
 
 const Hashtag = styled.div`
@@ -33,12 +33,25 @@ const Hashtag = styled.div`
   line-height: 23px;
   letter-spacing: 0.05em;
 
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   font-family: ${({ theme }) => theme.fonts.secondary};
 
   :hover {
     color: ${({ theme }) => theme.colors.tertiary};
+  }
+  &.scale-small {
+    transform: scale(1);
+  }
+  &.scale-medium {
+    padding-bottom: 2px;
+    filter: saturate(1.5);
+    font-size: 1.5rem;
+  }
+  &.scale-large {
+    padding-bottom: 5px;
+    filter: saturate(2);
+    font-size: 2rem;
   }
 `;
 

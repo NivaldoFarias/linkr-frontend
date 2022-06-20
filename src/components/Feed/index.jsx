@@ -2,8 +2,16 @@ import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/
 import NewPost from './NewPost/';
 import Post from './Post/';
 import EmptyPosts from './EmptyPosts/';
+import { useContext, useEffect } from 'react';
+import { MainPageContext } from '../../hooks/MainPageContext';
 
 export default function Feed({ title, posts, canCreatePost, userThumbnail, updatePostsFunction }) {
+  const { loadHashtags } = useContext(MainPageContext);
+
+  useEffect(() => {
+    loadHashtags();
+  }, [posts]);
+
   const postsElements = posts.map((post, index) => {
     return <Post key={index} post={post} updatePostsFunction={updatePostsFunction} />;
   });
