@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react';
-import DataContext from '../../../hooks/DataContext';
+import { confirmAlert } from 'react-confirm-alert';
 
+import fallbackAvatar from '../../../assets/fallback-avatar.png';
+import DataContext from '../../../hooks/DataContext';
 import { Wrapper, PostForm } from './styles/';
 import Axios from '../../../blueprints';
-import fallbackAvatar from '../../../assets/fallback-avatar.png';
 
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
@@ -70,9 +71,23 @@ export default function NewPost({ updatePostsFunction }) {
       console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
       setDescription('');
-      alert('Houve um erro ao publicar seu link');
+      handleError('Unable to create new post');
       setFieldVisibility(false);
     }
+  }
+
+  function handleError(error) {
+    confirmAlert({
+      message: `${
+        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
+      }. Please try again.`,
+      buttons: [
+        {
+          label: 'OK',
+          onClick: () => null,
+        },
+      ],
+    });
   }
 
   function toggleBtn() {
