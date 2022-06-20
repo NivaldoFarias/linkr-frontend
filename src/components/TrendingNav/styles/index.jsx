@@ -24,7 +24,8 @@ const Header = styled.div`
 
 const Hashtags = styled.div`
   padding: 22px 16px;
-  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '5px')};
+  width: 100%;
+  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '5px')};
 `;
 
 const Hashtag = styled.div`
@@ -39,6 +40,21 @@ const Hashtag = styled.div`
 
   :hover {
     color: ${({ theme }) => theme.colors.tertiary};
+  }
+  &.scale-small {
+    transform: scale(1);
+  }
+  &.scale-medium {
+    padding-left: 10px;
+    padding-bottom: 2px;
+    filter: brightness(1.2);
+    transform: scale(1.2);
+  }
+  &.scale-large {
+    padding-left: 20px;
+    padding-bottom: 5px;
+    filter: brightness(1.5);
+    transform: scale(1.5);
   }
 `;
 

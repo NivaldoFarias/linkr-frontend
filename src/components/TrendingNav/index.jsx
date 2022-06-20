@@ -35,6 +35,7 @@ export default function TrendingNav() {
             onClickHandler(hashtag.name);
           }}
           key={index}
+          className={scaleHashtag(Number(hashtag.likes_count))}
         >{`# ${hashtag.name}`}</Hashtag>
       );
     })
@@ -48,4 +49,14 @@ export default function TrendingNav() {
       <Hashtags>{hashtagsElements}</Hashtags>
     </Wrapper>
   );
+
+  function scaleHashtag(likesCount) {
+    if (likesCount === 0 || likesCount === 1) {
+      return 'scale-small';
+    } else if (likesCount > 1 && likesCount < 10) {
+      return 'scale-medium';
+    } else {
+      return 'scale-large';
+    }
+  }
 }
