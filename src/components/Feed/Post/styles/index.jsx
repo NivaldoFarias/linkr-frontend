@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const PostContainer = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '18px')};
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
   padding: 18px;
   width: 100%;
+  min-width: 575px;
 
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.colors.tertiary};
@@ -207,6 +208,29 @@ const PostContainer = styled.div`
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 620px) {
+    min-height: 360px;
+    min-width: 370px;
+
+    .link {
+      min-height: 240px;
+      min-width: 270px;
+    }
+    .link__container {
+      flex-direction: column !important;
+    }
+    .post-header {
+      padding-bottom: 8px;
+    }
+    .right-container {
+      height: 100%;
+    }
+    .link-image {
+      width: 100px;
+      border-left: none !important;
     }
   }
 `;
