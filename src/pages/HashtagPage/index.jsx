@@ -28,7 +28,7 @@ export default function HashtagPage() {
 
   return (
     <Feed
-      title={`# ${hashtag}`}
+      title={`#${hashtag}`}
       posts={posts}
       canCreatePost={false}
       userThumbnail={false}

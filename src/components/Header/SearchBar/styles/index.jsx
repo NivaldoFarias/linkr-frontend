@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 
 export const StyledDiv = styled.div`
-  background: ${({ theme }) => theme.colors.backgroundGray};
+  background-color: ${({ theme }) => theme.colors.backgroundGray};
   border-radius: ${({ theme }) => theme.styles.borderRadius};
   position: relative;
   width: 40%;
   .magnifying-glass {
     ${({ theme }) => theme.mixins.position('absolute', '11px', '15px', 'auto', 'auto')};
-    color: ${({ theme }) => theme.colors.magnifyingIcon};
-    width: 21px;
-    height: 21px;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 1.5rem;
     z-index: 3;
+    cursor: pointer;
+
+    * {
+      pointer-events: none;
+    }
   }
 
   @media only screen and (max-width: 500px) {
@@ -20,43 +24,61 @@ export const StyledDiv = styled.div`
 
 export const StyledInput = styled.input`
   ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'flex-start', '0px')};
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.gradient};
   height: 45px;
   border-radius: ${({ theme }) => theme.styles.borderRadius};
   width: 100%;
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.primary};
   z-index: 1;
   border: none;
+
+  font-size: 1.2rem;
+
   text-indent: 17px;
-  cursor: pointer;
+  cursor: text;
+
+  &::placeholder {
+    font-size: 1.1rem;
+  }
 `;
 
 export const StyledList = styled.ul`
   ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-start', '16px')}
+  position: relative;
+  z-index: 2;
   overflow-y: scroll;
-  width: 100%;
-  padding: 10px 17px 23px 17px;
+
+  padding: 10px 17px 15px 17px;
   max-height: 18vh;
+  width: 100%;
+
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.gradient};
+
   &::-webkit-scrollbar {
     -webkit-appearance: scrollbartrack-vertical;
   }
   li {
-    cursor: pointer;
     figure {
-      ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'center', '0px')};
+      ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'center', '12px')};
       flex-wrap: nowrap;
+      cursor: pointer;
+
+      > * {
+        pointer-events: none;
+      }
       img {
-        width: 39px;
-        height: 39px;
+        width: 43px;
+        height: 43px;
         border-radius: 50%;
         object-fit: cover;
-        margin-right: 12px;
+        border: 2px solid ${({ theme }) => theme.colors.primary};
       }
       figcaption {
-        font-family: ${({ theme }) => theme.colors.secondary};
+        font-family: ${({ theme }) => theme.fonts.secondary};
         font-style: normal;
-        font-weight: 400;
-        font-size: 19px;
+        font-weight: 500;
+        font-size: 1.2rem;
         line-height: 23px;
         color: ${({ theme }) => theme.colors.mediumBlack};
       }

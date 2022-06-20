@@ -6,6 +6,7 @@ const DataContext = createContext();
 export function DataProvider({ children }) {
   const [user, setUser] = useLocalStorage('user', null);
   const [token, setToken] = useLocalStorage('token', null);
+  const [lightMode, setLightMode] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
 
   function handleWindowSizeChange() {
@@ -26,6 +27,8 @@ export function DataProvider({ children }) {
         setUser,
         token,
         setToken,
+        lightMode,
+        setLightMode,
         width,
         setWidth,
       }}

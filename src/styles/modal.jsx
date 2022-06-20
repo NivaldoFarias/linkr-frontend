@@ -55,6 +55,7 @@ const modal = `
     
     text-align: center;
     font-size: 1.5rem;
+    line-height: 2rem;
     font-family: 'Lato', sans-serif;
 
     h2 {

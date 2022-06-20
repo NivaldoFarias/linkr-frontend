@@ -7,33 +7,11 @@ import fallbackAvatar from '../../../assets/fallback-avatar.png';
 
 export default function NewPost({ updatePostsFunction }) {
   const [url, setUrl] = useState('');
+  const [btnClick, setBtnClick] = useState(false);
   const [description, setDescription] = useState('');
   const [fieldVisibility, setFieldVisibility] = useState(false);
 
   const { user, token } = useContext(DataContext);
-
-  async function handleSendNewPost(e) {
-    e.preventDefault();
-    setFieldVisibility(true);
-
-    try {
-      await Axios.post(
-        '/posts/',
-        { url, text: description },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      updatePostsFunction();
-      setFieldVisibility(false);
-      setUrl('');
-      setDescription('');
-    } catch (e) {
-      console.log('Não foi posssivel criar um novo post', e);
-      setUrl('');
-      setDescription('');
-      alert('Houve um erro ao publicar seu link');
-      setFieldVisibility(false);
-    }
-  }
 
   return (
     <Wrapper>
@@ -63,8 +41,45 @@ export default function NewPost({ updatePostsFunction }) {
           disabled={fieldVisibility}
         />
 
-        <button disabled={fieldVisibility}>{!fieldVisibility ? 'Publish' : 'Publishing...'}</button>
+        <button
+          className={btnClick ? 'clicked' : ''}
+          onClick={toggleBtn}
+          type='submit'
+          disabled={fieldVisibility}
+        >
+          {!fieldVisibility ? 'Publish' : 'Publishing...'}
+        </button>
       </PostForm>
     </Wrapper>
   );
+
+  async function handleSendNewPost(e) {
+    e.preventDefault();
+    setFieldVisibility(true);
+    try {
+      await Axios.post(
+        '/posts/',
+        { url, text: description },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      updatePostsFunction();
+      setFieldVisibility(false);
+      setUrl('');
+      setDescription('');
+    } catch (e) {
+      console.log('Não foi posssivel criar um novo post', e);
+      setUrl('');
+      setDescription('');
+      alert('Houve um erro ao publicar seu link');
+      setFieldVisibility(false);
+    }
+  }
+
+  function toggleBtn() {
+    setBtnClick(true);
+
+    setTimeout(() => {
+      setBtnClick(false);
+    }, 200);
+  }
 }

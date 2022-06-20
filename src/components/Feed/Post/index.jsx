@@ -6,11 +6,13 @@ import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
 
 import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { MdOutlineImageNotSupported } from 'react-icons/md';
 import { IoCloseSharp } from 'react-icons/io5';
 
-import PostContainer from './styles/';
+import getRandomInt from '../../../utils/getRandomInt';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
+import PostContainer from './styles/';
 
 export default function Post(props) {
   const { token, user } = useContext(DataContext);
@@ -24,6 +26,15 @@ export default function Post(props) {
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
   const navigate = useNavigate();
+  const regex = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  );
 
   useEffect(() => {
     setIsLiked(props.post.userHasLiked);
@@ -172,6 +183,7 @@ export default function Post(props) {
         renderHashtag={(val) => (
           <span
             className='hashtag'
+            key={Number(post.id) * getRandomInt(1, 10000)}
             onClick={() => {
               goToHashtagPage(val);
             }}
@@ -202,7 +214,14 @@ export default function Post(props) {
           <div className='link-info__url'>{post.url}</div>
         </div>
         <div className='link-image'>
-          <img src={post.urlPicture} alt='' />
+          {regex.test(post.urlPicture) ? (
+            <img src={post.urlPicture} alt='link header' />
+          ) : (
+            <>
+              <MdOutlineImageNotSupported className='link-image__not-supported-icon' />
+              <p className='link-image__not-supported-text'>Not supported</p>
+            </>
+          )}
         </div>
       </div>
     </a>
@@ -249,7 +268,7 @@ export default function Post(props) {
   }
 
   return (
-    <PostContainer key={post.id}>
+    <PostContainer>
       <ReactTooltip type='light' place='bottom' effect='solid' />
       <div className='left-container'>
         <img
