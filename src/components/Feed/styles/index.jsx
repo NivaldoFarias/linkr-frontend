@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', 'initial')};
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', '20px')};
 `;
 
 const Title = styled.h1`
@@ -26,13 +26,13 @@ const Title = styled.h1`
 `;
 
 const UserThumbnail = styled.img`
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', 'initial')};
-  margin-right: 20px;
-  height: 50px;
-  width: 50px;
+  align-self: center;
+  height: 70px;
+  width: 70px;
 
   object-fit: cover;
   border-radius: 50%;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
   background-color: ${({ theme }) => theme.colors.gradient};
 `;
 
