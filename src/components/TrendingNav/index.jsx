@@ -11,12 +11,6 @@ export default function TrendingNav() {
   const { token } = useContext(DataContext);
 
   useEffect(() => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
     Axios.get('hashtags/trending', token)
       .then(({ data }) => {
         setHashtags(data);
@@ -24,6 +18,7 @@ export default function TrendingNav() {
       .catch((err) => {
         console.log(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const navigate = useNavigate();

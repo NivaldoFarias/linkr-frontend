@@ -13,6 +13,11 @@ export default function UserPage() {
   const { token } = useContext(DataContext);
 
   useEffect(() => {
+    updateUserPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
+  function updateUserPosts() {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,7 +31,7 @@ export default function UserPage() {
       setPosts(data.posts);
     });
     promise.catch((error) => console.log(error));
-  }, [userId]);
+  }
 
   return (
     <Feed
@@ -34,6 +39,7 @@ export default function UserPage() {
       posts={posts}
       canCreatePost={false}
       userThumbnail={picture}
+      updatePostsFunction={updateUserPosts}
     />
   );
 }

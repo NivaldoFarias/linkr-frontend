@@ -1,14 +1,18 @@
-import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import { IoCloseSharp } from 'react-icons/io5';
 import { useContext, useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
 import ReactHashtag from '@mdnm/react-hashtag';
 import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
 
-import PostContainer from './styles/';
+import { AiFillHeart, AiOutlineHeart, AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { MdOutlineImageNotSupported } from 'react-icons/md';
+import { IoCloseSharp } from 'react-icons/io5';
+
+import getRandomInt from '../../../utils/getRandomInt';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
+import PostContainer from './styles/';
 
 // NEED REFACTOR
 
@@ -18,10 +22,20 @@ export default function Post(props) {
   const [post, setPost] = useState(props.post);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(props.post.text);
+
+  const [editText, setEditText] = useState(props.post.text || '');
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
   const navigate = useNavigate();
+  const regex = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  );
 
   useEffect(() => {
     setIsLiked(props.post.userHasLiked);
@@ -39,7 +53,6 @@ export default function Post(props) {
   }
 
   async function likeButtonClicked() {
-    console.log('likeButtonClicked');
     const tryToLike = !isLiked;
     setIsLiked(tryToLike);
 
@@ -48,7 +61,7 @@ export default function Post(props) {
       await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   }
 
@@ -56,23 +69,23 @@ export default function Post(props) {
     const url = `/posts/${post.id}`;
     try {
       const { data } = await Axios.get(url, CONFIG);
-      await updatePostData();
       setPost(data);
     } catch (err) {
-      console.log(err);
+      handleError(err);
     }
   }
 
   async function editPostData() {
     const url = `/posts/${post.id}`;
     try {
-      const { data } = await Axios.put(url, { text: editText }, CONFIG);
+      await Axios.put(url, { text: editText }, CONFIG);
     } catch (err) {
-      console.log(err);
+      handleError(err);
     }
   }
 
   function handleEditPostInputChange(e) {
+    e.preventDefault();
     setEditText(e.target.value);
   }
 
@@ -83,34 +96,39 @@ export default function Post(props) {
       setIsOpen(false);
       props.updatePostsFunction();
     } catch (err) {
+      handleError('Unable to delete post');
       setIsOpen(false);
-      alert('Não foi possivel excluir o post.');
-      console.log(err);
     }
+  }
+
+  function handleError(error) {
+    confirmAlert({
+      message: `${
+        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
+      }. Please try again.`,
+      buttons: [
+        {
+          label: 'OK',
+          onClick: () => null,
+        },
+      ],
+    });
   }
 
   function likesLabel() {
     const { userHasLiked, totalLikes, usersWhoLiked } = post;
-
-    if (userHasLiked) {
-      if (totalLikes === 1) {
-        return 'You';
-      } else if (totalLikes < 3) {
-        return `You and ${usersWhoLiked[0].username}`;
-      } else if (totalLikes > 2) {
-        return `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`;
-      }
-    } else {
-      if (totalLikes === 1) {
-        return `${usersWhoLiked[0].username}`;
-      } else if (totalLikes === 2) {
-        return `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`;
-      } else if (totalLikes > 2) {
-        return `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${
-          totalLikes - 2
-        }`;
-      }
-    }
+    let label = userHasLiked
+      ? totalLikes === 1
+        ? 'You'
+        : totalLikes < 3
+        ? `You and ${usersWhoLiked[0].username}`
+        : `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
+      : totalLikes === 1
+      ? `${usersWhoLiked[0].username}`
+      : totalLikes === 2
+      ? `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`
+      : `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`;
+    return label;
   }
 
   const likes = (
@@ -129,6 +147,7 @@ export default function Post(props) {
         renderHashtag={(val) => (
           <span
             className='hashtag'
+            key={Number(post.id) * getRandomInt(1, 10000)}
             onClick={() => {
               goToHashtagPage(val);
             }}
@@ -143,9 +162,11 @@ export default function Post(props) {
   );
 
   const postTextEdit = (
-    <textarea className='post-header__edit' onChange={handleEditPostInputChange}>
-      {editText}
-    </textarea>
+    <textarea
+      className='post-header__edit'
+      onChange={handleEditPostInputChange}
+      value={editText}
+    ></textarea>
   );
 
   const postUrl = (
@@ -157,7 +178,14 @@ export default function Post(props) {
           <div className='link-info__url'>{post.url}</div>
         </div>
         <div className='link-image'>
-          <img src={post.urlPicture} alt='' />
+          {regex.test(post.urlPicture) ? (
+            <img src={post.urlPicture} alt='link header' />
+          ) : (
+            <>
+              <MdOutlineImageNotSupported className='link-image__not-supported-icon' />
+              <p className='link-image__not-supported-text'>Not supported</p>
+            </>
+          )}
         </div>
       </div>
     </a>
@@ -191,16 +219,20 @@ export default function Post(props) {
 
   async function handleEditPostButtonClicked() {
     if (isEditing) {
-      await editPostData();
-      setIsEditing(false);
-      await updatePostData();
+      try {
+        await editPostData();
+        await updatePostData();
+        setIsEditing(false);
+      } catch (error) {
+        handleError(error);
+      }
     } else {
       setIsEditing(true);
     }
   }
 
   return (
-    <PostContainer key={post.id}>
+    <PostContainer>
       <ReactTooltip type='light' place='bottom' effect='solid' />
       <div className='left-container'>
         <img

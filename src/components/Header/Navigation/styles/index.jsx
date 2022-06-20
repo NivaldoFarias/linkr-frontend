@@ -29,9 +29,13 @@ const StyledNav = styled.nav`
   .dropdown-menu {
     ${({ theme }) => theme.mixins.position('absolute', 'initial', '0', '-50px', 'initial')};
     ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '10px')};
+    z-index: 1;
+
     height: fit-content;
     width: 100%;
+    pointer-events: auto;
 
+    color: ${({ theme }) => theme.colors.primary};
     background-color: transparent;
 
     > * {
@@ -52,6 +56,7 @@ const StyledNav = styled.nav`
     &.collapsed {
       ${({ theme }) => theme.mixins.position('absolute', 'initial', '0', '0', 'initial')};
       background-color: transparent;
+      pointer-events: none;
       height: 0 !important;
 
       * {

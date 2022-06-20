@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.aside`
-  margin-top: 160px;
+  margin-top: 100px;
   height: 460px;
   width: 30%;
   max-width: 360px;
 
-  color: white;
   border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const Header = styled.div`
   padding: 12px 16px;
 
   font-family: ${({ theme }) => theme.fonts.primary};
-  font-size: 27px;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 40px;
 
@@ -28,16 +28,17 @@ const Hashtags = styled.div`
 `;
 
 const Hashtag = styled.div`
-  font-family: ${({ theme }) => theme.fonts.secondary};
-  font-size: 19px;
-  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
   line-height: 23px;
   letter-spacing: 0.05em;
-  text-align: left;
-  letter-spacing: 0.05em;
-  cursor: pointer;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: ${({ theme }) => theme.fonts.secondary};
+
   :hover {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.tertiary};
   }
 `;
 

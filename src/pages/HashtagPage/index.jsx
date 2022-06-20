@@ -11,6 +11,11 @@ export default function HashtagPage() {
   const { token } = useContext(DataContext);
 
   useEffect(() => {
+    updateHashtagPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hashtag]);
+
+  function updateHashtagPosts() {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -20,7 +25,15 @@ export default function HashtagPage() {
     promise.then(({ data }) => {
       setPosts(data);
     });
-  }, [hashtag]);
+  }
 
-  return <Feed title={`# ${hashtag}`} posts={posts} canCreatePost={false} userThumbnail={false} />;
+  return (
+    <Feed
+      title={`#${hashtag}`}
+      posts={posts}
+      canCreatePost={false}
+      userThumbnail={false}
+      updatePostsFunction={updateHashtagPosts}
+    />
+  );
 }

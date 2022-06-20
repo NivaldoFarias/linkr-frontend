@@ -15,12 +15,12 @@ export default function useUsers(userName) {
   const { token } = useContext(DataContext);
   const browse = useNavigate();
   const config = useMemo(() => {
-    return({
+    return {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
-  },[token]);
+    };
+  }, [token]);
   useEffect(() => {
     if (userName.length > 0) {
       const response = Axios.get(`users/username/${userName}`, config);
@@ -35,8 +35,8 @@ export default function useUsers(userName) {
                 animate='visible'
                 variants={variants}
                 transition={{ delay: index * 0.05 }}
-                onClick={() => browse(`/user/${id}`)}>
-                <figure>
+              >
+                <figure onClick={() => browse(`/user/${id}`)}>
                   <img src={imageUrl} alt={`${username}`} />
                   <figcaption>{username}</figcaption>
                 </figure>

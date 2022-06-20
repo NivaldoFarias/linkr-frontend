@@ -9,7 +9,7 @@ import { MdOutlineLogout } from 'react-icons/md';
 import fallbackAvatar from './../../../assets/fallback-avatar.png';
 
 import DataContext from './../../../hooks/DataContext';
-import StyledNav from './styles';
+import StyledNav from './styles/';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);

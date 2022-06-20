@@ -8,15 +8,13 @@ import MouseContext from '../../../hooks/MouseContext';
 export default function SearchBar() {
   const [userName, setUserName] = useState('');
   const [users, setUsers] = useUsers(userName);
-  const [hovering, setHovering] = useState(false); 
+  const [hovering, setHovering] = useState(false);
   const { clicking } = useContext(MouseContext);
   useEffect(() => {
     clicking && !hovering && setUsers([]);
-  },[clicking, hovering, setUsers]);
+  }, [clicking, hovering, setUsers]);
   return (
-    <StyledDiv
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}>
+    <StyledDiv onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
       <DebounceInput
         required
         type='text'
@@ -26,6 +24,7 @@ export default function SearchBar() {
         element={StyledInput}
         minLength={3}
         debounceTimeout={300}
+        onBlur={() => setTimeout(() => setUserName(''), 300)}
       />
       <AiOutlineSearch className='magnifying-glass' />
       {users.length > 0 && userName.length > 0 && <StyledList>{users}</StyledList>}
