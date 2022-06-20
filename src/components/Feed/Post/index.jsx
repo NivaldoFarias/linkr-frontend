@@ -61,7 +61,6 @@ export default function Post(props) {
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
       await Axios.post(url, {}, CONFIG);
-      console.log(url);
       await updatePostData();
     } catch (error) {
       handleError(error);
