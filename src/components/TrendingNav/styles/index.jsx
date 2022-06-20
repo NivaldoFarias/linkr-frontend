@@ -2,12 +2,9 @@ import styled from 'styled-components';
 
 const Wrapper = styled.aside`
   margin-top: 100px;
-  height: 460px;
   width: 30%;
   max-width: 360px;
-
   border-radius: 16px;
-  background-color: transparent;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
@@ -23,6 +20,8 @@ const Header = styled.div`
 `;
 
 const Hashtags = styled.div`
+  max-height: 340px;
+  overflow-y: auto;
   padding: 22px 16px;
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '5px')};
 `;
