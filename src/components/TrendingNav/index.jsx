@@ -36,7 +36,7 @@ export default function TrendingNav() {
           }}
           key={index}
           className={scaleHashtag(Number(hashtag.likes_count), Number(hashtag.posts_count))}
-        >{`# ${hashtag.name}`}</Hashtag>
+        >{`#${hashtag.name}`}</Hashtag>
       );
     })
   ) : (
