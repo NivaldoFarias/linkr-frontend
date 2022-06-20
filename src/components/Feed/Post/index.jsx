@@ -107,7 +107,8 @@ export default function Post(props) {
 
   function likesLabel() {
     const { userHasLiked, totalLikes, usersWhoLiked } = post;
-    let label = userHasLiked
+
+    return userHasLiked
       ? totalLikes === 1
         ? 'You'
         : totalLikes < 3
@@ -117,8 +118,13 @@ export default function Post(props) {
       ? `${usersWhoLiked[0]?.username}`
       : totalLikes === 2
       ? `${usersWhoLiked[0]?.username} and ${usersWhoLiked[1]?.username}`
-      : `${usersWhoLiked[0]?.username}, ${usersWhoLiked[1]?.username} and other ${totalLikes - 2}`;
-    return label;
+      : `${
+          usersWhoLiked[0]?.username && usersWhoLiked[1]?.username
+            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and other ${
+                totalLikes - 2
+              }`
+            : 'No likes yet'
+        }`;
   }
 
   async function handleEditPostButtonClicked() {
