@@ -14,6 +14,7 @@ export default function Home() {
     if (token) {
       navigate('/timeline');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   function buildHomepage() {

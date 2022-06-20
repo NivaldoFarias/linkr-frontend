@@ -12,6 +12,7 @@ export default function TimelinePage() {
 
   useEffect(() => {
     updateTimeline();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function updateTimeline() {

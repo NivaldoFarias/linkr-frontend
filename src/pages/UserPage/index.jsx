@@ -14,6 +14,7 @@ export default function UserPage() {
 
   useEffect(() => {
     updateUserPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   function updateUserPosts() {
