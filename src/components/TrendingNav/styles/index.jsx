@@ -34,7 +34,7 @@ const Hashtag = styled.div`
   line-height: 23px;
   letter-spacing: 0.05em;
 
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   font-family: ${({ theme }) => theme.fonts.secondary};
 
@@ -45,16 +45,16 @@ const Hashtag = styled.div`
     transform: scale(1);
   }
   &.scale-medium {
-    padding-left: 10px;
+    padding-left: 20px;
     padding-bottom: 2px;
-    filter: brightness(1.2);
-    transform: scale(1.2);
+    filter: saturate(1.5);
+    transform: scale(1.5);
   }
   &.scale-large {
-    padding-left: 20px;
+    padding-left: 33px;
     padding-bottom: 5px;
-    filter: brightness(1.5);
-    transform: scale(1.5);
+    filter: saturate(2);
+    transform: scale(2);
   }
 `;
 
