@@ -109,13 +109,13 @@ export default function Post(props) {
       ? totalLikes === 1
         ? 'You'
         : totalLikes < 3
-        ? `You and ${usersWhoLiked[0].username}`
-        : `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
+        ? `You and ${usersWhoLiked[0]?.username}`
+        : `You, ${usersWhoLiked[0]?.username} and other ${totalLikes - 2}`
       : totalLikes === 1
-      ? `${usersWhoLiked[0].username}`
+      ? `${usersWhoLiked[0]?.username}`
       : totalLikes === 2
-      ? `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`
-      : `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`;
+      ? `${usersWhoLiked[0]?.username} and ${usersWhoLiked[1]?.username}`
+      : `${usersWhoLiked[0]?.username}, ${usersWhoLiked[1]?.username} and other ${totalLikes - 2}`;
     return label;
   }
 

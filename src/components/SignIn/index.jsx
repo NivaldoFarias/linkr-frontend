@@ -75,7 +75,7 @@ function SignIn() {
         };
 
         const response = await Axios.post(URL, body);
-        !!response.status ? handleSuccess(response.data) : handleError();
+        handleSuccess(response.data);
       } catch (error) {
         handleError(error);
         resetAll();

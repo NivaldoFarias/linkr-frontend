@@ -3,10 +3,18 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '24px')};
 
-  overflow-y: scroll;
   padding: 40px 0 71px;
-  width: 100%;
   height: 100%;
+  min-width: 625px;
+  width: 100%;
+
+  overflow-y: scroll;
+
+  @media only screen and (max-width: 620px) {
+    padding: 0 6px;
+    min-width: 375px;
+    padding-bottom: 117px;
+  }
 `;
 
 const Header = styled.div`
@@ -37,8 +45,11 @@ const UserThumbnail = styled.img`
 `;
 
 const Content = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '30px')};
+  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'center', '30px')};
   padding: 36px 24px;
+  min-height: min-content;
+  min-width: 625px;
+  width: 100%;
 
   border-left: ${({ theme }) => theme.styles.defaultBorder};
   border-right: ${({ theme }) => theme.styles.defaultBorder};
@@ -51,6 +62,11 @@ const Content = styled.div`
     ${({ theme }) => theme.colors.altTertiary} 100%
   );
   background-color: ${({ theme }) => theme.colors.gradient};
+
+  @media screen and (max-width: 620px) {
+    min-width: 375px;
+    padding: 36px 12px;
+  }
 `;
 
 const Posts = styled.div`

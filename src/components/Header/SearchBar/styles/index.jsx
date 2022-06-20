@@ -15,6 +15,9 @@ export const StyledDiv = styled.div`
     * {
       pointer-events: none;
     }
+    @media only screen and (max-width: 580px) {
+      display: none;
+    }
   }
 
   @media only screen and (max-width: 500px) {

@@ -100,7 +100,7 @@ function SignUp() {
         };
 
         const response = await Axios.post(URL, body);
-        response.status === 200 ? handleSuccess(response) : handleError();
+        handleSuccess(response);
       } catch (error) {
         handleError(error);
         resetAll();
@@ -108,7 +108,7 @@ function SignUp() {
 
       function handleError(error) {
         confirmAlert({
-          message: `${error.response.data.message ?? 'Something went wrong'}. Please try again.`,
+          message: `${error.response?.data.message ?? 'Something went wrong'}. Please try again.`,
           buttons: [
             {
               label: 'OK',
