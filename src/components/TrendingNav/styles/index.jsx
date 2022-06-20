@@ -44,16 +44,14 @@ const Hashtag = styled.div`
     transform: scale(1);
   }
   &.scale-medium {
-    padding-left: 20px;
     padding-bottom: 2px;
     filter: saturate(1.5);
-    transform: scale(1.5);
+    font-size: 1.5rem;
   }
   &.scale-large {
-    padding-left: 33px;
     padding-bottom: 5px;
     filter: saturate(2);
-    transform: scale(2);
+    font-size: 2rem;
   }
 `;
 
