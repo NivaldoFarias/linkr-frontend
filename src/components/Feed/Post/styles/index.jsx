@@ -95,7 +95,7 @@ const PostContainer = styled.div`
         }
       }
       .actions-container {
-        ${({ theme }) => theme.mixins.position('absolute', '10px', '15px', 'initial', 'initial')};
+        ${({ theme }) => theme.mixins.position('absolute', '0px', '0px', 'initial', 'initial')};
         ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
 
         font-size: 1rem;
@@ -140,6 +140,9 @@ const PostContainer = styled.div`
         border-left: 1px solid ${({ theme }) => theme.colors.altTertiary};
         border-right: 1px solid ${({ theme }) => theme.colors.altTertiary};
 
+        * {
+          pointer-events: none;
+        }
         :hover {
           background-color: rgba(255, 255, 255, 0.05);
         }
@@ -148,11 +151,6 @@ const PostContainer = styled.div`
           padding: 20px 16px 14px;
           height: 100%;
 
-          cursor: pointer;
-
-          * {
-            pointer-events: none;
-          }
           &__title {
             color: ${({ theme }) => theme.colors.post};
             font-size: 1rem;

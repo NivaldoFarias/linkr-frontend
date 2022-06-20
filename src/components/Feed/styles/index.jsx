@@ -3,10 +3,10 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '24px')};
 
+  overflow-y: scroll;
+  padding: 40px 0 71px;
   width: 100%;
-  margin-top: 38px;
   height: 100%;
-  overflow-y: auto;
 `;
 
 const Header = styled.div`
@@ -38,7 +38,6 @@ const UserThumbnail = styled.img`
 
 const Content = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '30px')};
-  margin-bottom: 100px;
   padding: 36px 24px;
 
   border-left: ${({ theme }) => theme.styles.defaultBorder};

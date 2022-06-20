@@ -11,6 +11,7 @@ export const Wrapper = styled.main`
 
 export const Main = styled.section`
   ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', '25px')};
+  position: relative;
   height: 100%;
   width: 100%;
 `;
