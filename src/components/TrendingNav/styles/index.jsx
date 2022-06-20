@@ -24,7 +24,7 @@ const Hashtags = styled.div`
   overflow-y: auto;
   padding: 22px 16px;
   width: 100%;
-  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '5px')};
+  ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-start', '5px')};
 `;
 
 const Hashtag = styled.div`
