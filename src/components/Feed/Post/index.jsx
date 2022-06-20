@@ -20,7 +20,6 @@ export default function Post(props) {
   const [post, setPost] = useState(props.post);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [textEdit, setTextEdit] = useState(post.text);
 
   const [editText, setEditText] = useState(props.post.text || '');
 
@@ -100,35 +99,6 @@ export default function Post(props) {
     }
   }
 
-  async function handleEditPost() {
-    const url = `/posts/${post.id}`;
-    console.log('hello', textEdit);
-    try {
-      await Axios.patch(url, { text: textEdit }, CONFIG);
-      props.updatePostsFunction();
-      setIsEditing(false);
-    } catch (err) {
-      alert('Não foi possivel editar!');
-      console.log(err);
-    }
-  }
-
-  async function handleHableEdit() {
-    setIsEditing(!isEditing);
-    setTextEdit(post.text);
-  }
-
-  function keyFunctions(e) {
-    if (e.keyCode === 27) {
-      setIsEditing(false);
-      setTextEdit(post.text);
-    }
-
-    if (e.key === 'Enter') {
-      handleEditPost();
-    }
-  }
-
   function handleError(error) {
     confirmAlert({
       message: `${
@@ -145,21 +115,19 @@ export default function Post(props) {
 
   function likesLabel() {
     const { userHasLiked, totalLikes, usersWhoLiked } = post;
-    let label = userHasLiked ? (
-        totalLikes === 1 ?
-            'You' :
-            totalLikes < 3 ?
-                `You and ${usersWhoLiked[0].username}` :
-                `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
-    ) : (
-        totalLikes === 1 ?
-            `${usersWhoLiked[0].username}` :
-            totalLikes === 2 ?
-                `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}` :
-                `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`
-    )
+    let label = userHasLiked
+      ? totalLikes === 1
+        ? 'You'
+        : totalLikes < 3
+        ? `You and ${usersWhoLiked[0].username}`
+        : `You, ${usersWhoLiked[0].username} and other ${totalLikes - 2}`
+      : totalLikes === 1
+      ? `${usersWhoLiked[0].username}`
+      : totalLikes === 2
+      ? `${usersWhoLiked[0].username} and ${usersWhoLiked[1].username}`
+      : `${usersWhoLiked[0].username}, ${usersWhoLiked[1].username} and other ${totalLikes - 2}`;
     return label;
-}
+  }
 
   const likes = (
     <div className='left-container__likes' onClick={likeButtonClicked}>

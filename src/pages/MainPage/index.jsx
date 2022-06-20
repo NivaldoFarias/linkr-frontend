@@ -22,6 +22,7 @@ export default function MainPage() {
         setUser(res.data.user);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (

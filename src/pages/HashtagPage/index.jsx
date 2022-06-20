@@ -12,6 +12,7 @@ export default function HashtagPage() {
 
   useEffect(() => {
     updateHashtagPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hashtag]);
 
   function updateHashtagPosts() {
