@@ -13,6 +13,7 @@ import getRandomInt from '../../../utils/getRandomInt';
 import DataContext from '../../../hooks/DataContext';
 import Axios from '../../../blueprints';
 import PostContainer from './styles/';
+import { StyledLoadingDots } from '../../../styles';
 
 // NEED REFACTOR
 
@@ -23,6 +24,7 @@ export default function Post(props) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  const [submitDelete, setSubmitDelete] = useState(false);
   const [editText, setEditText] = useState(props.post.text || '');
 
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
@@ -258,8 +260,16 @@ export default function Post(props) {
               <button onClick={closeModal} className='return-btn'>
                 Return
               </button>
-              <button onClick={handleDeletePost} className='delete-btn'>
-                Yes, delete it
+              <button
+                onClick={() => {
+                  setSubmitDelete(true);
+                  setTimeout(() => {
+                    handleDeletePost();
+                  }, getRandomInt(750, 2000));
+                }}
+                className='delete-btn'
+              >
+                {submitDelete ? <StyledLoadingDots /> : 'Yes, delete it'}
               </button>
             </div>
           </div>
@@ -268,6 +278,7 @@ export default function Post(props) {
     );
 
     async function handleDeletePost() {
+      setSubmitDelete(false);
       const url = `/posts/${post.id}`;
       try {
         await Axios.delete(url, CONFIG);

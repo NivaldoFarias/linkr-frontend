@@ -88,6 +88,7 @@ const modal = `
         background-color: transparent;
       }
       &.delete-btn {
+        min-width: 166.6px;
         background-color: rgb(95, 72, 224);
         color: white;
       }
