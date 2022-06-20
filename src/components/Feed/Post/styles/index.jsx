@@ -119,89 +119,88 @@ const PostContainer = styled.div`
           font-weight: 400;
         }
       }
+    }
+    .link {
+      height: 155px;
+      width: 100%;
 
-      .link {
-        height: 155px;
+      cursor: pointer;
+      text-decoration: none;
+
+      &__container {
+        ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
+        position: relative;
+        min-height: 155px;
+        height: 100%;
         width: 100%;
 
         cursor: pointer;
-        text-decoration: none;
+        overflow: hidden;
+        border-radius: 16px;
+        border-left: 1px solid ${({ theme }) => theme.colors.altTertiary};
+        border-right: 1px solid ${({ theme }) => theme.colors.altTertiary};
 
-        &__container {
-          ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
-          position: relative;
-          min-height: 155px;
+        :hover {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+        .link-info {
+          ${({ theme }) => theme.mixins.flexbox('column', 'space-evenly', 'initial', '7px')};
+          padding: 20px 16px 14px;
           height: 100%;
-          width: 100%;
 
           cursor: pointer;
+
+          * {
+            pointer-events: none;
+          }
+          &__title {
+            color: ${({ theme }) => theme.colors.post};
+            font-size: 1rem;
+            line-height: 1.2rem;
+            font-family: ${({ theme }) => theme.fonts.secondary};
+          }
+          &__description {
+            color: #9b9595;
+            font-size: 0.7rem;
+            font-family: ${({ theme }) => theme.fonts.secondary};
+            user-select: auto;
+          }
+          &__url {
+            margin-top: 6px;
+            width: 100%;
+
+            color: ${({ theme }) => theme.colors.post};
+            font-size: 0.6rem;
+            font-family: ${({ theme }) => theme.fonts.secondary};
+
+            user-select: auto;
+            word-break: break-all;
+          }
+        }
+        .link-image {
+          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '10px')};
+
+          min-width: 155px;
+          height: 100%;
+
           overflow: hidden;
-          border-radius: 16px;
-          border-left: 1px solid ${({ theme }) => theme.colors.altTertiary};
-          border-right: 1px solid ${({ theme }) => theme.colors.altTertiary};
+          border-left: 0.5px solid ${({ theme }) => theme.colors.altTertiary};
+          background-color: transparent;
 
-          :hover {
-            background-color: rgba(255, 255, 255, 0.05);
-          }
-          .link-info {
-            ${({ theme }) => theme.mixins.flexbox('column', 'space-evenly', 'initial', '7px')};
-            padding: 20px 16px 14px;
+          > img {
+            width: 100%;
             height: 100%;
-
-            cursor: pointer;
-
-            * {
-              pointer-events: none;
-            }
-            &__title {
-              color: ${({ theme }) => theme.colors.post};
-              font-size: 1rem;
-              line-height: 1.2rem;
-              font-family: ${({ theme }) => theme.fonts.secondary};
-            }
-            &__description {
-              color: #9b9595;
-              font-size: 0.7rem;
-              font-family: ${({ theme }) => theme.fonts.secondary};
-              user-select: auto;
-            }
-            &__url {
-              margin-top: 6px;
-              width: 100%;
-
-              color: ${({ theme }) => theme.colors.post};
-              font-size: 0.6rem;
-              font-family: ${({ theme }) => theme.fonts.secondary};
-
-              user-select: auto;
-              word-break: break-all;
-            }
+            object-fit: cover;
           }
-          .link-image {
-            ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '10px')};
-
-            min-width: 155px;
-            height: 100%;
-
-            overflow: hidden;
-            border-left: 0.5px solid ${({ theme }) => theme.colors.altTertiary};
-            background-color: transparent;
-
-            > img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-            &__not-supported-icon {
-              font-size: 3.6rem;
-              color: ${({ theme }) => theme.colors.tertiary};
-            }
-            &__not-supported-text {
-              font-size: 1rem;
-              font-weight: bold;
-              color: ${({ theme }) => theme.colors.tertiary};
-              font-family: ${({ theme }) => theme.fonts.secondary};
-            }
+          &__not-supported-icon {
+            font-size: 3.6rem;
+            color: ${({ theme }) => theme.colors.tertiary};
+          }
+          &__not-supported-text {
+            font-size: 1rem;
+            font-weight: bold;
+            color: ${({ theme }) => theme.colors.tertiary};
+            font-family: ${({ theme }) => theme.fonts.secondary};
           }
         }
       }

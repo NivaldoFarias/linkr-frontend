@@ -53,6 +53,7 @@ const StyledNav = styled.nav`
     &.collapsed {
       ${({ theme }) => theme.mixins.position('absolute', 'initial', '0', '0', 'initial')};
       background-color: transparent;
+      pointer-events: none;
       height: 0 !important;
 
       * {

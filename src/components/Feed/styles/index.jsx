@@ -38,6 +38,7 @@ const UserThumbnail = styled.img`
 
 const Content = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '30px')};
+  margin-bottom: 100px;
   padding: 36px 24px;
 
   border-left: ${({ theme }) => theme.styles.defaultBorder};
