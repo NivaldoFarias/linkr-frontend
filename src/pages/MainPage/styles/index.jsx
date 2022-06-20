@@ -10,7 +10,7 @@ export const Wrapper = styled.main`
 `;
 
 export const Main = styled.section`
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'initial', '25px')};
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'flex-start', '25px')};
   height: 100%;
   width: 100%;
 `;

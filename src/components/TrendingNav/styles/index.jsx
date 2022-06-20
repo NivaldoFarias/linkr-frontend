@@ -38,7 +38,7 @@ const Hashtag = styled.div`
   font-family: ${({ theme }) => theme.fonts.secondary};
 
   :hover {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.tertiary};
   }
 `;
 
