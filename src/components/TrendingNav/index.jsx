@@ -52,7 +52,6 @@ export default function TrendingNav() {
 
   function scaleHashtag(likesCount, postsCount) {
     const weigthedValue = likesCount * 2 + postsCount * 1.3;
-    console.log(weigthedValue);
 
     if (weigthedValue >= 0 && weigthedValue < 5) {
       return 'scale-small';
