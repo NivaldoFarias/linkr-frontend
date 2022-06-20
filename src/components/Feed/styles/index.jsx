@@ -4,15 +4,16 @@ const Wrapper = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'flex-start', '24px')};
 
   padding: 40px 0 71px;
-  min-height: 520px;
   height: 100%;
   min-width: 625px;
   width: 100%;
 
   overflow-y: scroll;
 
-  @media screen and (max-width: 620px) {
+  @media only screen and (max-width: 620px) {
+    padding: 0 6px;
     min-width: 375px;
+    padding-bottom: 117px;
   }
 `;
 
@@ -46,7 +47,7 @@ const UserThumbnail = styled.img`
 const Content = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'center', '30px')};
   padding: 36px 24px;
-  height: 100%;
+  min-height: min-content;
   min-width: 625px;
   width: 100%;
 
@@ -64,6 +65,7 @@ const Content = styled.div`
 
   @media screen and (max-width: 620px) {
     min-width: 375px;
+    padding: 36px 12px;
   }
 `;
 

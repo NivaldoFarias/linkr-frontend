@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const EmptyPostsContainer = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '25px')};
   padding: 18px;
-  min-height: 625px;
+  min-height: 520px;
   height: 100%;
   width: 100%;
 
