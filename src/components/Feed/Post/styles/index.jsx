@@ -11,6 +11,7 @@ const PostContainer = styled.div`
   .left-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
     height: 100%;
+    width: 50px;
 
     &__image {
       width: 50px;
@@ -54,15 +55,16 @@ const PostContainer = styled.div`
     }
   }
   .right-container {
-    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
+    ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
     height: 100%;
+    width: 100%;
 
     .delete-post {
       ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
       width: 100%;
     }
     .post-header {
-      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '12px')};
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex', '12px')};
       position: relative;
 
       margin-bottom: 16px;
@@ -95,17 +97,30 @@ const PostContainer = styled.div`
         font-size: 1rem;
         color: ${({ theme }) => theme.colors.post};
         font-family: ${({ theme }) => theme.fonts.secondary};
-
+        width: 100%;
         .hashtag {
           color: white;
           font-weight: bold;
           cursor: pointer;
         }
       }
+      &__edit {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.colors.editPost};
+        font-family: ${({ theme }) => theme.fonts.secondary};
+        width: 100%;
+        border-radius: 7px;
+        padding: 8px;
+        border: none;
+        font-weight: 400;
+      }
     }
+
     .link {
       text-decoration: none;
       cursor: pointer !important;
+      width: 100%;
+      height: 155px;
 
       &__container {
         ${({ theme }) => theme.mixins.flexbox('row', 'space-between', 'center', 'initial')};
@@ -126,7 +141,6 @@ const PostContainer = styled.div`
           ${({ theme }) => theme.mixins.flexbox('column', 'center', 'initial', '7px')};
           padding: 20px 16px 14px;
           height: 100%;
-          max-width: 350px;
 
           cursor: pointer;
 
@@ -158,8 +172,11 @@ const PostContainer = styled.div`
           }
         }
         .link-image {
-          ${({ theme }) => theme.mixins.flexbox('column', 'column', 'center', 'initial')};
-          max-width: 155px;
+          ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', 'initial')};
+
+          flex: 0 0 auto;
+
+          width: 155px;
           height: 100%;
 
           overflow: hidden;
@@ -169,7 +186,7 @@ const PostContainer = styled.div`
           > img {
             width: 100%;
             height: 100%;
-            object-fit: scale-down;
+            object-fit: cover;
           }
         }
       }
