@@ -35,7 +35,7 @@ export default function TrendingNav() {
             onClickHandler(hashtag.name);
           }}
           key={index}
-          className={scaleHashtag(Number(hashtag.likes_count))}
+          className={scaleHashtag(Number(hashtag.likes_count), Number(hashtag.posts_count))}
         >{`# ${hashtag.name}`}</Hashtag>
       );
     })
@@ -50,10 +50,13 @@ export default function TrendingNav() {
     </Wrapper>
   );
 
-  function scaleHashtag(likesCount) {
-    if (likesCount === 0 || likesCount === 1) {
+  function scaleHashtag(likesCount, postsCount) {
+    const weigthedValue = likesCount * 2 + postsCount * 1.3;
+    console.log(weigthedValue);
+
+    if (weigthedValue >= 0 && weigthedValue < 5) {
       return 'scale-small';
-    } else if (likesCount > 1 && likesCount < 10) {
+    } else if (weigthedValue > 5 && weigthedValue < 15) {
       return 'scale-medium';
     } else {
       return 'scale-large';
