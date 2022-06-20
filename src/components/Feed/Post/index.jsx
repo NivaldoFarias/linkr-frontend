@@ -183,6 +183,7 @@ export default function Post(props) {
         renderHashtag={(val) => (
           <span
             className='hashtag'
+            key={Number(post.id) * getRandomInt(1, 10000)}
             onClick={() => {
               goToHashtagPage(val);
             }}
@@ -267,7 +268,7 @@ export default function Post(props) {
   }
 
   return (
-    <PostContainer key={Number(post.id) * getRandomInt(1, 10000)}>
+    <PostContainer>
       <ReactTooltip type='light' place='bottom' effect='solid' />
       <div className='left-container'>
         <img
