@@ -14,6 +14,13 @@ export const Main = styled.section`
   position: relative;
   height: 100%;
   width: 100%;
+
+  .aside-container {
+    ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-end', '35px')};
+    padding-top: 45px;
+    height: 100%;
+    width: min-content;
+  }
 `;
 
 export const Feed = styled.div`

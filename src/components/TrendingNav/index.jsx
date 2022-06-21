@@ -1,9 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Wrapper, Header, Hashtags, Hashtag } from './styles';
-import DataContext from '../../hooks/DataContext';
-import Axios from '../../blueprints';
 import { MainPageContext } from '../../hooks/MainPageContext';
 
 export default function TrendingNav() {
