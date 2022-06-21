@@ -1,10 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PostContext from '../../../../../hooks/PostContext';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Axios from '../../../../../blueprints';
 
 export default function Likes() {
-  const { post, isLiked, setIsLiked, updatePostData, CONFIG, handleError } =
+  const { isLiked, setIsLiked, post, updatePostData, CONFIG, handleError } =
     useContext(PostContext);
 
   return (
@@ -19,8 +19,6 @@ export default function Likes() {
 
   async function likeButtonClicked() {
     const tryToLike = !isLiked;
-    setIsLiked(tryToLike);
-
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
       await Axios.post(url, {}, CONFIG);

@@ -1,9 +1,20 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PostContext from '../../../../hooks/PostContext';
 
 export default function EditPostText() {
-  const { editText, setEditText, setIsEditingPost, handleError, editPostData, updatePostData } =
-    useContext(PostContext);
+  const {
+    post,
+    editText,
+    setEditText,
+    setIsEditingPost,
+    handleError,
+    editPostData,
+    updatePostData,
+  } = useContext(PostContext);
+
+  useEffect(() => {
+    setEditText(post.text);
+  }, [post]);
 
   return (
     <textarea
