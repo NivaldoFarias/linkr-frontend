@@ -17,6 +17,7 @@ import { StyledLoadingDots } from '../../../styles';
 import PostContainer from './styles/';
 
 import Likes from './Likes';
+import Comments from './Comments';
 
 // NEED REFACTOR
 
@@ -130,6 +131,7 @@ export default function Post(props) {
           post={post}
           updatePostData={updatePostData}
         />
+        <Comments />
       </div>
       <div className='right-container'>
         {deletePost}
