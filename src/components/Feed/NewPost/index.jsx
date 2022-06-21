@@ -1,22 +1,24 @@
 import { useContext, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 
-import fallbackAvatar from '../../../assets/fallback-avatar.png';
+import fallbackAvatar from './../../../assets/fallback-avatar.png';
 import DataContext from '../../../hooks/DataContext';
 import { Wrapper, PostForm } from './styles/';
 import Axios from '../../../blueprints';
+import FeedContext from '../../../hooks/FeedContext';
 
-export default function NewPost({ updatePostsFunction }) {
+export default function NewPost() {
   const [url, setUrl] = useState('');
   const [btnClick, setBtnClick] = useState(false);
   const [description, setDescription] = useState('');
   const [fieldVisibility, setFieldVisibility] = useState(false);
 
   const { user, token } = useContext(DataContext);
+  const { updatePostsFunction } = useContext(FeedContext);
 
   return (
     <Wrapper>
-      <img src={user?.imageUrl || fallbackAvatar} alt='user'></img>
+      <img src={user?.imageUrl ?? fallbackAvatar} alt='user'></img>
       <PostForm onSubmit={handleSendNewPost}>
         <h3>What are you going to share today?</h3>
         <input
