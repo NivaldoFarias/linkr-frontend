@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import PostContext from '../../../../hooks/PostContext';
+import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditActions() {
   const {

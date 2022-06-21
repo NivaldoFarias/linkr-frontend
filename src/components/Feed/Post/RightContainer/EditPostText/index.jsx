@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import PostContext from '../../../../hooks/PostContext';
+import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditPostText() {
   const { editText, setEditText, setIsEditingPost, handleError, editPostData, updatePostData } =
