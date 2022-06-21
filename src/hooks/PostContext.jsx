@@ -14,10 +14,11 @@ export function PostProvider(props) {
   const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
   const [editText, setEditText] = useState(props.post.text);
 
-  const [commentsData, setCommentsData] = useState(null);
-  const [sharesData, setSharesData] = useState(null);
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [commentsData, setCommentsData] = useState([]);
+  const [sharesData, setSharesData] = useState([]);
 
   const navigate = useNavigate();
 

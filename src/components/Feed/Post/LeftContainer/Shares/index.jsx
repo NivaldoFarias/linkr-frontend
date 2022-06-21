@@ -1,15 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { IoRepeatSharp } from 'react-icons/io5';
+import DataContext from '../../../../../hooks/DataContext';
 import PostContext from './../../../../../hooks/PostContext';
 
 function Shares() {
   const [click, setClick] = useState(false);
-  const { post, sharesData, setSharesData } = useContext(PostContext);
-  const [postData, setPostData] = useState({ id: post?.id || 0, shares_count: 0 });
+
+  const { user } = useContext(DataContext);
+  const { sharesData, setSharesData } = useContext(PostContext);
 
   useEffect(() => {
-    if (click) setSharesData({ ...sharesData, id: postData.id });
-    else if (!click) setSharesData({ ...sharesData, id: null });
+    if (click && !sharesData.includes(user.id)) {
+      setSharesData([...sharesData, user.id]);
+    } else setSharesData(sharesData.filter((id) => id !== user.id));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [click]);
 
@@ -20,8 +24,8 @@ function Shares() {
         onClick={toggleReshare}
       />
       <p className='left-container__shares__label'>
-        <span>{processSharesCount(postData.shares_count)}</span>
-        {sharesLabel(postData.shares_count)}
+        <span>{processSharesCount(sharesData.length)}</span>
+        {sharesLabel(sharesData.length)}
       </p>
     </div>
   );

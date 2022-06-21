@@ -38,16 +38,18 @@ function Likes() {
         ? 'You'
         : totalLikes < 3
         ? `You and ${usersWhoLiked[0]?.username}`
-        : `You, ${usersWhoLiked[0]?.username} and other ${totalLikes - 2}`
+        : `You, ${usersWhoLiked[0]?.username} and ${totalLikes - 2} other${
+            totalLikes - 2 === 1 ? '' : 's'
+          }`
       : totalLikes === 1
       ? `${usersWhoLiked[0]?.username}`
       : totalLikes === 2
       ? `${usersWhoLiked[0]?.username} and ${usersWhoLiked[1]?.username}`
       : `${
           usersWhoLiked[0]?.username && usersWhoLiked[1]?.username
-            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and other ${
+            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and ${
                 totalLikes - 2
-              }`
+              }other${totalLikes - 2 === 1 ? '' : 's'}`
             : 'No likes yet'
         }`;
   }
