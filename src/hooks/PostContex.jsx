@@ -38,6 +38,7 @@ export function PostProvider(props) {
         modalIsOpen,
         setModalIsOpen,
         updatePostData,
+        editPostData,
         isEditingPost,
         setIsEditingPost,
         goToUserPage,
@@ -54,6 +55,15 @@ export function PostProvider(props) {
     try {
       const { data } = await Axios.get(url, CONFIG);
       setPost(data);
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
+  async function editPostData() {
+    const url = `/posts/${post.id}`;
+    try {
+      await Axios.put(url, { text: editText }, CONFIG);
     } catch (err) {
       handleError(err);
     }

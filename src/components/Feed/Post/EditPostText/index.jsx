@@ -3,26 +3,38 @@ import Axios from '../../../../blueprints';
 import PostContext from '../../../../hooks/PostContex';
 
 export default function EditPostText() {
-  const { post, editText, setEditText, CONFIG, handleError } = useContext(PostContext);
+  const {
+    post,
+    editText,
+    setEditText,
+    setIsEditingPost,
+    handleError,
+    editPostData,
+    updatePostData,
+  } = useContext(PostContext);
 
   return (
     <textarea
       className='post-header__edit'
-      onChange={handleEditPostInputChange}
+      onChange={handleChange}
+      onKeyDownCapture={handleEditPostInputKeyDown}
       value={editText}
     ></textarea>
   );
 
-  async function editPostData() {
-    const url = `/posts/${post.id}`;
-    try {
-      await Axios.put(url, { text: editText }, CONFIG);
-    } catch (err) {
-      handleError(err);
+  async function handleEditPostInputKeyDown(e) {
+    if (e.key === 'Enter') {
+      try {
+        await editPostData();
+        await updatePostData();
+        setIsEditingPost(false);
+      } catch (error) {
+        handleError(error);
+      }
     }
   }
 
-  function handleEditPostInputChange(e) {
+  function handleChange(e) {
     e.preventDefault();
     setEditText(e.target.value);
   }

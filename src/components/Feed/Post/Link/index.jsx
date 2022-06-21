@@ -3,7 +3,7 @@ import PostContext from '../../../../hooks/PostContex';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
 
 export default function Link() {
-  const [post] = useContext(PostContext);
+  const { post } = useContext(PostContext);
 
   const regex = new RegExp(
     '^(https?:\\/\\/)?' + // protocol

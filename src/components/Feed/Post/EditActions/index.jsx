@@ -13,6 +13,7 @@ export default function EditActions() {
     setModalIsOpen,
     CONFIG,
     handleError,
+    editPostData,
   } = useContext(PostContext);
 
   return (
@@ -33,15 +34,6 @@ export default function EditActions() {
       }
     } else {
       setIsEditingPost(true);
-    }
-  }
-
-  async function editPostData() {
-    const url = `/posts/${post.id}`;
-    try {
-      await Axios.put(url, { text: editText }, CONFIG);
-    } catch (err) {
-      handleError(err);
     }
   }
 
