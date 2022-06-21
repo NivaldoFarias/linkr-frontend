@@ -45,7 +45,7 @@ const StyledFollowButton = styled.button`
     height: 10px;
     border-radius: 5px;
     background-color: transparent;
-    box-shadow: 12px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+    box-shadow: 12px 0 0 -5px ${({ theme }) => theme.colors.primary};
     animation: dotPulse 1s infinite linear;
     animation-delay: 0.17777777s;
 
@@ -58,54 +58,54 @@ const StyledFollowButton = styled.button`
       width: 10px;
       height: 10px;
       border-radius: 5px;
-      color: ${({ theme }) => theme.colors.gradient};
+      color: ${({ theme }) => theme.colors.primary};
     }
 
     &::before {
-      box-shadow: -25px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+      box-shadow: -25px 0 0 -5px ${({ theme }) => theme.colors.primary};
       animation: dotPulseBefore 1s infinite linear;
       animation-delay: 0s;
     }
 
     &::after {
-      box-shadow: 36px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+      box-shadow: 36px 0 0 -5px ${({ theme }) => theme.colors.primary};
       animation: dotPulseAfter 1s infinite linear;
       animation-delay: 0.33333s;
     }
     @keyframes dotPulseBefore {
       0% {
-        box-shadow: -25px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+        box-shadow: -25px 0 0 -5px ${({ theme }) => theme.colors.primary};
       }
       30% {
-        box-shadow: -25px 0 0 2px ${({ theme }) => theme.colors.gradient};
+        box-shadow: -25px 0 0 2px ${({ theme }) => theme.colors.primary};
       }
       60%,
       100% {
-        box-shadow: -25px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+        box-shadow: -25px 0 0 -5px ${({ theme }) => theme.colors.primary};
       }
     }
     @keyframes dotPulse {
       0% {
-        box-shadow: 12px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+        box-shadow: 12px 0 0 -5px ${({ theme }) => theme.colors.primary};
       }
       30% {
-        box-shadow: 12px 0 0 2px ${({ theme }) => theme.colors.gradient};
+        box-shadow: 12px 0 0 2px ${({ theme }) => theme.colors.primary};
       }
       60%,
       100% {
-        box-shadow: 12px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+        box-shadow: 12px 0 0 -5px ${({ theme }) => theme.colors.primary};
       }
     }
     @keyframes dotPulseAfter {
       0% {
-        box-shadow: 36px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+        box-shadow: 36px 0 0 -5px ${({ theme }) => theme.colors.primary};
       }
       30% {
-        box-shadow: 36px 0 0 2px ${({ theme }) => theme.colors.gradient};
+        box-shadow: 36px 0 0 2px ${({ theme }) => theme.colors.primary};
       }
       60%,
       100% {
-        box-shadow: 36px 0 0 -5px ${({ theme }) => theme.colors.gradient};
+        box-shadow: 36px 0 0 -5px ${({ theme }) => theme.colors.primary};
       }
     }
   }
