@@ -23,11 +23,11 @@ export default function Post(props) {
     <PostContainer>
       <ReactTooltip type='light' place='bottom' effect='solid' />
       {leftContainer}
-      <div className='right-container'>
+      {/* <div className='right-container'>
         {modalIsOpen ? <DeleteModal /> : <></>}
         {postHeader}
         <Link />
-      </div>
+      </div> */}
     </PostContainer>
   );
 

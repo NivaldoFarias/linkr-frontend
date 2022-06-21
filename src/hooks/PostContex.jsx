@@ -20,10 +20,9 @@ export function PostProvider(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setPost(props.post);
-    setIsLiked(props.post.userHasLiked);
-    setEditText(props.post.text);
-  }, [props]);
+    setIsLiked(post.userHasLiked);
+    setEditText(post.text);
+  }, [post]);
 
   return (
     <PostContext.Provider

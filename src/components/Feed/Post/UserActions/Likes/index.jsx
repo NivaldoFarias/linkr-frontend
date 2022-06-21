@@ -19,12 +19,11 @@ export default function Likes() {
 
   async function likeButtonClicked() {
     const tryToLike = !isLiked;
-    setIsLiked(tryToLike);
-
+    console.log(tryToLike ? 'curtir' : 'descurtir');
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
-      await Axios.post(url, {}, CONFIG);
       console.log(url);
+      await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
       handleError(error);
