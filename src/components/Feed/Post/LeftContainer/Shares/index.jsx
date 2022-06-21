@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { IoRepeatSharp } from 'react-icons/io5';
-import DataContext from '../../../../hooks/DataContext';
+import PostContext from './../../../../../hooks/PostContext';
 
 function Shares() {
   const [postData, setPostData] = useState({ id: 1, shares_count: 0 });
   const [click, setClick] = useState(false);
-  const { sharesData, setSharesData } = useContext(DataContext);
+  const { sharesData, setSharesData } = useContext(PostContext);
 
   useEffect(() => {
     if (click) setSharesData({ ...sharesData, id: postData.id });

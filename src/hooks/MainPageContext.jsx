@@ -10,6 +10,7 @@ export function MainPageProvider({ children }) {
 
   useEffect(() => {
     loadHashtags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function loadHashtags() {

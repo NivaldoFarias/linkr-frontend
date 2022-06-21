@@ -1,17 +1,13 @@
 import { useState, useEffect, createContext } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
-const DataContext = createContext();
+export const DataContext = createContext();
 
 export function DataProvider({ children }) {
   const [user, setUser] = useLocalStorage('user', null);
   const [token, setToken] = useLocalStorage('token', null);
   const [lightMode, setLightMode] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
-
-  // Temporary contexts for testing components
-  const [commentsData, setCommentsData] = useState(null);
-  const [sharesData, setSharesData] = useState(null);
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
@@ -31,10 +27,6 @@ export function DataProvider({ children }) {
         setUser,
         token,
         setToken,
-        commentsData,
-        setCommentsData,
-        sharesData,
-        setSharesData,
         lightMode,
         setLightMode,
         width,

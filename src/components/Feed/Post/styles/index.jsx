@@ -167,16 +167,17 @@ const PostContainer = styled.div`
             pointer-events: none;
           }
         }
-        &__edit {
-          font-size: 1rem;
-          color: ${({ theme }) => theme.colors.editPost};
-          font-family: ${({ theme }) => theme.fonts.secondary};
-          width: 100%;
-          border-radius: 7px;
-          padding: 8px;
-          border: none;
-          font-weight: 400;
-        }
+      }
+
+      &__edit {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.colors.editPost};
+        font-family: ${({ theme }) => theme.fonts.secondary};
+        width: 100%;
+        border-radius: 7px;
+        padding: 8px;
+        border: none;
+        font-weight: 400;
       }
     }
     .link {

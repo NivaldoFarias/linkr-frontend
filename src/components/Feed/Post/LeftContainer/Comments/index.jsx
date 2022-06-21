@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { GoCommentDiscussion } from 'react-icons/go';
-import DataContext from '../../../../hooks/DataContext';
+import PostContext from '../../../../../hooks/PostContext';
 
 function Comments() {
   const [postData, setPostData] = useState({ id: 1, comments_count: 0 });
   const [click, setClick] = useState(false);
-  const { commentsData, setCommentsData } = useContext(DataContext);
+  const { commentsData, setCommentsData } = useContext(PostContext);
 
   useEffect(() => {
     if (click) setCommentsData({ ...commentsData, id: postData.id });

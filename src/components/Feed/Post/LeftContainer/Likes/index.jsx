@@ -1,13 +1,11 @@
 import { useContext } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
+import PostContext from '../../../../../hooks/PostContext';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import Axios from '../../../../../blueprints';
 
-import DataContext from '../../../../hooks/DataContext';
-import Axios from '../../../../blueprints';
-
-function Likes({ post, updatePostData, isLiked, setIsLiked }) {
-  const { token } = useContext(DataContext);
-  const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
+function Likes() {
+  const { post, isLiked, setIsLiked, updatePostData, CONFIG, handleError } =
+    useContext(PostContext);
 
   return (
     <div className='left-container__likes' onClick={likeButtonClicked}>
@@ -60,20 +58,6 @@ function Likes({ post, updatePostData, isLiked, setIsLiked }) {
 
   function processLikes() {
     return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
-  }
-
-  function handleError(error) {
-    confirmAlert({
-      message: `${
-        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
-      }. Please try again.`,
-      buttons: [
-        {
-          label: 'OK',
-          onClick: () => null,
-        },
-      ],
-    });
   }
 }
 
