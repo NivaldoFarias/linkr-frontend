@@ -12,7 +12,7 @@ const theme = {
     lowContrastSecondary: 'rgb(248, 158, 55)',
     lowContrastTertiary: 'rgb(184, 98, 0)',
 
-    commentSection: 'rgba(76, 30, 79, 0.945)',
+    commentSection: 'rgb(43, 11, 49)',
     gradient: 'rgb(255, 248, 241)',
 
     text: 'rgb(112, 112, 112)',

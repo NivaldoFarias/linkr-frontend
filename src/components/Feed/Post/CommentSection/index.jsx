@@ -9,7 +9,8 @@ import StyledCommentSection from './styles';
 function CommentSection() {
   const { user } = useContext(DataContext);
   const [inputValue, setInputValue] = useState('');
-  const { commentsData, setCommentsData, isCommentSectionOpen } = useContext(PostContext);
+  const { commentsData, setCommentsData, isCommentSectionOpen, handleError } =
+    useContext(PostContext);
 
   useEffect(() => {
     setCommentsData([
@@ -20,6 +21,13 @@ function CommentSection() {
         imageUrl: user.imageUrl,
         username: user.username,
         text: 'testing comment section',
+      },
+      {
+        id: 2,
+        userId: 5,
+        imageUrl: user.imageUrl,
+        username: 'this-is-a-test',
+        text: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem! Quisquam, quidem!',
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,16 +73,36 @@ function CommentSection() {
           type='text'
           placeholder='Write a comment...'
           onChange={handleInput}
+          onBlur={handleLeave}
+          onReset={handleLeave}
+          onKeyDown={handleErase}
         />
-        <AiOutlineSend className='new-comment__icon' />
+        <AiOutlineSend className='new-comment__icon' onClick={handleSubmitComment} />
       </div>
     </StyledCommentSection>
   );
 
   function handleInput(e) {
-    e.target.style.height = 'inherit';
-    e.target.style.height = `${Math.min(e.target.scrollHeight, 240)}px`;
+    e.target.parentNode.style.height = `${Math.max(
+      e.target.scrollHeight,
+      e.target.parentNode.clientHeight,
+    )}px`;
     setInputValue(e.target.value);
+  }
+
+  function handleLeave(e) {
+    if (inputValue === '') e.target.parentNode.style.height = 'inherit';
+  }
+
+  function handleErase(e) {
+    console.log(e.key, e.target.value);
+    if (e.key === 'Backspace') {
+      e.target.parentNode.style.height = 'inherit';
+    }
+  }
+
+  function handleSubmitComment() {
+    handleError('Need Implementation');
   }
 }
 

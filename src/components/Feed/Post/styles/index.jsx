@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const PostWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
+  position: relative;
   height: min-content;
   width: 100%;
 `;
@@ -15,7 +16,7 @@ const PostContainer = styled.div`
   min-width: 602px;
 
   border-radius: 16px;
-  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border: 2px solid ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.primary};
 
   .left-container {
@@ -271,8 +272,9 @@ const PostContainer = styled.div`
     }
   }
   &.open-comments {
-    border-radius: 16px;
-    border: 1px solid ${({ theme }) => theme.colors.tertiary};
+    border-bottom: none !important;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   @media screen and (max-width: 620px) {

@@ -1,18 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { GoCommentDiscussion } from 'react-icons/go';
 import PostContext from '../../../../../hooks/PostContext';
 
 function Comments() {
-  const { post, commentsData, setCommentsData, isCommentSectionOpen, setOpenCommentSection } =
-    useContext(PostContext);
-
-  const [postData, setPostData] = useState({ id: post?.id || 0, comments_count: 0 });
-
-  useEffect(() => {
-    if (isCommentSectionOpen) setCommentsData({ ...commentsData, id: postData.id });
-    else if (!isCommentSectionOpen) setCommentsData({ ...commentsData, id: null });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCommentSectionOpen]);
+  const { commentsData, isCommentSectionOpen, setOpenCommentSection } = useContext(PostContext);
 
   return (
     <div className='left-container__comments'>
@@ -21,8 +12,8 @@ function Comments() {
         onClick={toggleCommentSection}
       />
       <p className='left-container__comments__label'>
-        <span>{commentsCount(postData.comments_count)}</span>
-        {commentsLabel(postData.comments_count)}
+        <span>{commentsCount(commentsData.length)}</span>
+        {commentsLabel(commentsData.length)}
       </p>
     </div>
   );
