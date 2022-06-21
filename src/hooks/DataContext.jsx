@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
-const DataContext = createContext();
+export const DataContext = createContext();
 
 export function DataProvider({ children }) {
   const [user, setUser] = useLocalStorage('user', null);
