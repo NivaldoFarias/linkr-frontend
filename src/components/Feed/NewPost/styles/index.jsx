@@ -59,7 +59,7 @@ export const PostForm = styled.form`
     padding: 8px 33px;
     margin: 10px 0 0 auto;
 
-    color: white;
+    color: ${({ theme }) => theme.colors.gradient};
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 2px;

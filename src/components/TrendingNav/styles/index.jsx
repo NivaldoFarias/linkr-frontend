@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.aside`
-  margin-top: 100px;
-  width: 30%;
-  max-width: 360px;
+  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
+
+  min-width: 100%;
+  width: 360px;
   border-radius: 16px;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
 const Header = styled.div`
   padding: 12px 16px;
+  width: 100%;
 
   font-family: ${({ theme }) => theme.fonts.primary};
   font-size: 2rem;
@@ -33,7 +35,7 @@ const Hashtag = styled.div`
   line-height: 23px;
   letter-spacing: 0.05em;
 
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   font-family: ${({ theme }) => theme.fonts.secondary};
 
@@ -44,16 +46,14 @@ const Hashtag = styled.div`
     transform: scale(1);
   }
   &.scale-medium {
-    padding-left: 10px;
     padding-bottom: 2px;
-    filter: brightness(1.2);
-    transform: scale(1.2);
+    filter: saturate(1.5);
+    font-size: 1.5rem;
   }
   &.scale-large {
-    padding-left: 20px;
     padding-bottom: 5px;
-    filter: brightness(1.5);
-    transform: scale(1.5);
+    filter: saturate(2);
+    font-size: 2rem;
   }
 `;
 

@@ -1,25 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Wrapper, Header, Hashtags, Hashtag } from './styles';
-import DataContext from '../../hooks/DataContext';
-import Axios from '../../blueprints';
+import { MainPageContext } from '../../hooks/MainPageContext';
 
 export default function TrendingNav() {
-  const [hashtags, setHashtags] = useState(null);
-
-  const { token } = useContext(DataContext);
-
-  useEffect(() => {
-    Axios.get('hashtags/trending', token)
-      .then(({ data }) => {
-        setHashtags(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { hashtags } = useContext(MainPageContext);
 
   const navigate = useNavigate();
 
@@ -36,7 +22,7 @@ export default function TrendingNav() {
           }}
           key={index}
           className={scaleHashtag(Number(hashtag.likes_count), Number(hashtag.posts_count))}
-        >{`# ${hashtag.name}`}</Hashtag>
+        >{`#${hashtag.name}`}</Hashtag>
       );
     })
   ) : (

@@ -7,6 +7,8 @@ import { Wrapper, Main, Feed } from './styles';
 import { useNavigate } from 'react-router-dom';
 import MouseContext from '../../hooks/MouseContext';
 import Axios from '../../blueprints';
+import MainPageProvider from '../../hooks/MainPageContext';
+import FollowButton from '../../components/FollowButton';
 
 export default function MainPage() {
   const { width, token, setUser } = useContext(DataContext);
@@ -26,14 +28,21 @@ export default function MainPage() {
   }, [token]);
 
   return (
-    <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
-      <Header />
-      <Main>
-        <Feed>
-          <Outlet />
-        </Feed>
-        {width > 600 && <TrendingNav />}
-      </Main>
-    </Wrapper>
+    <MainPageProvider>
+      <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
+        <Header />
+        <Main>
+          <Feed>
+            <Outlet />
+          </Feed>
+          {width > 600 && (
+            <div className='aside-container'>
+              <FollowButton />
+              <TrendingNav />
+            </div>
+          )}
+        </Main>
+      </Wrapper>
+    </MainPageProvider>
   );
 }
