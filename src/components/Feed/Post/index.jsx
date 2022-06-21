@@ -3,7 +3,7 @@ import ReactTooltip from 'react-tooltip';
 
 import DataContext from '../../../hooks/DataContext';
 import PostContainer from './styles/';
-import PostContext from '../../../hooks/PostContex';
+import PostContext from '../../../hooks/PostContext';
 
 import Link from './Link';
 import DeleteModal from './DeleteModal';
@@ -12,7 +12,7 @@ import EditPostText from './EditPostText';
 import PostText from './PostText';
 import Likes from './UserActions/Likes';
 
-export default function Post(props) {
+export default function Post() {
   const { user } = useContext(DataContext);
   const { post, modalIsOpen, isEditingPost, goToUserPage } = useContext(PostContext);
 

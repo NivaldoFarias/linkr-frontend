@@ -4,7 +4,7 @@ import { StyledLoadingDots } from '../../../../styles';
 
 import Modal from 'react-modal';
 import Axios from '../../../../blueprints';
-import PostContext from '../../../../hooks/PostContex';
+import PostContext from '../../../../hooks/PostContext';
 import FeedContext from '../../../../hooks/FeedContext';
 import getRandomInt from '../../../../utils/getRandomInt';
 

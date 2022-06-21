@@ -10,10 +10,10 @@ export function MainPageProvider({ children }) {
 
   useEffect(() => {
     loadHashtags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function loadHashtags() {
-    console.log('loading hashtags');
     Axios.get('hashtags/trending', token)
       .then(({ data }) => {
         setHashtags(data);
