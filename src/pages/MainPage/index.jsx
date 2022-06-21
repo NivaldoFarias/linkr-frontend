@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import MouseContext from '../../hooks/MouseContext';
 import Axios from '../../blueprints';
 import MainPageProvider from '../../hooks/MainPageContext';
+import FollowButton from '../../components/FollowButton';
 
 export default function MainPage() {
   const { width, token, setUser } = useContext(DataContext);
@@ -23,6 +24,7 @@ export default function MainPage() {
         setUser(res.data.user);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (
@@ -33,7 +35,12 @@ export default function MainPage() {
           <Feed>
             <Outlet />
           </Feed>
-          {width > 600 && <TrendingNav />}
+          {width > 600 && (
+            <div className='aside-container'>
+              <FollowButton />
+              <TrendingNav />
+            </div>
+          )}
         </Main>
       </Wrapper>
     </MainPageProvider>

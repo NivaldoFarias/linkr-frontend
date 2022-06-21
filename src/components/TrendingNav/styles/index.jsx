@@ -3,9 +3,8 @@ import styled from 'styled-components';
 const Wrapper = styled.aside`
   ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
 
-  margin-top: 40px;
-  width: 100%;
-  max-width: 360px;
+  min-width: 100%;
+  width: 360px;
   border-radius: 16px;
   color: ${({ theme }) => theme.colors.primary};
 `;

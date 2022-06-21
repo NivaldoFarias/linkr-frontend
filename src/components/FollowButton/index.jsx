@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
-import DataContext from '../../../hooks/DataContext';
-import getRandomInt from '../../../utils/getRandomInt';
+import DataContext from '../../hooks/DataContext';
+import getRandomInt from '../../utils/getRandomInt';
 import StyledFollowButton from './styles';
 
 function FollowButton() {
@@ -21,6 +21,7 @@ function FollowButton() {
       className={clicked ? 'clicked' : ''}
       onClick={() => {
         setIsLoading(true);
+        setClicked(!clicked);
         setTimeout(() => {
           toggleFollowUser();
         }, getRandomInt(750, 2000));
@@ -34,7 +35,6 @@ function FollowButton() {
 
   function toggleFollowUser() {
     setIsLoading(false);
-    setClicked(!clicked);
     handleError('Need content');
   }
 

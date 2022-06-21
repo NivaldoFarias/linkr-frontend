@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 const StyledFollowButton = styled.button`
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', 'initial')};
+
   position: relative;
   left: 0px;
   top: 0px;
 
+  margin-right: 10px;
   padding: 8px 16px;
-  margin: 10px 0 30px auto;
   min-height: 36px;
   min-width: 150px;
 
