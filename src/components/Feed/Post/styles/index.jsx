@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
+export const PostWrapper = styled.div`
+  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
+  height: min-content;
+  width: 100%;
+`;
+
 const PostContainer = styled.div`
   ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '13px')};
   padding: 18px 18px 22px 9px;
   height: 100%;
-  min-height: 280px;
+  min-height: 310px;
   width: 100%;
   min-width: 602px;
 
