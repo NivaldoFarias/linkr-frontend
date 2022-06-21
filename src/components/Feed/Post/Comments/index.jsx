@@ -5,11 +5,11 @@ import DataContext from '../../../../hooks/DataContext';
 function Comments() {
   const [postData, setPostData] = useState({ id: 1, comments_count: 0 });
   const [click, setClick] = useState(false);
-  const { commentSection, setCommentSection } = useContext(DataContext);
+  const { commentsData, setCommentsData } = useContext(DataContext);
 
   useEffect(() => {
-    if (click) setCommentSection({ ...commentSection, id: postData.id });
-    else if (!click) setCommentSection({ ...commentSection, id: null });
+    if (click) setCommentsData({ ...commentsData, id: postData.id });
+    else if (!click) setCommentsData({ ...commentsData, id: null });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [click]);
 

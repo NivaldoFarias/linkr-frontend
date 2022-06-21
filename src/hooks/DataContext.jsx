@@ -10,7 +10,7 @@ export function DataProvider({ children }) {
   const [width, setWidth] = useState(window.innerWidth);
 
   // Temporary contexts for testing components
-  const [commentSection, setCommentSection] = useState(null);
+  const [commentsData, setCommentsData] = useState(null);
   const [sharesData, setSharesData] = useState(null);
 
   function handleWindowSizeChange() {
@@ -31,8 +31,8 @@ export function DataProvider({ children }) {
         setUser,
         token,
         setToken,
-        commentSection,
-        setCommentSection,
+        commentsData,
+        setCommentsData,
         sharesData,
         setSharesData,
         lightMode,
