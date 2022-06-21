@@ -20,7 +20,6 @@ export function PostProvider(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('use effect');
     setPost(props.post);
     setIsLiked(props.post.userHasLiked);
     setEditText(props.post.text);
@@ -78,7 +77,6 @@ export function PostProvider(props) {
 
   function goToHashtagPage(hashtag) {
     const cleanHashtag = hashtag.replace('#', '').toLowerCase();
-    console.log('go to ', cleanHashtag);
     navigate(`/hashtag/${cleanHashtag}`);
   }
 
