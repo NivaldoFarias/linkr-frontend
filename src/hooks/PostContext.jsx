@@ -28,7 +28,7 @@ export function PostProvider(props) {
     setPost(props.post);
     setIsLiked(props.post.userHasLiked);
     setEditText(props.post.text);
-  }, [props]);
+  }, [props.post]);
 
   return (
     <PostContext.Provider
@@ -66,6 +66,8 @@ export function PostProvider(props) {
     try {
       const { data } = await Axios.get(url, CONFIG);
       setPost(data);
+      setIsLiked(data.userHasLiked);
+      setEditText(data.text);
     } catch (err) {
       handleError(err);
     }

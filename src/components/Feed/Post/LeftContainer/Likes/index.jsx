@@ -4,8 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Axios from '../../../../../blueprints';
 
 function Likes() {
-  const { post, isLiked, setIsLiked, updatePostData, CONFIG, handleError } =
-    useContext(PostContext);
+  const { post, isLiked, updatePostData, CONFIG, handleError } = useContext(PostContext);
 
   return (
     <div className='left-container__likes' onClick={likeButtonClicked}>
@@ -19,8 +18,6 @@ function Likes() {
 
   async function likeButtonClicked() {
     const tryToLike = !isLiked;
-    setIsLiked(tryToLike);
-
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
       await Axios.post(url, {}, CONFIG);
