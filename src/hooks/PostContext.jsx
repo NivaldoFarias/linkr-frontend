@@ -20,9 +20,11 @@ export function PostProvider(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLiked(post.userHasLiked);
-    setEditText(post.text);
-  }, [post]);
+    console.log('use effect');
+    setPost(props.post);
+    setIsLiked(props.post.userHasLiked);
+    setEditText(props.post.text);
+  }, [props.post]);
 
   return (
     <PostContext.Provider
@@ -54,6 +56,8 @@ export function PostProvider(props) {
     try {
       const { data } = await Axios.get(url, CONFIG);
       setPost(data);
+      setIsLiked(data.userHasLiked);
+      setEditText(data.text);
     } catch (err) {
       handleError(err);
     }
