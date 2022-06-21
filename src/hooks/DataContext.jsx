@@ -6,9 +6,12 @@ const DataContext = createContext();
 export function DataProvider({ children }) {
   const [user, setUser] = useLocalStorage('user', null);
   const [token, setToken] = useLocalStorage('token', null);
-  const [commentSection, setCommentSection] = useState(null);
   const [lightMode, setLightMode] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
+
+  // Temporary contexts for testing components
+  const [commentSection, setCommentSection] = useState(null);
+  const [sharesData, setSharesData] = useState(null);
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
@@ -30,6 +33,8 @@ export function DataProvider({ children }) {
         setToken,
         commentSection,
         setCommentSection,
+        sharesData,
+        setSharesData,
         lightMode,
         setLightMode,
         width,

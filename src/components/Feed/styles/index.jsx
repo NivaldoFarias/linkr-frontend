@@ -5,7 +5,7 @@ const Wrapper = styled.div`
 
   padding: 40px 0 71px;
   height: 100%;
-  min-width: 625px;
+  min-width: 645px;
   width: 100%;
 
   overflow-y: scroll;
@@ -48,7 +48,7 @@ const Content = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'center', '30px')};
   padding: 36px 24px;
   min-height: min-content;
-  min-width: 625px;
+  min-width: 645px;
   width: 100%;
 
   border-left: ${({ theme }) => theme.styles.defaultBorder};

@@ -18,6 +18,7 @@ import PostContainer from './styles/';
 
 import Likes from './Likes';
 import Comments from './Comments';
+import Shares from './Shares';
 
 // NEED REFACTOR
 
@@ -132,6 +133,7 @@ export default function Post(props) {
           updatePostData={updatePostData}
         />
         <Comments />
+        <Shares />
       </div>
       <div className='right-container'>
         {deletePost}

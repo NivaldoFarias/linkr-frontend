@@ -1,25 +1,25 @@
 import styled from 'styled-components';
 
 const PostContainer = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '15px')};
-  padding: 18px;
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '13px')};
+  padding: 18px 18px 22px 9px;
   height: 100%;
   min-height: 280px;
   width: 100%;
-  min-width: 575px;
+  min-width: 602px;
 
   border-radius: 16px;
   border: 1px solid ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.primary};
 
   .left-container {
-    ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', '18px')};
+    ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', '15px')};
     height: 100%;
-    width: 87px;
+    width: 100px;
 
     &__image {
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
       cursor: pointer;
 
       object-fit: cover;
@@ -30,7 +30,7 @@ const PostContainer = styled.div`
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '6px')};
 
       > svg {
-        color: white;
+        color: ${({ theme }) => theme.colors.gradient};
         font-size: 1.7rem;
         cursor: pointer;
 
@@ -43,7 +43,6 @@ const PostContainer = styled.div`
       }
       &__label {
         width: 100%;
-        max-width: 80px;
 
         color: ${({ theme }) => theme.colors.gradient};
         font-weight: 400;
@@ -51,7 +50,6 @@ const PostContainer = styled.div`
         font-family: ${({ theme }) => theme.fonts.secondary};
 
         text-align: center;
-        word-spacing: -1px;
 
         strong {
           font-weight: 700;
@@ -61,6 +59,7 @@ const PostContainer = styled.div`
     &__comments {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '6px')};
       color: ${({ theme }) => theme.colors.gradient};
+      padding-top: 6px;
 
       &__icon {
         font-size: 1.7rem;
@@ -71,25 +70,44 @@ const PostContainer = styled.div`
           pointer-events: none;
         }
         &.toggled {
-          color: ${({ theme }) => theme.colors.tertiary};
+          color: ${({ theme }) => theme.colors.btnPrimary};
         }
       }
       &__label {
         width: 100%;
-        max-width: 80px;
 
         text-align: center;
         font-weight: 400;
         font-size: 0.7rem;
         color: ${({ theme }) => theme.colors.gradient};
         font-family: ${({ theme }) => theme.fonts.secondary};
+        line-height: 0.8rem;
+      }
+    }
+    &__shares {
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '3px')};
+      color: ${({ theme }) => theme.colors.gradient};
 
-        strong {
-          font-weight: 700;
+      &__icon {
+        font-size: 1.9rem;
+        cursor: pointer;
+        transition: all 50ms ease-in-out;
+
+        * {
+          pointer-events: none;
         }
-        span {
-          font-size: 0.8rem;
+        &.reshared {
+          color: ${({ theme }) => theme.colors.btnPrimary};
         }
+      }
+      &__label {
+        width: 100%;
+
+        text-align: center;
+        font-weight: 400;
+        font-size: 0.7rem;
+        color: ${({ theme }) => theme.colors.gradient};
+        font-family: ${({ theme }) => theme.fonts.secondary};
       }
     }
   }
@@ -106,13 +124,13 @@ const PostContainer = styled.div`
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex', '12px')};
       position: relative;
 
-      margin-bottom: 36px;
+      margin-bottom: 26px;
       width: 100%;
 
       &__username {
         p {
           cursor: pointer;
-          font-size: 1.3rem;
+          font-size: 1.4rem;
           font-weight: 700;
           color: ${({ theme }) => theme.colors.gradient};
           font-family: ${({ theme }) => theme.fonts.secondary};
