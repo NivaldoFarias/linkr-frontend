@@ -4,7 +4,7 @@ import Post from './Post/';
 import EmptyPosts from './EmptyPosts/';
 
 import { FeedProvider } from '../../hooks/FeedContext';
-import { PostProvider } from '../../hooks/PostContex';
+import { PostProvider } from '../../hooks/PostContext';
 import { useContext, useEffect } from 'react';
 import { MainPageContext } from '../../hooks/MainPageContext';
 

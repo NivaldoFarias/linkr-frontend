@@ -1,17 +1,13 @@
 import { useContext } from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
-import Axios from '../../../../blueprints';
-import PostContext from '../../../../hooks/PostContex';
+import PostContext from '../../../../hooks/PostContext';
 
 export default function EditActions() {
   const {
-    post,
-    editText,
     updatePostData,
     isEditingPost,
     setIsEditingPost,
     setModalIsOpen,
-    CONFIG,
     handleError,
     editPostData,
   } = useContext(PostContext);

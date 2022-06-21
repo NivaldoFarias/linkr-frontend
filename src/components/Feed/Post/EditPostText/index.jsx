@@ -1,17 +1,9 @@
 import { useContext } from 'react';
-import Axios from '../../../../blueprints';
-import PostContext from '../../../../hooks/PostContex';
+import PostContext from '../../../../hooks/PostContext';
 
 export default function EditPostText() {
-  const {
-    post,
-    editText,
-    setEditText,
-    setIsEditingPost,
-    handleError,
-    editPostData,
-    updatePostData,
-  } = useContext(PostContext);
+  const { editText, setEditText, setIsEditingPost, handleError, editPostData, updatePostData } =
+    useContext(PostContext);
 
   return (
     <textarea

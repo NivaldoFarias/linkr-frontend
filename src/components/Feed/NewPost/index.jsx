@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 
-import fallbackAvatar from '../../../assets/fallback-avatar.png';
+import fallbackAvatar from './../../../assets/fallback-avatar.png';
 import DataContext from '../../../hooks/DataContext';
 import { Wrapper, PostForm } from './styles/';
 import Axios from '../../../blueprints';
@@ -18,7 +18,7 @@ export default function NewPost() {
 
   return (
     <Wrapper>
-      <img src={user?.imageUrl || fallbackAvatar} alt='user'></img>
+      <img src={user?.imageUrl ?? fallbackAvatar} alt='user'></img>
       <PostForm onSubmit={handleSendNewPost}>
         <h3>What are you going to share today?</h3>
         <input

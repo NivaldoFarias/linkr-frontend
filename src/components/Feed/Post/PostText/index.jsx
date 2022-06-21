@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import PostContext from '../../../../hooks/PostContex';
+import PostContext from '../../../../hooks/PostContext';
 import ReactHashtag from '@mdnm/react-hashtag';
+import getRandomInt from '../../../../utils/getRandomInt';
 
 export default function PostText() {
   const { post, goToHashtagPage } = useContext(PostContext);
@@ -11,7 +12,7 @@ export default function PostText() {
         renderHashtag={(val, i) => (
           <span
             className='hashtag'
-            key={i}
+            key={getRandomInt(1, 10000)}
             onClick={() => {
               goToHashtagPage(val);
             }}

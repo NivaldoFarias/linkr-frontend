@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import PostContext from '../../../../../hooks/PostContex';
+import PostContext from '../../../../../hooks/PostContext';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Axios from '../../../../../blueprints';
 
@@ -22,7 +22,6 @@ export default function Likes() {
     console.log(tryToLike ? 'curtir' : 'descurtir');
     const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
     try {
-      console.log(url);
       await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
@@ -33,20 +32,23 @@ export default function Likes() {
   function likesLabel() {
     const { userHasLiked, totalLikes, usersWhoLiked } = post;
 
-    let first = userHasLiked ? 'You' : usersWhoLiked[0]?.username ?? '';
-    let second = userHasLiked ? usersWhoLiked[0]?.username ?? '' : usersWhoLiked[1]?.username ?? '';
-
     return userHasLiked
       ? totalLikes === 1
         ? 'You'
         : totalLikes < 3
-        ? `You and ${first}`
-        : `You, ${first} and other ${totalLikes - 2}`
+        ? `You and ${usersWhoLiked[0]?.username}`
+        : `You, ${usersWhoLiked[0]?.username} and other ${totalLikes - 2}`
       : totalLikes === 1
-      ? `${first}`
+      ? `${usersWhoLiked[0]?.username}`
       : totalLikes === 2
-      ? `${first} and ${second}`
-      : `${first && second ? `${first}, ${second} and other ${totalLikes - 2}` : 'No likes yet'}`;
+      ? `${usersWhoLiked[0]?.username} and ${usersWhoLiked[1]?.username}`
+      : `${
+          usersWhoLiked[0]?.username && usersWhoLiked[1]?.username
+            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and other ${
+                totalLikes - 2
+              }`
+            : 'No likes yet'
+        }`;
   }
 
   function processLikesLabel() {
