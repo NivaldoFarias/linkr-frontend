@@ -3,9 +3,9 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import PostContext from '../../../../../hooks/PostContext';
 
 function Comments() {
-  const [postData, setPostData] = useState({ id: 1, comments_count: 0 });
   const [click, setClick] = useState(false);
-  const { commentsData, setCommentsData } = useContext(PostContext);
+  const { post, commentsData, setCommentsData } = useContext(PostContext);
+  const [postData, setPostData] = useState({ id: post?.id || 0, comments_count: 0 });
 
   useEffect(() => {
     if (click) setCommentsData({ ...commentsData, id: postData.id });
