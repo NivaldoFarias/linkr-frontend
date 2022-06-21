@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.aside`
-  margin-top: 100px;
-  width: 30%;
+  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', 'initial')};
+
+  margin-top: 40px;
+  width: 100%;
   max-width: 360px;
   border-radius: 16px;
   color: ${({ theme }) => theme.colors.primary};
@@ -10,6 +12,7 @@ const Wrapper = styled.aside`
 
 const Header = styled.div`
   padding: 12px 16px;
+  width: 100%;
 
   font-family: ${({ theme }) => theme.fonts.primary};
   font-size: 2rem;

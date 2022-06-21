@@ -5,6 +5,7 @@ import { Wrapper, Header, Hashtags, Hashtag } from './styles';
 import DataContext from '../../hooks/DataContext';
 import Axios from '../../blueprints';
 import { MainPageContext } from '../../hooks/MainPageContext';
+import FollowButton from './FollowButton';
 
 export default function TrendingNav() {
   const { hashtags } = useContext(MainPageContext);
@@ -33,6 +34,7 @@ export default function TrendingNav() {
 
   return (
     <Wrapper>
+      <FollowButton />
       <Header>trending</Header>
       <Hashtags>{hashtagsElements}</Hashtags>
     </Wrapper>

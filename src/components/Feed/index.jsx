@@ -5,11 +5,13 @@ import EmptyPosts from './EmptyPosts/';
 import { useContext, useEffect } from 'react';
 import { MainPageContext } from '../../hooks/MainPageContext';
 
-export default function Feed({ title, posts, canCreatePost, userThumbnail, updatePostsFunction }) {
+export default function Feed(props) {
+  const { title, posts, canCreatePost, userThumbnail, updatePostsFunction } = props;
   const { loadHashtags } = useContext(MainPageContext);
 
   useEffect(() => {
     loadHashtags();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [posts]);
 
   const postsElements = posts.map((post, index) => {
