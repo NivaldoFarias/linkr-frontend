@@ -78,6 +78,7 @@ export function PostProvider(props) {
 
   function goToHashtagPage(hashtag) {
     const cleanHashtag = hashtag.replace('#', '').toLowerCase();
+    console.log('go to ', cleanHashtag);
     navigate(`/hashtag/${cleanHashtag}`);
   }
 
