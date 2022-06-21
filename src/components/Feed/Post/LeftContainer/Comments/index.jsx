@@ -3,20 +3,21 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import PostContext from '../../../../../hooks/PostContext';
 
 function Comments() {
-  const [click, setClick] = useState(false);
-  const { post, commentsData, setCommentsData } = useContext(PostContext);
+  const { post, commentsData, setCommentsData, isCommentSectionOpen, setOpenCommentSection } =
+    useContext(PostContext);
+
   const [postData, setPostData] = useState({ id: post?.id || 0, comments_count: 0 });
 
   useEffect(() => {
-    if (click) setCommentsData({ ...commentsData, id: postData.id });
-    else if (!click) setCommentsData({ ...commentsData, id: null });
+    if (isCommentSectionOpen) setCommentsData({ ...commentsData, id: postData.id });
+    else if (!isCommentSectionOpen) setCommentsData({ ...commentsData, id: null });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [click]);
+  }, [isCommentSectionOpen]);
 
   return (
     <div className='left-container__comments'>
       <GoCommentDiscussion
-        className={`left-container__comments__icon ${click ? 'toggled' : ''}`}
+        className={`left-container__comments__icon ${isCommentSectionOpen ? 'toggled' : ''}`}
         onClick={toggleCommentSection}
       />
       <p className='left-container__comments__label'>
@@ -27,7 +28,7 @@ function Comments() {
   );
 
   function toggleCommentSection() {
-    setClick(!click);
+    setOpenCommentSection(!isCommentSectionOpen);
   }
 
   function commentsCount(count) {

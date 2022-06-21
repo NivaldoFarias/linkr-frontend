@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { RiUserStarFill } from 'react-icons/ri';
 import { AiOutlineSend } from 'react-icons/ai';
 
@@ -8,7 +8,8 @@ import StyledCommentSection from './styles';
 
 function CommentSection() {
   const { user } = useContext(DataContext);
-  const { commentsData, setCommentsData } = useContext(PostContext);
+  const [inputValue, setInputValue] = useState('');
+  const { commentsData, setCommentsData, isCommentSectionOpen } = useContext(PostContext);
 
   useEffect(() => {
     setCommentsData([
@@ -25,39 +26,56 @@ function CommentSection() {
   }, []);
 
   return (
-    <StyledCommentSection>
-      {commentsData.map((comment) => {
-        return (
-          <div key={comment.id}>
-            <div className='comment-header'>
-              <div className='comment-header__avatar'>
-                <img src={comment.imageUrl} alt='user avatar' />
-              </div>
-              <div className='comment-header__username'>
-                <p>{comment.username}</p>
-                {comment.userId === user.id ? (
-                  <div className='comment-user-status'>
-                    <RiUserStarFill className='comment-user-status__icon' />
-                    <p className='comment-user-status__label'>post's author</p>
+    <StyledCommentSection className={isCommentSectionOpen ? '' : 'collapsed'}>
+      <div className='comments-container'>
+        {commentsData.length > 0 ? (
+          commentsData.map((comment) => {
+            return (
+              <div key={comment.id} className='comment'>
+                <img className='comment__avatar' src={comment.imageUrl} alt='user avatar' />
+                <div className='comment__content'>
+                  <div className='comment__content__username'>
+                    <p>{comment.username}</p>
+                    {comment.userId === user.id ? (
+                      <div className='comment-user-status'>
+                        <RiUserStarFill className='comment-user-status__icon' />
+                        <p className='comment-user-status__label'>OP</p>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                ) : (
-                  <></>
-                )}
+                  <div className='comment__content__text'>
+                    <p>{comment.text}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className='comment-text'>
-              <p>{comment.text}</p>
-            </div>
-          </div>
-        );
-      })}
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </div>
       <div className='new-comment'>
         <img className='new-comment__avatar' src={user.imageUrl} alt='user avatar' />
-        <input className='new-comment__input' type='text' placeholder='Write a comment...' />
+        <textarea
+          rows={1}
+          className='new-comment__input'
+          value={inputValue}
+          type='text'
+          placeholder='Write a comment...'
+          onChange={handleInput}
+        />
         <AiOutlineSend className='new-comment__icon' />
       </div>
     </StyledCommentSection>
   );
+
+  function handleInput(e) {
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${Math.min(e.target.scrollHeight, 240)}px`;
+    setInputValue(e.target.value);
+  }
 }
 
 export default CommentSection;

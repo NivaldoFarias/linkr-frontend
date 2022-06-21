@@ -8,8 +8,8 @@ export const PostWrapper = styled.div`
 
 const PostContainer = styled.div`
   ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '13px')};
+  position: relative;
   padding: 18px 18px 22px 9px;
-  height: 100%;
   min-height: 310px;
   width: 100%;
   min-width: 602px;
@@ -70,7 +70,7 @@ const PostContainer = styled.div`
       &__icon {
         font-size: 1.7rem;
         cursor: pointer;
-        transition: all 50ms ease-in-out;
+        transition: all 5ms ease-in-out !important;
 
         * {
           pointer-events: none;
@@ -269,6 +269,10 @@ const PostContainer = styled.div`
         }
       }
     }
+  }
+  &.open-comments {
+    border-radius: 16px;
+    border: 1px solid ${({ theme }) => theme.colors.tertiary};
   }
 
   @media screen and (max-width: 620px) {
