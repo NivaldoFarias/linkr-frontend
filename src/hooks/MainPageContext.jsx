@@ -8,19 +8,16 @@ export function MainPageProvider({ children }) {
   const [hashtags, setHashtags] = useState([]);
   const { token } = useContext(DataContext);
 
-  useEffect(() => {
-    loadHashtags();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => loadHashtags(), []);
 
-  function loadHashtags() {
-    Axios.get('hashtags/trending', token)
-      .then(({ data }) => {
-        setHashtags(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async function loadHashtags() {
+    try {
+      const request = await Axios.get('hashtags/trending', token);
+      setHashtags(request.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

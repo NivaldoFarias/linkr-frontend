@@ -1,9 +1,12 @@
 import { useContext } from 'react';
-import PostContext from './../../../../../hooks/PostContext';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
 
+import PostContext from './../../../../../hooks/PostContext';
+
 export default function Link() {
-  const { post } = useContext(PostContext);
+  const {
+    postData: { url },
+  } = useContext(PostContext);
 
   const regex = new RegExp(
     '^(https?:\\/\\/)?' + // protocol
@@ -16,16 +19,16 @@ export default function Link() {
   );
 
   return (
-    <a className='link' href={post.url} target='blank'>
+    <a className='link' href={url.url} target='blank'>
       <div className='link__container'>
         <div className='link-info'>
-          <div className='link-info__title'>{post.urlTitle}</div>
-          <div className='link-info__description'>{post.urlDescription}</div>
-          <div className='link-info__url'>{post.url}</div>
+          <div className='link-info__title'>{url.title}</div>
+          <div className='link-info__description'>{url.description}</div>
+          <div className='link-info__url'>{url.url}</div>
         </div>
         <div className='link-image'>
-          {regex.test(post.urlPicture) ? (
-            <img src={post.urlPicture} alt='link header' />
+          {regex.test(url.imageUrl) ? (
+            <img src={url.imageUrl} alt='link header' />
           ) : (
             <>
               <MdOutlineImageNotSupported className='link-image__not-supported-icon' />

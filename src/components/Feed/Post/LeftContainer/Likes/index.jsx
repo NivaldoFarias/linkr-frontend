@@ -4,11 +4,23 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Axios from '../../../../../blueprints';
 
 function Likes() {
-  const { post, isLiked, updatePostData, CONFIG, handleError } = useContext(PostContext);
+  const {
+    postData: {
+      id: postId,
+      likes: { totalLikes, usersWhoLiked, userHasLiked },
+    },
+    updatePostData,
+    CONFIG,
+    handleError,
+  } = useContext(PostContext);
 
   return (
     <div className='left-container__likes' onClick={likeButtonClicked}>
-      {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
+      {userHasLiked ? (
+        <AiFillHeart className={userHasLiked ? 'red-heart' : ''} />
+      ) : (
+        <AiOutlineHeart />
+      )}
       <div data-tip={likesLabel()} className='left-container__likes__label'>
         <strong>{processLikes()}</strong>
         {processLikesLabel()}
@@ -17,19 +29,17 @@ function Likes() {
   );
 
   async function likeButtonClicked() {
-    const tryToLike = !isLiked;
-    const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
+    const tryToLike = !userHasLiked;
+    const url = `/posts/${postId}/${tryToLike ? '' : 'un'}like`;
     try {
       await Axios.post(url, {}, CONFIG);
       await updatePostData();
     } catch (error) {
-      handleError(error);
+      handleError();
     }
   }
 
   function likesLabel() {
-    const { userHasLiked, totalLikes, usersWhoLiked } = post;
-
     return userHasLiked
       ? totalLikes === 1
         ? 'You'
@@ -52,11 +62,11 @@ function Likes() {
   }
 
   function processLikesLabel() {
-    return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
+    return totalLikes > 0 ? ` like${totalLikes === 1 ? '' : 's'}` : '';
   }
 
   function processLikes() {
-    return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
+    return totalLikes > 0 ? `${totalLikes}` : 'No likes yet';
   }
 }
 

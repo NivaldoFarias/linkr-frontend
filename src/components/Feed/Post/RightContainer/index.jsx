@@ -1,7 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import PostContext from '../../../../hooks/PostContext';
 import DataContext from '../../../../hooks/DataContext';
+import FeedContext from '../../../../hooks/FeedContext';
 
 import EditPostText from './EditPostText';
 import EditActions from './EditActions';
@@ -11,7 +12,25 @@ import Link from './Link';
 
 function RightContainer() {
   const { user } = useContext(DataContext);
-  const { post, modalIsOpen, isEditingPost, goToUserPage } = useContext(PostContext);
+  const {
+    feedData: { users },
+  } = useContext(FeedContext);
+  const {
+    postData: { userId },
+    modalIsOpen,
+    isEditingPost,
+    goToUserPage,
+  } = useContext(PostContext);
+
+  const [processedData, setProcessedData] = useState({});
+
+  useEffect(() => {
+    setProcessedData({
+      userId: userId,
+      username: users[userId].username,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   const postHeader = buildPostHeader();
 
@@ -32,9 +51,9 @@ function RightContainer() {
               goToUserPage(user.id);
             }}
           >
-            {post.username}
+            {processedData.username}
           </p>
-          {post.userId === user.id ? <EditActions /> : <></>}
+          {processedData.userId === user.id ? <EditActions /> : <></>}
         </div>
         {isEditingPost ? <EditPostText /> : <PostText />}
       </div>

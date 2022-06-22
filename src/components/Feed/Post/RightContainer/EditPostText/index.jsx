@@ -3,7 +3,7 @@ import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditPostText() {
   const {
-    post,
+    postData: { text },
     editText,
     setEditText,
     setIsEditingPost,
@@ -13,8 +13,9 @@ export default function EditPostText() {
   } = useContext(PostContext);
 
   useEffect(() => {
-    setEditText(post.text);
-  }, [post]);
+    setEditText(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
   return (
     <textarea

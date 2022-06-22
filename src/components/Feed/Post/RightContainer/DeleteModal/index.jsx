@@ -1,15 +1,22 @@
+import Modal from 'react-modal';
 import { useContext, useState } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
 import { StyledLoadingDots } from './../../../../../styles';
 
-import Modal from 'react-modal';
-import Axios from './../../../../../blueprints';
 import PostContext from './../../../../../hooks/PostContext';
 import FeedContext from './../../../../../hooks/FeedContext';
+
 import getRandomInt from './../../../../../utils/getRandomInt';
+import Axios from './../../../../../blueprints';
 
 export default function DeleteModal() {
-  const { post, modalIsOpen, setModalIsOpen, CONFIG, handleError } = useContext(PostContext);
+  const {
+    postData: { id: postId },
+    modalIsOpen,
+    setModalIsOpen,
+    CONFIG,
+    handleError,
+  } = useContext(PostContext);
   const { updatePostsFunction } = useContext(FeedContext);
   const [submitDelete, setSubmitDelete] = useState(false);
 
@@ -49,7 +56,7 @@ export default function DeleteModal() {
 
   async function handleDeletePost() {
     setSubmitDelete(false);
-    const url = `/posts/${post.id}`;
+    const url = `/posts/${postId}`;
     try {
       await Axios.delete(url, CONFIG);
       setModalIsOpen(false);

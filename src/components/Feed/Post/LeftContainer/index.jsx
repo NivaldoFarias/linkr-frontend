@@ -1,11 +1,23 @@
 import { useContext } from 'react';
+
+import DataContext from '../../../../hooks/DataContext';
+import FeedContext from '../../../../hooks/FeedContext';
 import PostContext from '../../../../hooks/PostContext';
+
 import Comments from './Comments';
 import Likes from './Likes';
 import Shares from './Shares';
 
 function LeftContainer() {
-  const { post, goToUserPage } = useContext(PostContext);
+  const { user } = useContext(DataContext);
+  const {
+    postData: { userId },
+    goToUserPage,
+  } = useContext(PostContext);
+  const {
+    feedData: { users },
+  } = useContext(FeedContext);
+  const postCreator = users[userId];
 
   return (
     <div className='left-container'>
@@ -13,13 +25,13 @@ function LeftContainer() {
         className='left-container__image'
         alt='post creator user avatar'
         onClick={() => {
-          goToUserPage(post.id);
+          goToUserPage(postCreator.id);
         }}
-        src={post.userPictureUrl}
+        src={postCreator.imageUrl}
       />
       <Likes />
       <Comments />
-      <Shares />
+      {userId !== user.id ? <Shares /> : <></>}
     </div>
   );
 }

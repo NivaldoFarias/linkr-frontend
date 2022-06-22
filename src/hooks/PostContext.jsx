@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, createContext, useContext } from 'react';
 import { DataContext } from './DataContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
@@ -7,37 +7,27 @@ import Axios from '../blueprints';
 const PostContext = createContext();
 
 export function PostProvider(props) {
+  const { post, children } = props;
+  const [postData, setPostData] = useState(post ?? {});
+
   const { token } = useContext(DataContext);
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
 
-  const [post, setPost] = useState(props.post);
-  const [isLiked, setIsLiked] = useState(props.post.userHasLiked);
-  const [editText, setEditText] = useState(props.post.text);
-
+  const [editText, setEditText] = useState(postData?.text ?? '');
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const [commentsData, setCommentsData] = useState([]);
+  const [sharesData, setSharesData] = useState(postData?.shares ?? {});
+  const [commentsData, setCommentsData] = useState(postData?.comments ?? []);
   const [isCommentSectionOpen, setOpenCommentSection] = useState(false);
 
-  const [sharesData, setSharesData] = useState([]);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setPost(props.post);
-    setIsLiked(props.post.userHasLiked);
-    setEditText(props.post.text);
-  }, [props.post]);
 
   return (
     <PostContext.Provider
       value={{
         CONFIG,
-        post,
-        setPost,
-        isLiked,
-        setIsLiked,
+        postData,
         commentsData,
         setCommentsData,
         isCommentSectionOpen,
@@ -57,24 +47,22 @@ export function PostProvider(props) {
         handleError,
       }}
     >
-      {props.children}
+      {children}
     </PostContext.Provider>
   );
 
   async function updatePostData() {
-    const url = `/posts/${post.id}`;
+    const url = `/posts/${postData.id}`;
     try {
       const { data } = await Axios.get(url, CONFIG);
-      setPost(data);
-      setIsLiked(data.userHasLiked);
-      setEditText(data.text);
+      setPostData(data);
     } catch (err) {
       handleError(err);
     }
   }
 
   async function editPostData() {
-    const url = `/posts/${post.id}`;
+    const url = `/posts/${postData.id}`;
     try {
       await Axios.put(url, { text: editText }, CONFIG);
     } catch (err) {
@@ -83,7 +71,7 @@ export function PostProvider(props) {
   }
 
   function goToUserPage(userId) {
-    navigate(`/user/${post.userId}`);
+    navigate(`/user/${userId}`);
   }
 
   function goToHashtagPage(hashtag) {
@@ -91,11 +79,9 @@ export function PostProvider(props) {
     navigate(`/hashtag/${cleanHashtag}`);
   }
 
-  function handleError(error) {
+  function handleError(error = { response: { data: { message: 'Something went wrong' } } }) {
     confirmAlert({
-      message: `${
-        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
-      }. Please try again.`,
+      message: `${error.response.data.message}. Please try again.`,
       buttons: [
         {
           label: 'OK',
