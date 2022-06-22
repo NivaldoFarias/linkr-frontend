@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
-import { StyledLoadingDots } from '../../../../styles';
+import { StyledLoadingDots } from './../../../../../styles';
 
 import Modal from 'react-modal';
-import Axios from '../../../../blueprints';
-import PostContext from '../../../../hooks/PostContext';
-import FeedContext from '../../../../hooks/FeedContext';
-import getRandomInt from '../../../../utils/getRandomInt';
+import Axios from './../../../../../blueprints';
+import PostContext from './../../../../../hooks/PostContext';
+import FeedContext from './../../../../../hooks/FeedContext';
+import getRandomInt from './../../../../../utils/getRandomInt';
 
 export default function DeleteModal() {
   const { post, modalIsOpen, setModalIsOpen, CONFIG, handleError } = useContext(PostContext);

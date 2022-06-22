@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import PostContext from '../../../../hooks/PostContext';
+import PostContext from './../../../../../hooks/PostContext';
 import { MdOutlineImageNotSupported } from 'react-icons/md';
 
 export default function Link() {

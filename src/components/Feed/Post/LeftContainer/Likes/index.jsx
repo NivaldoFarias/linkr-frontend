@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import PostContext from '../../../../../hooks/PostContext';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import Axios from '../../../../../blueprints';
 
-export default function Likes() {
-  const { isLiked, setIsLiked, post, updatePostData, CONFIG, handleError } =
-    useContext(PostContext);
+function Likes() {
+  const { post, isLiked, updatePostData, CONFIG, handleError } = useContext(PostContext);
 
   return (
     <div className='left-container__likes' onClick={likeButtonClicked}>
@@ -36,16 +35,18 @@ export default function Likes() {
         ? 'You'
         : totalLikes < 3
         ? `You and ${usersWhoLiked[0]?.username}`
-        : `You, ${usersWhoLiked[0]?.username} and other ${totalLikes - 2}`
+        : `You, ${usersWhoLiked[0]?.username} and ${totalLikes - 2} other${
+            totalLikes - 2 === 1 ? '' : 's'
+          }`
       : totalLikes === 1
       ? `${usersWhoLiked[0]?.username}`
       : totalLikes === 2
       ? `${usersWhoLiked[0]?.username} and ${usersWhoLiked[1]?.username}`
       : `${
           usersWhoLiked[0]?.username && usersWhoLiked[1]?.username
-            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and other ${
+            ? `${usersWhoLiked[0]?.username ?? ''}, ${usersWhoLiked[1]?.username ?? ''} and ${
                 totalLikes - 2
-              }`
+              }other${totalLikes - 2 === 1 ? '' : 's'}`
             : 'No likes yet'
         }`;
   }
@@ -58,3 +59,5 @@ export default function Likes() {
     return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
   }
 }
+
+export default Likes;

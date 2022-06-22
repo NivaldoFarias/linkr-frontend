@@ -17,6 +17,11 @@ export function PostProvider(props) {
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  const [commentsData, setCommentsData] = useState([]);
+  const [isCommentSectionOpen, setOpenCommentSection] = useState(false);
+
+  const [sharesData, setSharesData] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +38,12 @@ export function PostProvider(props) {
         setPost,
         isLiked,
         setIsLiked,
+        commentsData,
+        setCommentsData,
+        isCommentSectionOpen,
+        setOpenCommentSection,
+        sharesData,
+        setSharesData,
         editText,
         setEditText,
         modalIsOpen,

@@ -1,24 +1,32 @@
 import styled from 'styled-components';
 
-const PostContainer = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '18px')};
-  padding: 18px;
+export const PostWrapper = styled.div`
+  ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
+  position: relative;
+  height: min-content;
   width: 100%;
-  min-width: 575px;
+`;
+
+const PostContainer = styled.div`
+  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '13px')};
+  position: relative;
+  padding: 18px 18px 22px 9px;
+  min-height: 310px;
+  width: 100%;
+  min-width: 602px;
 
   border-radius: 16px;
-  border: 1px solid ${({ theme }) => theme.colors.tertiary};
+  border: 2px solid ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.primary};
 
   .left-container {
-    ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', 'initial')};
+    ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', '15px')};
     height: 100%;
-    width: 50px;
+    width: 100px;
 
     &__image {
-      margin-bottom: 18px;
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
       cursor: pointer;
 
       object-fit: cover;
@@ -26,11 +34,11 @@ const PostContainer = styled.div`
       border: 2px solid ${({ theme }) => theme.colors.altTertiary};
     }
     &__likes {
-      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '8px')};
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '6px')};
 
       > svg {
-        color: white;
-        font-size: 1.5rem;
+        color: ${({ theme }) => theme.colors.gradient};
+        font-size: 1.7rem;
         cursor: pointer;
 
         * {
@@ -42,19 +50,71 @@ const PostContainer = styled.div`
       }
       &__label {
         width: 100%;
-        max-width: 80px;
 
         color: ${({ theme }) => theme.colors.gradient};
         font-weight: 400;
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-family: ${({ theme }) => theme.fonts.secondary};
 
         text-align: center;
-        word-spacing: -1px;
 
         strong {
           font-weight: 700;
         }
+      }
+    }
+    &__comments {
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '6px')};
+      color: ${({ theme }) => theme.colors.gradient};
+      padding-top: 6px;
+
+      &__icon {
+        font-size: 1.7rem;
+        cursor: pointer;
+        transition: all 5ms ease-in-out !important;
+
+        * {
+          pointer-events: none;
+        }
+        &.toggled {
+          color: ${({ theme }) => theme.colors.btnPrimary};
+        }
+      }
+      &__label {
+        width: 100%;
+
+        text-align: center;
+        font-weight: 400;
+        font-size: 0.7rem;
+        color: ${({ theme }) => theme.colors.gradient};
+        font-family: ${({ theme }) => theme.fonts.secondary};
+        line-height: 0.8rem;
+      }
+    }
+    &__shares {
+      ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '3px')};
+      color: ${({ theme }) => theme.colors.gradient};
+
+      &__icon {
+        font-size: 1.9rem;
+        cursor: pointer;
+        transition: all 50ms ease-in-out;
+
+        * {
+          pointer-events: none;
+        }
+        &.reshared {
+          color: ${({ theme }) => theme.colors.btnPrimary};
+        }
+      }
+      &__label {
+        width: 100%;
+
+        text-align: center;
+        font-weight: 400;
+        font-size: 0.7rem;
+        color: ${({ theme }) => theme.colors.gradient};
+        font-family: ${({ theme }) => theme.fonts.secondary};
       }
     }
   }
@@ -71,13 +131,13 @@ const PostContainer = styled.div`
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex', '12px')};
       position: relative;
 
-      margin-bottom: 16px;
+      margin-bottom: 26px;
       width: 100%;
 
       &__username {
         p {
           cursor: pointer;
-          font-size: 1.3rem;
+          font-size: 1.4rem;
           font-weight: 700;
           color: ${({ theme }) => theme.colors.gradient};
           font-family: ${({ theme }) => theme.fonts.secondary};
@@ -128,7 +188,7 @@ const PostContainer = styled.div`
       }
     }
     .link {
-      height: 155px;
+      height: 185px;
       width: 100%;
 
       cursor: pointer;
@@ -210,6 +270,11 @@ const PostContainer = styled.div`
         }
       }
     }
+  }
+  &.open-comments {
+    border-bottom: none !important;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   @media screen and (max-width: 620px) {

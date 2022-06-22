@@ -12,9 +12,11 @@ const theme = {
     lowContrastSecondary: 'rgb(248, 158, 55)',
     lowContrastTertiary: 'rgb(184, 98, 0)',
 
+    commentSection: 'rgb(43, 11, 49)',
     gradient: 'rgb(255, 248, 241)',
 
     text: 'rgb(112, 112, 112)',
+    textLight: 'rgb(167, 167, 167)',
     post: 'lightgray',
     editPost: 'rgb(76, 76, 76)',
     btnPrimary: 'rgb(24, 119, 242)',
