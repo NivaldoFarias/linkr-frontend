@@ -14,7 +14,7 @@ export default function NewPost() {
   const [fieldVisibility, setFieldVisibility] = useState(false);
 
   const { user, token } = useContext(DataContext);
-  const { updatePostsFunction } = useContext(FeedContext);
+  const { updatePosts } = useContext(FeedContext);
 
   return (
     <Wrapper>
@@ -65,12 +65,11 @@ export default function NewPost() {
         { url, text: description },
         { headers: { Authorization: `Bearer ${token}` } },
       );
-      updatePostsFunction();
+      updatePosts();
       setFieldVisibility(false);
       setUrl('');
       setDescription('');
     } catch (e) {
-      console.log('Não foi posssivel criar um novo post', e);
       setUrl('');
       setDescription('');
       handleError('Unable to create new post');

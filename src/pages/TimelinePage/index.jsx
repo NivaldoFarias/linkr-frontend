@@ -20,7 +20,7 @@ export default function TimelinePage() {
     try {
       await feed.updatePosts(token, '/timeline');
       setLoading(false);
-      setFeed({ ...feed, canCreatePost: true, userThumbnail: false, title: 'Timeline' });
+      setFeed({ ...feed, canCreatePost: true, userThumbnail: false, title: 'timeline' });
     } catch (error) {
       toast.error('An error occured while trying to fetch the posts, please refresh the page');
     }

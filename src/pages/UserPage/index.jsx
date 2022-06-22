@@ -22,7 +22,7 @@ export default function UserPage() {
       setFeed({
         ...feed,
         canCreatePost: false,
-        userThumbnail: request?.username ?? '',
+        userThumbnail: request?.imageUrl ?? '',
         title: `${request?.username ?? 'user'}'s posts`,
       });
     } catch (error) {

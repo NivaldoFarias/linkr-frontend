@@ -11,7 +11,7 @@ export default function HashtagPage() {
   const { token } = useContext(DataContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(updateHashtagPosts(), [hashtag]);
+  useEffect(() => updateHashtagPosts(), [hashtag]);
 
   async function updateHashtagPosts() {
     const route = `/hashtags/${hashtag}`;

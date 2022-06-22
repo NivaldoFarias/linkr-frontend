@@ -19,7 +19,7 @@ export default function Feed() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => loadHashtags(), [feedData]);
 
-  const postsKeys = Object.keys(feedData?.posts);
+  const postsKeys = Object.keys(feedData?.posts ?? {});
   const postsElements = postsKeys.map((key, index) => {
     return (
       <PostProvider key={index} post={feedData.posts[key]}>
