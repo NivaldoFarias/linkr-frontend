@@ -9,7 +9,6 @@ const PostContext = createContext();
 export function PostProvider(props) {
   const { post, children } = props;
   const [postData, setPostData] = useState(post ?? {});
-  const reference = useRef(null);
 
   const { token } = useContext(DataContext);
   const CONFIG = { headers: { Authorization: `Bearer ${token}` } };
@@ -27,8 +26,6 @@ export function PostProvider(props) {
   return (
     <PostContext.Provider
       value={{
-        reference,
-        scrollToRef,
         CONFIG,
         postData,
         commentsData,
@@ -53,13 +50,6 @@ export function PostProvider(props) {
       {children}
     </PostContext.Provider>
   );
-
-  function scrollToRef() {
-    reference.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-    });
-  }
 
   async function updatePostData() {
     const url = `/posts/${postData.id}`;

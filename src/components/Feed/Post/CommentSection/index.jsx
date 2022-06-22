@@ -17,7 +17,6 @@ function CommentSection() {
     feedData: { users },
   } = useContext(FeedContext);
   const {
-    reference,
     postData: { userId: postCreatorId },
     commentsData,
     isCommentSectionOpen,
@@ -72,7 +71,7 @@ function CommentSection() {
           <></>
         )}
       </div>
-      <div className='new-comment' ref={reference}>
+      <div className='new-comment'>
         <img className='new-comment__avatar' src={user.imageUrl} alt='user avatar' />
         <textarea
           rows={1}

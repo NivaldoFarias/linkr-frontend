@@ -1,15 +1,9 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { GoCommentDiscussion } from 'react-icons/go';
 import PostContext from '../../../../../hooks/PostContext';
 
 function Comments() {
-  const { commentsData, isCommentSectionOpen, setOpenCommentSection, scrollToRef } =
-    useContext(PostContext);
-
-  useEffect(() => {
-    if (isCommentSectionOpen) scrollToRef();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCommentSectionOpen]);
+  const { commentsData, isCommentSectionOpen, setOpenCommentSection } = useContext(PostContext);
 
   return (
     <div className='left-container__comments'>
