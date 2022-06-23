@@ -12,7 +12,7 @@ import Post from './Post/';
 export default function Feed() {
   const {
     feedData,
-    feed: { title, canCreatePost, userThumbnail },
+    feedRepository: { title, canCreatePost, userThumbnail },
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
 

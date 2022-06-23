@@ -11,16 +11,21 @@ export default function TimelinePage() {
   const [loading, setLoading] = useState(true);
 
   const { token } = useContext(DataContext);
-  const { feed, setFeed } = useContext(FeedContext);
+  const { feedRepository, setFeedRepository } = useContext(FeedContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => updateTimeline(), []);
 
   async function updateTimeline() {
     try {
-      await feed.updatePosts(token, '/timeline');
+      await feedRepository.updatePosts(token, '/timeline');
       setLoading(false);
-      setFeed({ ...feed, canCreatePost: true, userThumbnail: false, title: 'timeline' });
+      setFeedRepository({
+        ...feedRepository,
+        canCreatePost: true,
+        userThumbnail: false,
+        title: 'timeline',
+      });
     } catch (error) {
       toast.error('An error occured while trying to fetch the posts, please refresh the page');
     }

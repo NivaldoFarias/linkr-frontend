@@ -7,7 +7,7 @@ import FeedContext from '../../hooks/FeedContext';
 
 export default function HashtagPage() {
   const hashtag = useParams().hashtag.toLowerCase();
-  const { feed, setFeed } = useContext(FeedContext);
+  const { feedRepository, setFeedRepository } = useContext(FeedContext);
   const { token } = useContext(DataContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -17,8 +17,13 @@ export default function HashtagPage() {
     const route = `/hashtags/${hashtag}`;
     const title = `#${hashtag}`;
     try {
-      await feed.updatePosts(token, route);
-      setFeed({ ...feed, canCreatePost: false, userThumbnail: false, title: title });
+      await feedRepository.updatePosts(token, route);
+      setFeedRepository({
+        ...feedRepository,
+        canCreatePost: false,
+        userThumbnail: false,
+        title: title,
+      });
     } catch (error) {
       console.log(error);
     }

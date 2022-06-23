@@ -7,7 +7,7 @@ import FeedContext from '../../hooks/FeedContext';
 import Feed from '../../components/Feed';
 
 export default function UserPage() {
-  const { feed, setFeed } = useContext(FeedContext);
+  const { feedRepository, setFeedRepository } = useContext(FeedContext);
   const { token } = useContext(DataContext);
   const { userId } = useParams();
 
@@ -18,9 +18,9 @@ export default function UserPage() {
     const route = `/users/${userId}`;
 
     try {
-      const request = await feed.updatePosts(token, route);
-      setFeed({
-        ...feed,
+      const request = await feedRepository.updatePosts(token, route);
+      setFeedRepository({
+        ...feedRepository,
         canCreatePost: false,
         userThumbnail: request?.imageUrl ?? '',
         title: `${request?.username ?? 'user'}'s posts`,

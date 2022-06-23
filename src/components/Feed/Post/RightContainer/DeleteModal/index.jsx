@@ -17,7 +17,7 @@ export default function DeleteModal() {
     CONFIG,
     handleError,
   } = useContext(PostContext);
-  const { updatePostsFunction } = useContext(FeedContext);
+  const { updatePosts } = useContext(FeedContext);
   const [submitDelete, setSubmitDelete] = useState(false);
 
   return (
@@ -60,7 +60,7 @@ export default function DeleteModal() {
     try {
       await Axios.delete(url, CONFIG);
       setModalIsOpen(false);
-      updatePostsFunction();
+      updatePosts();
     } catch (err) {
       handleError('Unable to delete post');
       setModalIsOpen(false);

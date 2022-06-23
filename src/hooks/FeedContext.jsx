@@ -8,7 +8,7 @@ const FeedContext = createContext();
 export function FeedProvider({ children }) {
   const [feedData, setFeedData] = useState({ ...feedResponse });
 
-  const [feed, setFeed] = useState({
+  const [feedRepository, setFeedRepository] = useState({
     updatePosts: async (token = null, route = '/timeline') => {
       const CONFIG = {
         headers: {
@@ -34,7 +34,7 @@ export function FeedProvider({ children }) {
   });
 
   return (
-    <FeedContext.Provider value={{ feed, setFeed, feedData, setFeedData }}>
+    <FeedContext.Provider value={{ feedRepository, setFeedRepository, feedData, setFeedData }}>
       {children}
     </FeedContext.Provider>
   );
