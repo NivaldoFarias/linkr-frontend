@@ -20,6 +20,13 @@ export function FeedProvider({ children }) {
   const { token } = useContext(DataContext);
   const navigate = useNavigate();
 
+  const dates = {
+    oldestShare:
+      shares.length > 0 ? shares[shares.length - 1].createdAt : '1900-06-23T17:03:04.974Z',
+    newestShare: shares.length > 0 ? shares[0].createdAt : '1900-06-23T17:03:04.974Z',
+  };
+  console.log(dates);
+
   const CONFIG = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -36,6 +43,7 @@ export function FeedProvider({ children }) {
       togglePostLike,
       togglePostShare,
       submitComment,
+      submitPost,
     },
     navigate: {
       goToUserPage,
@@ -169,6 +177,55 @@ export function FeedProvider({ children }) {
       await refreshPost(postId);
     } catch (error) {
       handleError('Unable to submit comment');
+    }
+  }
+
+  async function submitPost(postUrl, text) {
+    const url = '/posts/';
+
+    try {
+      await Axios.post(url, { url: postUrl, text }, CONFIG);
+      await pushFeed();
+    } catch (error) {
+      handleError('Unable to submit post');
+    }
+  }
+
+  async function pushFeed() {
+    const PATH = `${feedRepository.route}/posts?afterDate=${dates.newestShare}`;
+    try {
+      const {
+        data: { shares: newShares, posts: newPosts, users: newUsers },
+      } = await Axios.get(PATH, CONFIG);
+      console.log(dates);
+      const object = {
+        ...feedData,
+        shares: [...newShares, ...shares],
+        posts: { ...posts, ...newPosts },
+        users: { ...users, ...newUsers },
+      };
+      setFeedData(object);
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  async function unshiftFeed() {
+    const PATH = `${feedRepository.route}/posts?beforeDate=${dates.oldestShare}`;
+    try {
+      const {
+        data: { shares: newShares, posts: newPosts, users: newUsers },
+      } = await Axios.get(PATH, CONFIG);
+      console.log(dates);
+      const object = {
+        ...feedData,
+        shares: [...shares, ...newShares],
+        posts: { ...posts, ...newPosts },
+        users: { ...users, ...newUsers },
+      };
+      setFeedData(object);
+    } catch (error) {
+      handleError(error);
     }
   }
 

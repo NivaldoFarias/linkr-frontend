@@ -17,6 +17,7 @@ export function PostProvider(props) {
   return (
     <PostContext.Provider
       value={{
+        share,
         post,
         isCommentSectionOpen,
         setOpenCommentSection,
