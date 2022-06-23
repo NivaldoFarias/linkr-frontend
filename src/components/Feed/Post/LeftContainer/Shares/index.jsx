@@ -1,14 +1,19 @@
 import { useContext, useState } from 'react';
 import { IoRepeatSharp } from 'react-icons/io5';
+import DataContext from '../../../../../hooks/DataContext';
 import FeedContext from '../../../../../hooks/FeedContext';
 
 import PostContext from './../../../../../hooks/PostContext';
 
 function Shares() {
   const {
+    user: { id: userId },
+  } = useContext(DataContext);
+  const {
     post: {
       id: postId,
       shares: { userHasShared, numberOfShares },
+      userId: postUserId,
     },
   } = useContext(PostContext);
   const {
@@ -17,12 +22,17 @@ function Shares() {
     },
   } = useContext(FeedContext);
 
+  const userCanShare = postUserId !== userId;
+  console.log(userCanShare);
+
   const [click, setClick] = useState(userHasShared ?? false);
 
   return (
     <div className='left-container__shares'>
       <IoRepeatSharp
-        className={`left-container__shares__icon ${userHasShared ? 'reshared' : ''}`}
+        className={`left-container__shares__icon ${
+          userCanShare && userHasShared ? 'reshared' : ''
+        }`}
         onClick={handleClick}
       />
       <p className='left-container__shares__label'>
@@ -33,12 +43,13 @@ function Shares() {
   );
 
   async function handleClick() {
-    setClick(!click);
-
-    try {
-      await togglePostShare(postId, userHasShared);
-    } catch (err) {
+    if (userCanShare) {
       setClick(!click);
+      try {
+        await togglePostShare(postId, userHasShared);
+      } catch (err) {
+        setClick(!click);
+      }
     }
   }
 

@@ -37,6 +37,8 @@ export function FeedProvider({ children }) {
   const hooks = {
     data: {
       reloadFeed,
+      pushFeed,
+      unshiftFeed,
       refreshPost,
       updatePost,
       deletePost,
@@ -113,8 +115,8 @@ export function FeedProvider({ children }) {
   }
 
   async function togglePostShare(postId, userHasShared) {
-    console.log(userHasShared);
-    const url = `/posts/${postId}/${!userHasShared ? '' : 'un'}share`;
+    const command = userHasShared ? 'unshare' : 'share';
+    const url = `/posts/${postId}/${command}`;
     try {
       await Axios.post(url, {}, CONFIG);
       await refreshPost(postId);
@@ -234,6 +236,7 @@ export function FeedProvider({ children }) {
     const url = `/posts/${postId}`;
     try {
       await Axios.put(url, { text }, CONFIG);
+      await refreshPost(postId);
     } catch (error) {
       handleError(error);
     }
