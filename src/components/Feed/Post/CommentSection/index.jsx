@@ -106,14 +106,13 @@ function CommentSection() {
     if (e.key === 'Backspace') {
       e.target.parentNode.style.height = 'inherit';
     } else if (e.key === 'Enter') {
-      handleSubmit(e);
+      handleSubmit();
     }
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit() {
     await submitComment(inputValue, postId);
     setInputValue('');
-    handleLeave(e);
   }
 }
 

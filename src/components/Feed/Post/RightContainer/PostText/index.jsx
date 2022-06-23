@@ -8,7 +8,7 @@ export default function PostText() {
   } = useContext(PostContext);
   const {
     hooks: {
-      data: { goToHashtagPage },
+      navigate: { goToHashtagPage },
     },
   } = useContext(FeedContext);
 

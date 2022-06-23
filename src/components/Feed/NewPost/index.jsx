@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
 
 import fallbackAvatar from './../../../assets/fallback-avatar.png';
 import DataContext from '../../../hooks/DataContext';
@@ -14,7 +13,11 @@ export default function NewPost() {
   const [fieldVisibility, setFieldVisibility] = useState(false);
 
   const { user, token } = useContext(DataContext);
-  const { updatePosts } = useContext(FeedContext);
+  const {
+    hooks: {
+      data: { submitPost },
+    },
+  } = useContext(FeedContext);
 
   return (
     <Wrapper>
@@ -59,37 +62,11 @@ export default function NewPost() {
   async function handleSendNewPost(e) {
     e.preventDefault();
     setFieldVisibility(true);
-    try {
-      await Axios.post(
-        '/posts/',
-        { url, text: description },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      updatePosts();
-      setFieldVisibility(false);
-      setUrl('');
-      setDescription('');
-    } catch (e) {
-      console.log(e);
-      setUrl('');
-      setDescription('');
-      handleError('Unable to create new post');
-      setFieldVisibility(false);
-    }
-  }
 
-  function handleError(error) {
-    confirmAlert({
-      message: `${
-        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
-      }. Please try again.`,
-      buttons: [
-        {
-          label: 'OK',
-          onClick: () => null,
-        },
-      ],
-    });
+    await submitPost(url, description);
+    setFieldVisibility(false);
+    setUrl('');
+    setDescription('');
   }
 
   function toggleBtn() {
