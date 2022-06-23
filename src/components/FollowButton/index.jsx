@@ -6,11 +6,6 @@ import getRandomInt from '../../utils/getRandomInt';
 import StyledFollowButton from './styles';
 
 function FollowButton() {
-  const [clicked, setClicked] = useState(false);
-  const [text, setText] = useState('Follow');
-  const [isHovering, setIsHovering] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const {
     user: { id: userId },
   } = useContext(DataContext);
@@ -22,17 +17,18 @@ function FollowButton() {
     feedRepository: { type },
   } = useContext(FeedContext);
 
-  useEffect(() => {
-    setText(clicked ? `${isHovering ? 'Unfollow' : 'Following'}` : 'Follow');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clicked, isHovering]);
+  const [clicked, setClicked] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const text = isFollowing ? (isHovering ? 'Unfollow' : 'Following') : 'Follow';
 
   return type === 'user' && pageOwnerId !== userId ? (
     <StyledFollowButton
       className={clicked ? 'clicked' : ''}
       onClick={() => {
         setIsLoading(true);
-        setClicked(!clicked);
+        setClicked(true);
         setTimeout(() => {
           submitToggleFollowing();
         }, getRandomInt(750, 1500));
@@ -47,12 +43,9 @@ function FollowButton() {
   );
 
   async function submitToggleFollowing() {
-    try {
-      await toggleFollowUser(pageOwnerId, isFollowing);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-    }
+    await toggleFollowUser(pageOwnerId, isFollowing);
+    setIsLoading(false);
+    setClicked(false);
   }
 
   function handleHoverIn() {

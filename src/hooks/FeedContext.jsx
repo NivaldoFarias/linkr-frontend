@@ -16,7 +16,9 @@ export function FeedProvider({ children }) {
   const pageOwner = feedData.users[feedData.pageOwnerId] ?? {
     username: 'User',
     imageUrl: fallbackAvatar,
+    isFollowing: false,
   };
+
   const { token } = useContext(DataContext);
   const navigate = useNavigate();
 
@@ -25,7 +27,6 @@ export function FeedProvider({ children }) {
       shares.length > 0 ? shares[shares.length - 1].createdAt : '1900-06-23T17:03:04.974Z',
     newestShare: shares.length > 0 ? shares[0].createdAt : '1900-06-23T17:03:04.974Z',
   };
-  console.log(dates);
 
   const CONFIG = {
     headers: {
