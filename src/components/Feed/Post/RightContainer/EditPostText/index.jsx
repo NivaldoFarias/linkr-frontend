@@ -1,20 +1,26 @@
 import { useContext, useEffect } from 'react';
+import FeedContext from '../../../../../hooks/FeedContext';
 import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditPostText() {
   const {
-    post,
+    post: { text },
     editText,
     setEditText,
     setIsEditingPost,
-    handleError,
     editPostData,
-    updatePostData,
   } = useContext(PostContext);
+  const {
+    handleError,
+    hooks: {
+      data: { updatePost },
+    },
+  } = useContext(FeedContext);
 
   useEffect(() => {
-    setEditText(post.text);
-  }, [post]);
+    setEditText(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
   return (
     <textarea
@@ -29,7 +35,7 @@ export default function EditPostText() {
     if (e.key === 'Enter') {
       try {
         await editPostData();
-        await updatePostData();
+        await updatePost();
         setIsEditingPost(false);
       } catch (error) {
         handleError(error);

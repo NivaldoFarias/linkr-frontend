@@ -1,14 +1,17 @@
 import { useContext, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+
+import MainPageProvider from '../../hooks/MainPageContext';
+import DataContext from './../../hooks/DataContext';
+import MouseContext from '../../hooks/MouseContext';
+
 import Header from '../../components/Header';
 import TrendingNav from '../../components/TrendingNav';
-import DataContext from './../../hooks/DataContext';
-import { Wrapper, Main, Feed } from './styles';
-import { useNavigate } from 'react-router-dom';
-import MouseContext from '../../hooks/MouseContext';
-import Axios from '../../blueprints';
-import MainPageProvider from '../../hooks/MainPageContext';
 import FollowButton from '../../components/FollowButton';
+
+import { Wrapper, Main, Feed } from './styles';
+import Axios from '../../blueprints';
+import { FeedProvider } from '../../hooks/FeedContext';
 
 export default function MainPage() {
   const { width, token, setUser } = useContext(DataContext);
@@ -28,21 +31,23 @@ export default function MainPage() {
   }, [token]);
 
   return (
-    <MainPageProvider>
-      <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
-        <Header />
-        <Main>
-          <Feed>
-            <Outlet />
-          </Feed>
-          {width > 600 && (
-            <div className='aside-container'>
-              <FollowButton />
-              <TrendingNav />
-            </div>
-          )}
-        </Main>
-      </Wrapper>
-    </MainPageProvider>
+    <FeedProvider>
+      <MainPageProvider>
+        <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
+          <Header />
+          <Main>
+            <Feed>
+              <Outlet />
+            </Feed>
+            {width > 600 && (
+              <div className='aside-container'>
+                <FollowButton />
+                <TrendingNav />
+              </div>
+            )}
+          </Main>
+        </Wrapper>
+      </MainPageProvider>
+    </FeedProvider>
   );
 }

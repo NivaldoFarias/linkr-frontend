@@ -1,39 +1,31 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Axios from '../../blueprints';
+
+import FeedContext from '../../hooks/FeedContext';
 import Feed from '../../components/Feed';
-import DataContext from '../../hooks/DataContext';
 
 export default function HashtagPage() {
-  const [posts, setPosts] = useState([]);
   const hashtag = useParams().hashtag.toLowerCase();
+  const {
+    hooks: {
+      data: { reloadFeed },
+    },
+  } = useContext(FeedContext);
 
-  const { token } = useContext(DataContext);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => updateHashtagPosts(), [hashtag]);
 
-  useEffect(() => {
-    updateHashtagPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hashtag]);
-
-  function updateHashtagPosts() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const promise = Axios.get(`/hashtags/${hashtag}/posts`, config);
-    promise.then(({ data }) => {
-      setPosts(data);
-    });
+  async function updateHashtagPosts() {
+    try {
+      await reloadFeed({
+        canCreatePost: false,
+        route: `/hashtags/${hashtag}`,
+        type: 'hashtag',
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  return (
-    <Feed
-      title={`#${hashtag}`}
-      posts={posts}
-      canCreatePost={false}
-      userThumbnail={false}
-      updatePostsFunction={updateHashtagPosts}
-    />
-  );
+  return <Feed hashtag={hashtag} />;
 }

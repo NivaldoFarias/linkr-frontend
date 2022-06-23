@@ -3,6 +3,8 @@ import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { DataProvider } from './../hooks/DataContext';
+import { MouseProvider } from '../hooks/MouseContext';
+
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
 
@@ -13,7 +15,6 @@ import TimelinePage from '../pages/TimelinePage';
 import UserPage from '../pages/UserPage';
 import HashtagPage from '../pages/HashtagPage';
 import MainPage from '../pages/MainPage';
-import { MouseProvider } from '../hooks/MouseContext';
 
 export default function App() {
   return (

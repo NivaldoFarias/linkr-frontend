@@ -5,9 +5,10 @@ const LoadingContainer = styled.div`
   padding: 18px;
   width: 100%;
 
-  border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.post};
+  background-color: transparent;
+  font-size: 4rem;
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export default LoadingContainer;

@@ -1,45 +1,35 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import FeedContext from '../../hooks/FeedContext';
 import Feed from '../../components/Feed';
-import DataContext from '../../hooks/DataContext';
-import Axios from '../../blueprints';
 
 export default function UserPage() {
+  const {
+    hooks: {
+      data: { reloadFeed },
+    },
+  } = useContext(FeedContext);
   const { userId } = useParams();
-  const [userName, setUserName] = useState('timeline');
-  const [picture, setPicture] = useState('');
-  const [posts, setPosts] = useState([]);
 
-  const { token } = useContext(DataContext);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => updateUserPosts(), [userId]);
 
-  useEffect(() => {
-    updateUserPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  async function updateUserPosts() {
+    const route = `/users/${userId}`;
+    const canCreatePost = false;
+    const type = `user`;
 
-  function updateUserPosts() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const promise = Axios.get(`/users/${userId}/posts`, config);
-    promise.then(({ data }) => {
-      setUserName(data.username);
-      setPicture(data.imageUrl);
-      setPosts(data.posts);
-    });
-    promise.catch((error) => console.log(error));
+    try {
+      await reloadFeed({
+        canCreatePost,
+        route,
+        type,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  return (
-    <Feed
-      title={`${userName}'s posts`}
-      posts={posts}
-      canCreatePost={false}
-      userThumbnail={picture}
-      updatePostsFunction={updateUserPosts}
-    />
-  );
+  return <Feed />;
 }

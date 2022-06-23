@@ -1,11 +1,16 @@
 import { useContext } from 'react';
+import FeedContext from '../../../../../hooks/FeedContext';
 import PostContext from './../../../../../hooks/PostContext';
-import ReactHashtag from '@mdnm/react-hashtag';
-import getRandomInt from './../../../../../utils/getRandomInt';
 
 export default function PostText() {
-  const { post, goToHashtagPage } = useContext(PostContext);
-  const { text } = post;
+  const {
+    post: { text },
+  } = useContext(PostContext);
+  const {
+    hooks: {
+      data: { goToHashtagPage },
+    },
+  } = useContext(FeedContext);
 
   const textWithHashtags = textBuilder(text);
 

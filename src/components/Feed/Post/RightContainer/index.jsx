@@ -2,6 +2,7 @@ import { useContext } from 'react';
 
 import PostContext from '../../../../hooks/PostContext';
 import DataContext from '../../../../hooks/DataContext';
+import FeedContext from '../../../../hooks/FeedContext';
 
 import EditPostText from './EditPostText';
 import EditActions from './EditActions';
@@ -11,7 +12,22 @@ import Link from './Link';
 
 function RightContainer() {
   const { user } = useContext(DataContext);
-  const { post, modalIsOpen, isEditingPost, goToUserPage } = useContext(PostContext);
+  const {
+    users,
+    hooks: {
+      navigate: { goToUserPage },
+    },
+  } = useContext(FeedContext);
+  const {
+    post: { userId },
+    modalIsOpen,
+    isEditingPost,
+  } = useContext(PostContext);
+
+  const postCreator = {
+    userId,
+    username: users[userId].username,
+  };
 
   const postHeader = buildPostHeader();
 
@@ -29,12 +45,12 @@ function RightContainer() {
         <div className='post-header__username'>
           <p
             onClick={() => {
-              goToUserPage(user.id);
+              goToUserPage(userId);
             }}
           >
-            {post.username}
+            {postCreator.username}
           </p>
-          {post.userId === user.id ? <EditActions /> : <></>}
+          {postCreator.userId === user.id ? <EditActions /> : <></>}
         </div>
         {isEditingPost ? <EditPostText /> : <PostText />}
       </div>

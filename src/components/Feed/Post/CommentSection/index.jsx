@@ -4,47 +4,55 @@ import { AiOutlineSend } from 'react-icons/ai';
 
 import DataContext from '../../../../hooks/DataContext';
 import PostContext from '../../../../hooks/PostContext';
+import FeedContext from '../../../../hooks/FeedContext';
+
 import StyledCommentSection from './styles';
 
 function CommentSection() {
-  const { user } = useContext(DataContext);
   const [inputValue, setInputValue] = useState('');
-  const { commentsData, setCommentsData, isCommentSectionOpen, handleError } =
-    useContext(PostContext);
+  const [processedComments, setProcessedComments] = useState([]);
+
+  const { user } = useContext(DataContext);
+  const {
+    users,
+    hooks: {
+      data: { submitComment },
+    },
+  } = useContext(FeedContext);
+  const {
+    post: { id: postId, userId: postCreatorId, comments },
+    isCommentSectionOpen,
+  } = useContext(PostContext);
 
   useEffect(() => {
-    setCommentsData([
-      ...commentsData,
-      {
-        id: 1,
-        userId: user.id,
-        imageUrl: user.imageUrl,
-        username: user.username,
-        text: 'testing comment section',
-      },
-      {
-        id: 2,
-        userId: 5,
-        imageUrl: user.imageUrl,
-        username: 'this-is-a-test',
-        text: 'lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem! Quisquam, quidem!',
-      },
-    ]);
+    setProcessedComments(
+      comments.map((comment) => {
+        return {
+          id: comment.id,
+          userId: comment.userId,
+          text: comment.text,
+          createdAt: comment.createdAt,
+          imageUrl: users[comment.userId].imageUrl,
+          username: users[comment.userId].username,
+          isFollowing: users[comment.userId].isFollowing,
+        };
+      }),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [comments]);
 
   return (
     <StyledCommentSection className={isCommentSectionOpen ? '' : 'collapsed'}>
       <div className='comments-container'>
-        {commentsData.length > 0 ? (
-          commentsData.map((comment) => {
+        {processedComments.length > 0 ? (
+          processedComments.map((comment) => {
             return (
               <div key={comment.id} className='comment'>
                 <img className='comment__avatar' src={comment.imageUrl} alt='user avatar' />
                 <div className='comment__content'>
                   <div className='comment__content__username'>
                     <p>{comment.username}</p>
-                    {comment.userId === user.id ? (
+                    {comment.userId === postCreatorId ? (
                       <div className='comment-user-status'>
                         <RiUserStarFill className='comment-user-status__icon' />
                         <p className='comment-user-status__label'>OP</p>
@@ -75,9 +83,9 @@ function CommentSection() {
           onChange={handleInput}
           onBlur={handleLeave}
           onReset={handleLeave}
-          onKeyDown={handleErase}
+          onKeyDown={handleKeyDown}
         />
-        <AiOutlineSend className='new-comment__icon' onClick={handleSubmitComment} />
+        <AiOutlineSend className='new-comment__icon' onClick={handleSubmit} />
       </div>
     </StyledCommentSection>
   );
@@ -94,15 +102,18 @@ function CommentSection() {
     if (inputValue === '') e.target.parentNode.style.height = 'inherit';
   }
 
-  function handleErase(e) {
-    console.log(e.key, e.target.value);
+  function handleKeyDown(e) {
     if (e.key === 'Backspace') {
       e.target.parentNode.style.height = 'inherit';
+    } else if (e.key === 'Enter') {
+      handleSubmit(e);
     }
   }
 
-  function handleSubmitComment() {
-    handleError('Need Implementation');
+  async function handleSubmit(e) {
+    await submitComment(inputValue, postId);
+    setInputValue('');
+    handleLeave(e);
   }
 }
 

@@ -1,42 +1,53 @@
+import { useContext, useEffect } from 'react';
+
+import FeedContext from '../../hooks/FeedContext';
+import { MainPageContext } from '../../hooks/MainPageContext';
+import { PostProvider } from '../../hooks/PostContext';
+
 import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/';
+import EmptyPosts from './EmptyPosts/';
 import NewPost from './NewPost/';
 import Post from './Post/';
-import EmptyPosts from './EmptyPosts/';
 
-import { FeedProvider } from '../../hooks/FeedContext';
-import { PostProvider } from '../../hooks/PostContext';
-import { useContext, useEffect } from 'react';
-import { MainPageContext } from '../../hooks/MainPageContext';
-
-export default function Feed(props) {
-  const { title, posts, canCreatePost, userThumbnail, updatePostsFunction } = props;
+export default function Feed({ hashtag }) {
+  const {
+    pageOwner,
+    shares,
+    feedRepository: { type, canCreatePost },
+  } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
 
-  useEffect(() => {
-    loadHashtags();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [posts]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => loadHashtags(), [shares]);
 
-  const postsElements = posts.map((post, index) => {
+  const postsElements = shares.map((share) => {
     return (
-      <PostProvider key={index} post={post}>
+      <PostProvider key={share.id} share={share}>
         <Post />
       </PostProvider>
     );
   });
-
   return (
-    <FeedProvider updatePostsFunction={updatePostsFunction}>
-      <Wrapper>
-        <Header>
-          {userThumbnail ? <UserThumbnail src={userThumbnail} /> : <></>}
-          <Title>{title}</Title>
-        </Header>
-        <Content>
-          {canCreatePost ? <NewPost /> : <></>}
-          <Posts>{posts.length > 0 ? postsElements : <EmptyPosts />}</Posts>
-        </Content>
-      </Wrapper>
-    </FeedProvider>
+    <Wrapper>
+      <Header>
+        {type === 'user' ? <UserThumbnail src={pageOwner.imageUrl} /> : <></>}
+        <Title>{title()}</Title>
+      </Header>
+      <Content>
+        {canCreatePost ? <NewPost /> : <></>}
+        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts />}</Posts>
+      </Content>
+    </Wrapper>
   );
+
+  function title() {
+    switch (type) {
+      case 'user':
+        return `${pageOwner.username ?? 'User'}'s posts`;
+      case 'hashtag':
+        return `#${hashtag}`;
+      default:
+        return 'timeline';
+    }
+  }
 }

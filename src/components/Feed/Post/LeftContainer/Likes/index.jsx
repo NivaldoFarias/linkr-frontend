@@ -1,14 +1,29 @@
 import { useContext } from 'react';
-import PostContext from '../../../../../hooks/PostContext';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import Axios from '../../../../../blueprints';
+
+import PostContext from '../../../../../hooks/PostContext';
+import FeedContext from '../../../../../hooks/FeedContext';
 
 function Likes() {
-  const { post, isLiked, updatePostData, CONFIG, handleError } = useContext(PostContext);
+  const {
+    post: {
+      id: postId,
+      likes: { totalLikes, usersWhoLiked, userHasLiked },
+    },
+  } = useContext(PostContext);
+  const {
+    hooks: {
+      data: { togglePostLike },
+    },
+  } = useContext(FeedContext);
 
   return (
-    <div className='left-container__likes' onClick={likeButtonClicked}>
-      {isLiked ? <AiFillHeart className={isLiked ? 'red-heart' : ''} /> : <AiOutlineHeart />}
+    <div className='left-container__likes' onClick={handleLike}>
+      {userHasLiked ? (
+        <AiFillHeart className={userHasLiked ? 'red-heart' : ''} />
+      ) : (
+        <AiOutlineHeart />
+      )}
       <div data-tip={likesLabel()} className='left-container__likes__label'>
         <strong>{processLikes()}</strong>
         {processLikesLabel()}
@@ -16,20 +31,11 @@ function Likes() {
     </div>
   );
 
-  async function likeButtonClicked() {
-    const tryToLike = !isLiked;
-    const url = `/posts/${post.id}/${tryToLike ? '' : 'un'}like`;
-    try {
-      await Axios.post(url, {}, CONFIG);
-      await updatePostData();
-    } catch (error) {
-      handleError(error);
-    }
+  async function handleLike() {
+    await togglePostLike(postId, userHasLiked);
   }
 
   function likesLabel() {
-    const { userHasLiked, totalLikes, usersWhoLiked } = post;
-
     return userHasLiked
       ? totalLikes === 1
         ? 'You'
@@ -52,11 +58,11 @@ function Likes() {
   }
 
   function processLikesLabel() {
-    return post.totalLikes > 0 ? ` like${post.totalLikes === 1 ? '' : 's'}` : '';
+    return totalLikes > 0 ? ` like${totalLikes === 1 ? '' : 's'}` : '';
   }
 
   function processLikes() {
-    return post.totalLikes > 0 ? `${post.totalLikes}` : 'No likes yet';
+    return totalLikes > 0 ? `${totalLikes}` : 'No likes yet';
   }
 }
 

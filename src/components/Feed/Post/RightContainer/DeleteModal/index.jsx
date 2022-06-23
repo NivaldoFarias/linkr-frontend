@@ -1,17 +1,25 @@
+import Modal from 'react-modal';
 import { useContext, useState } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
 import { StyledLoadingDots } from './../../../../../styles';
 
-import Modal from 'react-modal';
-import Axios from './../../../../../blueprints';
 import PostContext from './../../../../../hooks/PostContext';
 import FeedContext from './../../../../../hooks/FeedContext';
+
 import getRandomInt from './../../../../../utils/getRandomInt';
 
 export default function DeleteModal() {
-  const { post, modalIsOpen, setModalIsOpen, CONFIG, handleError } = useContext(PostContext);
-  const { updatePostsFunction } = useContext(FeedContext);
-  const [submitDelete, setSubmitDelete] = useState(false);
+  const {
+    postData: { id: postId },
+    modalIsOpen,
+    setModalIsOpen,
+  } = useContext(PostContext);
+  const {
+    hooks: {
+      data: { deletePost },
+    },
+  } = useContext(FeedContext);
+  const [hasSubmited, setHasSubmited] = useState(false);
 
   return (
     <div className='delete-post'>
@@ -32,14 +40,14 @@ export default function DeleteModal() {
             </button>
             <button
               onClick={() => {
-                setSubmitDelete(true);
+                setHasSubmited(true);
                 setTimeout(() => {
-                  handleDeletePost();
+                  submitDelete();
                 }, getRandomInt(750, 2000));
               }}
               className='delete-btn'
             >
-              {submitDelete ? <StyledLoadingDots /> : 'Yes, delete it'}
+              {hasSubmited ? <StyledLoadingDots /> : 'Yes, delete it'}
             </button>
           </div>
         </div>
@@ -47,15 +55,12 @@ export default function DeleteModal() {
     </div>
   );
 
-  async function handleDeletePost() {
-    setSubmitDelete(false);
-    const url = `/posts/${post.id}`;
+  async function submitDelete() {
+    setHasSubmited(false);
     try {
-      await Axios.delete(url, CONFIG);
+      await deletePost(postId);
       setModalIsOpen(false);
-      updatePostsFunction();
     } catch (err) {
-      handleError('Unable to delete post');
       setModalIsOpen(false);
     }
   }
