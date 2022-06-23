@@ -200,7 +200,7 @@ export function FeedProvider({ children }) {
       console.log(dates);
       const object = {
         ...feedData,
-        shares: [...shares, ...newShares],
+        shares: [...newShares, ...shares],
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
@@ -211,15 +211,19 @@ export function FeedProvider({ children }) {
   }
 
   async function unshiftFeed() {
-    const PATH = `${feedRepository.route}/posts?afterDate=${dates.oldestShare}`;
-
+    const PATH = `${feedRepository.route}/posts?beforeDate=${dates.oldestShare}`;
     try {
-      const request = await Axios.get(PATH, CONFIG);
-      setFeedData(
-        request?.data.shares
-          ? request.data
-          : { shares: [], posts: {}, users: {}, pageOwnerId: null },
-      );
+      const {
+        data: { shares: newShares, posts: newPosts, users: newUsers },
+      } = await Axios.get(PATH, CONFIG);
+      console.log(dates);
+      const object = {
+        ...feedData,
+        shares: [...shares, ...newShares],
+        posts: { ...posts, ...newPosts },
+        users: { ...users, ...newUsers },
+      };
+      setFeedData(object);
     } catch (error) {
       handleError(error);
     }
