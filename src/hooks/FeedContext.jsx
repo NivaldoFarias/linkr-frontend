@@ -18,7 +18,7 @@ export function FeedProvider({ children }) {
       const PATH = `${route}/posts`;
 
       const request = await Axios.get(PATH, CONFIG);
-      setFeedData(request?.data ? request.data : feedData);
+      setFeedData(request?.data.shares ? request.data : feedData);
 
       if (request?.data.username && request?.data.imageUrl) {
         return { username: request?.data.username, imageUrl: request?.data.imageUrl };
