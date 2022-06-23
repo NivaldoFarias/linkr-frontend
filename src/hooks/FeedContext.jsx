@@ -78,10 +78,10 @@ export function FeedProvider({ children }) {
   }
 
   async function toggleFollowUser(userId, isFollowing) {
-    const url = `/users/${userId}/${isFollowing ? '' : 'un'}follow`;
+    const url = `/users/${userId}/${isFollowing ? 'un' : ''}follow`;
     try {
-      await Axios.post(url, CONFIG);
-      refreshUser();
+      await Axios.post(url, {}, CONFIG);
+      refreshUser(userId);
     } catch (err) {
       handleError('Unable to follow user');
     }
@@ -148,7 +148,6 @@ export function FeedProvider({ children }) {
 
   async function refreshUser(userId) {
     const url = `/users/${userId}`;
-
     try {
       const {
         data: { user },
@@ -163,13 +162,13 @@ export function FeedProvider({ children }) {
     }
   }
 
-  async function submitComment(comment, postId) {
-    const url = `/posts/${postId}/comments`;
+  async function submitComment(text, postId) {
+    const url = `/posts/${postId}/comment`;
     try {
-      await Axios.post(url, { comment }, CONFIG);
+      await Axios.post(url, { text }, CONFIG);
       await refreshPost(postId);
     } catch (error) {
-      handleError(error);
+      handleError('Unable to submit comment');
     }
   }
 

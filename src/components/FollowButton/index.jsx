@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
 import DataContext from '../../hooks/DataContext';
 
 import FeedContext from '../../hooks/FeedContext';
@@ -36,7 +35,7 @@ function FollowButton() {
         setClicked(!clicked);
         setTimeout(() => {
           submitToggleFollowing();
-        }, getRandomInt(750, 2000));
+        }, getRandomInt(750, 1500));
       }}
       onMouseEnter={handleHoverIn}
       onMouseLeave={handleHoverOut}
@@ -47,10 +46,11 @@ function FollowButton() {
     <></>
   );
 
-  function submitToggleFollowing() {
+  async function submitToggleFollowing() {
     try {
-      toggleFollowUser(pageOwnerId, isFollowing);
-    } catch (err) {
+      await toggleFollowUser(pageOwnerId, isFollowing);
+      setIsLoading(false);
+    } catch (error) {
       setIsLoading(false);
     }
   }
@@ -61,20 +61,6 @@ function FollowButton() {
 
   function handleHoverOut() {
     setIsHovering(false);
-  }
-
-  function handleError(error) {
-    confirmAlert({
-      message: `${
-        error.response?.data.message ?? `${error ? error : ' Something went wrong'}`
-      }. Please try again.`,
-      buttons: [
-        {
-          label: 'OK',
-          onClick: () => null,
-        },
-      ],
-    });
   }
 }
 

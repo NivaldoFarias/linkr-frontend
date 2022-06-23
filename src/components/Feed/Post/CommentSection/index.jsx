@@ -103,16 +103,17 @@ function CommentSection() {
   }
 
   function handleKeyDown(e) {
-    console.log(e.key, e.target.value);
     if (e.key === 'Backspace') {
       e.target.parentNode.style.height = 'inherit';
     } else if (e.key === 'Enter') {
-      handleSubmit();
+      handleSubmit(e);
     }
   }
 
-  function handleSubmit() {
-    submitComment(inputValue, postId);
+  async function handleSubmit(e) {
+    await submitComment(inputValue, postId);
+    setInputValue('');
+    handleLeave(e);
   }
 }
 
