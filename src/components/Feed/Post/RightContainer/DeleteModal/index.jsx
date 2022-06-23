@@ -7,18 +7,19 @@ import PostContext from './../../../../../hooks/PostContext';
 import FeedContext from './../../../../../hooks/FeedContext';
 
 import getRandomInt from './../../../../../utils/getRandomInt';
-import Axios from './../../../../../blueprints';
 
 export default function DeleteModal() {
   const {
     postData: { id: postId },
     modalIsOpen,
     setModalIsOpen,
-    CONFIG,
-    handleError,
   } = useContext(PostContext);
-  const { updatePosts } = useContext(FeedContext);
-  const [submitDelete, setSubmitDelete] = useState(false);
+  const {
+    hooks: {
+      data: { deletePost },
+    },
+  } = useContext(FeedContext);
+  const [hasSubmited, setHasSubmited] = useState(false);
 
   return (
     <div className='delete-post'>
@@ -39,14 +40,14 @@ export default function DeleteModal() {
             </button>
             <button
               onClick={() => {
-                setSubmitDelete(true);
+                setHasSubmited(true);
                 setTimeout(() => {
-                  handleDeletePost();
+                  submitDelete();
                 }, getRandomInt(750, 2000));
               }}
               className='delete-btn'
             >
-              {submitDelete ? <StyledLoadingDots /> : 'Yes, delete it'}
+              {hasSubmited ? <StyledLoadingDots /> : 'Yes, delete it'}
             </button>
           </div>
         </div>
@@ -54,15 +55,12 @@ export default function DeleteModal() {
     </div>
   );
 
-  async function handleDeletePost() {
-    setSubmitDelete(false);
-    const url = `/posts/${postId}`;
+  async function submitDelete() {
+    setHasSubmited(false);
     try {
-      await Axios.delete(url, CONFIG);
+      await deletePost(postId);
       setModalIsOpen(false);
-      updatePosts();
     } catch (err) {
-      handleError('Unable to delete post');
       setModalIsOpen(false);
     }
   }

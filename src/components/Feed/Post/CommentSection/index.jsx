@@ -14,18 +14,19 @@ function CommentSection() {
 
   const { user } = useContext(DataContext);
   const {
-    feedData: { users },
+    users,
+    hooks: {
+      data: { submitComment },
+    },
   } = useContext(FeedContext);
   const {
-    postData: { userId: postCreatorId },
-    commentsData,
+    post: { id: postId, userId: postCreatorId, comments },
     isCommentSectionOpen,
-    handleError,
   } = useContext(PostContext);
 
   useEffect(() => {
     setProcessedComments(
-      commentsData.map((comment) => {
+      comments.map((comment) => {
         return {
           id: comment.id,
           userId: comment.userId,
@@ -38,7 +39,7 @@ function CommentSection() {
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [commentsData]);
+  }, [comments]);
 
   return (
     <StyledCommentSection className={isCommentSectionOpen ? '' : 'collapsed'}>
@@ -84,7 +85,7 @@ function CommentSection() {
           onReset={handleLeave}
           onKeyDown={handleKeyDown}
         />
-        <AiOutlineSend className='new-comment__icon' onClick={handleSubmitComment} />
+        <AiOutlineSend className='new-comment__icon' onClick={handleSubmit} />
       </div>
     </StyledCommentSection>
   );
@@ -106,12 +107,12 @@ function CommentSection() {
     if (e.key === 'Backspace') {
       e.target.parentNode.style.height = 'inherit';
     } else if (e.key === 'Enter') {
-      handleSubmitComment();
+      handleSubmit();
     }
   }
 
-  function handleSubmitComment() {
-    handleError('Need Implementation');
+  function handleSubmit() {
+    submitComment(inputValue, postId);
   }
 }
 

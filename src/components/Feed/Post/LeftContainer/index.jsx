@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 
-import DataContext from '../../../../hooks/DataContext';
 import FeedContext from '../../../../hooks/FeedContext';
 import PostContext from '../../../../hooks/PostContext';
 
@@ -8,16 +7,18 @@ import Comments from './Comments';
 import Likes from './Likes';
 import Shares from './Shares';
 
+import fallbackAvatar from '../../../../assets/fallback-avatar.png';
+
 function LeftContainer() {
-  const { user } = useContext(DataContext);
   const {
-    postData: { userId },
-    goToUserPage,
+    post: { userId },
   } = useContext(PostContext);
+
   const {
-    feedData: { users },
+    users,
+    hooks: { navigate },
   } = useContext(FeedContext);
-  const postCreator = users[userId];
+  const postCreator = users[userId] ?? { username: 'User', imageUrl: fallbackAvatar };
 
   return (
     <div className='left-container'>
@@ -25,13 +26,13 @@ function LeftContainer() {
         className='left-container__image'
         alt='post creator user avatar'
         onClick={() => {
-          goToUserPage(postCreator.id);
+          navigate.goToUserPage(postCreator.id);
         }}
         src={postCreator.imageUrl}
       />
       <Likes />
       <Comments />
-      {userId !== user.id ? <Shares /> : <></>}
+      <Shares />
     </div>
   );
 }

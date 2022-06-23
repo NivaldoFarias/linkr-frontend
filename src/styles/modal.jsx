@@ -27,7 +27,7 @@ const modal = `
     overflow: hidden;
     border-radius: 5px;
     border: 1px solid rgb(204, 204, 204);
-    background-color: rgb(253, 235, 220) !important;
+    background-color: rgb(253, 235, 220);
 
     .close-modal-btn {
       position: absolute;

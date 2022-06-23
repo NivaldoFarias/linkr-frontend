@@ -98,7 +98,7 @@ const PostContainer = styled.div`
       &__icon {
         font-size: 1.9rem;
         cursor: pointer;
-        transition: all 50ms ease-in-out;
+        transition: all 10ms ease-in-out;
 
         * {
           pointer-events: none;

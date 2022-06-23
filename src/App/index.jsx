@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { DataProvider } from './../hooks/DataContext';
 import { MouseProvider } from '../hooks/MouseContext';
-import { FeedProvider } from '../hooks/FeedContext';
 
 import SignIn from '../components/SignIn';
 import SignUp from '../components/SignUp';
@@ -22,22 +21,20 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <MouseProvider>
         <DataProvider>
-          <FeedProvider>
-            <BrowserRouter>
-              <StyledResets />
-              <Routes>
-                <Route path='/' element={<Home />}>
-                  <Route index element={<SignIn />} />
-                  <Route path='/sign-up' element={<SignUp />} />
-                </Route>
-                <Route element={<MainPage />}>
-                  <Route path='/timeline' element={<TimelinePage />} />
-                  <Route path='/user/:userId' element={<UserPage />} />
-                  <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
-          </FeedProvider>
+          <BrowserRouter>
+            <StyledResets />
+            <Routes>
+              <Route path='/' element={<Home />}>
+                <Route index element={<SignIn />} />
+                <Route path='/sign-up' element={<SignUp />} />
+              </Route>
+              <Route element={<MainPage />}>
+                <Route path='/timeline' element={<TimelinePage />} />
+                <Route path='/user/:userId' element={<UserPage />} />
+                <Route path='/hashtag/:hashtag' element={<HashtagPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
         </DataProvider>
       </MouseProvider>
     </ThemeProvider>

@@ -1,23 +1,29 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { IoRepeatSharp } from 'react-icons/io5';
+import FeedContext from '../../../../../hooks/FeedContext';
 
 import PostContext from './../../../../../hooks/PostContext';
 
 function Shares() {
-  const { sharesData, setSharesData } = useContext(PostContext);
-  const [numberOfShares, setNumberOfShares] = useState(Number(sharesData.numberOfShares) ?? 0);
+  const {
+    post: {
+      id: postId,
+      shares: { userHasShared, numberOfShares },
+    },
+  } = useContext(PostContext);
+  const {
+    hooks: {
+      data: { togglePostShare },
+    },
+  } = useContext(FeedContext);
 
-  useEffect(() => {
-    if (sharesData.userHasShared) setNumberOfShares(numberOfShares + 1);
-    else setNumberOfShares(Number(sharesData.numberOfShares) ?? 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sharesData.userHasShared]);
+  const [click, setClick] = useState(userHasShared ?? false);
 
   return (
     <div className='left-container__shares'>
       <IoRepeatSharp
-        className={`left-container__shares__icon ${sharesData.userHasShared ? 'reshared' : ''}`}
-        onClick={() => setSharesData({ ...sharesData, userHasShared: !sharesData.userHasShared })}
+        className={`left-container__shares__icon ${userHasShared ? 'reshared' : ''}`}
+        onClick={handleClick}
       />
       <p className='left-container__shares__label'>
         <span>{processSharesCount(numberOfShares)}</span>
@@ -25,6 +31,16 @@ function Shares() {
       </p>
     </div>
   );
+
+  async function handleClick() {
+    setClick(!click);
+
+    try {
+      await togglePostShare(postId, userHasShared);
+    } catch (err) {
+      setClick(!click);
+    }
+  }
 
   function processSharesCount(count) {
     return count > 0 ? `${count}` : 'No reshares yet';

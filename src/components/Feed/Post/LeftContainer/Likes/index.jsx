@@ -1,21 +1,24 @@
 import { useContext } from 'react';
-import PostContext from '../../../../../hooks/PostContext';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import Axios from '../../../../../blueprints';
+
+import PostContext from '../../../../../hooks/PostContext';
+import FeedContext from '../../../../../hooks/FeedContext';
 
 function Likes() {
   const {
-    postData: {
+    post: {
       id: postId,
       likes: { totalLikes, usersWhoLiked, userHasLiked },
     },
-    updatePostData,
-    CONFIG,
-    handleError,
   } = useContext(PostContext);
+  const {
+    hooks: {
+      data: { togglePostLike },
+    },
+  } = useContext(FeedContext);
 
   return (
-    <div className='left-container__likes' onClick={likeButtonClicked}>
+    <div className='left-container__likes' onClick={handleLike}>
       {userHasLiked ? (
         <AiFillHeart className={userHasLiked ? 'red-heart' : ''} />
       ) : (
@@ -28,15 +31,8 @@ function Likes() {
     </div>
   );
 
-  async function likeButtonClicked() {
-    const tryToLike = !userHasLiked;
-    const url = `/posts/${postId}/${tryToLike ? '' : 'un'}like`;
-    try {
-      await Axios.post(url, {}, CONFIG);
-      await updatePostData();
-    } catch (error) {
-      handleError();
-    }
+  async function handleLike() {
+    await togglePostLike(postId, userHasLiked);
   }
 
   function likesLabel() {

@@ -5,7 +5,7 @@ import PostContext from './../../../../../hooks/PostContext';
 
 export default function Link() {
   const {
-    postData: { url },
+    post: { url },
   } = useContext(PostContext);
 
   const regex = new RegExp(

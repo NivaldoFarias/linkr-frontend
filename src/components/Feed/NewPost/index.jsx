@@ -70,6 +70,7 @@ export default function NewPost() {
       setUrl('');
       setDescription('');
     } catch (e) {
+      console.log(e);
       setUrl('');
       setDescription('');
       handleError('Unable to create new post');

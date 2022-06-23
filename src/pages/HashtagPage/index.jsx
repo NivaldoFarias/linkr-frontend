@@ -1,33 +1,31 @@
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Feed from '../../components/Feed';
-import DataContext from '../../hooks/DataContext';
 import FeedContext from '../../hooks/FeedContext';
+import Feed from '../../components/Feed';
 
 export default function HashtagPage() {
   const hashtag = useParams().hashtag.toLowerCase();
-  const { feedRepository, setFeedRepository } = useContext(FeedContext);
-  const { token } = useContext(DataContext);
+  const {
+    hooks: {
+      data: { reloadFeed },
+    },
+  } = useContext(FeedContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => updateHashtagPosts(), [hashtag]);
 
   async function updateHashtagPosts() {
-    const route = `/hashtags/${hashtag}`;
-    const title = `#${hashtag}`;
     try {
-      await feedRepository.updatePosts(token, route);
-      setFeedRepository({
-        ...feedRepository,
+      await reloadFeed({
         canCreatePost: false,
-        userThumbnail: false,
-        title: title,
+        route: `/hashtags/${hashtag}`,
+        type: 'hashtag',
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  return <Feed />;
+  return <Feed hashtag={hashtag} />;
 }

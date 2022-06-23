@@ -1,29 +1,41 @@
 import { useContext, useEffect, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import DataContext from '../../hooks/DataContext';
+
+import FeedContext from '../../hooks/FeedContext';
 import getRandomInt from '../../utils/getRandomInt';
 import StyledFollowButton from './styles';
 
 function FollowButton() {
-  const { user } = useContext(DataContext);
   const [clicked, setClicked] = useState(false);
   const [text, setText] = useState('Follow');
   const [isHovering, setIsHovering] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    user: { id: userId },
+  } = useContext(DataContext);
+  const {
+    hooks: {
+      data: { toggleFollowUser },
+    },
+    pageOwner: { id: pageOwnerId, isFollowing },
+    feedRepository: { type },
+  } = useContext(FeedContext);
 
   useEffect(() => {
     setText(clicked ? `${isHovering ? 'Unfollow' : 'Following'}` : 'Follow');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clicked, isHovering]);
 
-  return (
+  return type === 'user' && pageOwnerId !== userId ? (
     <StyledFollowButton
       className={clicked ? 'clicked' : ''}
       onClick={() => {
         setIsLoading(true);
         setClicked(!clicked);
         setTimeout(() => {
-          toggleFollowUser();
+          submitToggleFollowing();
         }, getRandomInt(750, 2000));
       }}
       onMouseEnter={handleHoverIn}
@@ -31,11 +43,16 @@ function FollowButton() {
     >
       {isLoading ? <div className='loading-dots' /> : `${text}`}
     </StyledFollowButton>
+  ) : (
+    <></>
   );
 
-  function toggleFollowUser() {
-    setIsLoading(false);
-    handleError('Need content');
+  function submitToggleFollowing() {
+    try {
+      toggleFollowUser(pageOwnerId, isFollowing);
+    } catch (err) {
+      setIsLoading(false);
+    }
   }
 
   function handleHoverIn() {

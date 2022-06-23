@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import PostContext from '../../../../hooks/PostContext';
 import DataContext from '../../../../hooks/DataContext';
@@ -13,24 +13,21 @@ import Link from './Link';
 function RightContainer() {
   const { user } = useContext(DataContext);
   const {
-    feedData: { users },
+    users,
+    hooks: {
+      navigate: { goToUserPage },
+    },
   } = useContext(FeedContext);
   const {
-    postData: { userId },
+    post: { userId },
     modalIsOpen,
     isEditingPost,
-    goToUserPage,
   } = useContext(PostContext);
 
-  const [processedData, setProcessedData] = useState({});
-
-  useEffect(() => {
-    setProcessedData({
-      userId: userId,
-      username: users[userId].username,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  const postCreator = {
+    userId,
+    username: users[userId].username,
+  };
 
   const postHeader = buildPostHeader();
 
@@ -48,12 +45,12 @@ function RightContainer() {
         <div className='post-header__username'>
           <p
             onClick={() => {
-              goToUserPage(user.id);
+              goToUserPage(userId);
             }}
           >
-            {processedData.username}
+            {postCreator.username}
           </p>
-          {processedData.userId === user.id ? <EditActions /> : <></>}
+          {postCreator.userId === user.id ? <EditActions /> : <></>}
         </div>
         {isEditingPost ? <EditPostText /> : <PostText />}
       </div>

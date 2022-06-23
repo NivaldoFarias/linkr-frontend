@@ -3,7 +3,11 @@ import { GoCommentDiscussion } from 'react-icons/go';
 import PostContext from '../../../../../hooks/PostContext';
 
 function Comments() {
-  const { commentsData, isCommentSectionOpen, setOpenCommentSection } = useContext(PostContext);
+  const {
+    post: { comments },
+    isCommentSectionOpen,
+    setOpenCommentSection,
+  } = useContext(PostContext);
 
   return (
     <div className='left-container__comments'>
@@ -12,8 +16,8 @@ function Comments() {
         onClick={toggleCommentSection}
       />
       <p className='left-container__comments__label'>
-        <span>{commentsCount(commentsData.length)}</span>
-        {commentsLabel(commentsData.length)}
+        <span>{commentsCount(comments.length)}</span>
+        {commentsLabel(comments.length)}
       </p>
     </div>
   );

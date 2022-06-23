@@ -1,11 +1,16 @@
 import { useContext } from 'react';
+import FeedContext from '../../../../../hooks/FeedContext';
 import PostContext from './../../../../../hooks/PostContext';
 
 export default function PostText() {
   const {
-    postData: { text },
-    goToHashtagPage,
+    post: { text },
   } = useContext(PostContext);
+  const {
+    hooks: {
+      data: { goToHashtagPage },
+    },
+  } = useContext(FeedContext);
 
   const textWithHashtags = textBuilder(text);
 

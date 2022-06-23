@@ -9,20 +9,20 @@ import EmptyPosts from './EmptyPosts/';
 import NewPost from './NewPost/';
 import Post from './Post/';
 
-export default function Feed() {
+export default function Feed({ hashtag }) {
   const {
-    feedData,
-    feedRepository: { title, canCreatePost, userThumbnail },
+    pageOwner,
+    shares,
+    feedRepository: { type, canCreatePost },
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => loadHashtags(), [feedData]);
+  useEffect(() => loadHashtags(), [shares]);
 
-  const postsKeys = Object.keys(feedData?.posts ?? {});
-  const postsElements = postsKeys.map((key, index) => {
+  const postsElements = shares.map((share) => {
     return (
-      <PostProvider key={index} post={feedData.posts[key]}>
+      <PostProvider key={share.id} share={share}>
         <Post />
       </PostProvider>
     );
@@ -30,13 +30,24 @@ export default function Feed() {
   return (
     <Wrapper>
       <Header>
-        {userThumbnail ? <UserThumbnail src={userThumbnail} /> : <></>}
-        <Title>{title}</Title>
+        {type === 'user' ? <UserThumbnail src={pageOwner.imageUrl} /> : <></>}
+        <Title>{title()}</Title>
       </Header>
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
-        <Posts>{postsKeys.length > 0 ? postsElements : <EmptyPosts />}</Posts>
+        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts />}</Posts>
       </Content>
     </Wrapper>
   );
+
+  function title() {
+    switch (type) {
+      case 'user':
+        return `${pageOwner.username ?? 'User'}'s posts`;
+      case 'hashtag':
+        return `#${hashtag}`;
+      default:
+        return 'timeline';
+    }
+  }
 }

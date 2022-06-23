@@ -11,6 +11,7 @@ import FollowButton from '../../components/FollowButton';
 
 import { Wrapper, Main, Feed } from './styles';
 import Axios from '../../blueprints';
+import { FeedProvider } from '../../hooks/FeedContext';
 
 export default function MainPage() {
   const { width, token, setUser } = useContext(DataContext);
@@ -30,21 +31,23 @@ export default function MainPage() {
   }, [token]);
 
   return (
-    <MainPageProvider>
-      <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
-        <Header />
-        <Main>
-          <Feed>
-            <Outlet />
-          </Feed>
-          {width > 600 && (
-            <div className='aside-container'>
-              <FollowButton />
-              <TrendingNav />
-            </div>
-          )}
-        </Main>
-      </Wrapper>
-    </MainPageProvider>
+    <FeedProvider>
+      <MainPageProvider>
+        <Wrapper onMouseDown={() => setClicking(true)} onMouseUp={() => setClicking(false)}>
+          <Header />
+          <Main>
+            <Feed>
+              <Outlet />
+            </Feed>
+            {width > 600 && (
+              <div className='aside-container'>
+                <FollowButton />
+                <TrendingNav />
+              </div>
+            )}
+          </Main>
+        </Wrapper>
+      </MainPageProvider>
+    </FeedProvider>
   );
 }
