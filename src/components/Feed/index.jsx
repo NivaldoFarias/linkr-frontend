@@ -1,4 +1,5 @@
-import { useCallback, useContext, useEffect} from 'react';
+
+import { useCallback, useContext, useEffect, useState} from 'react';
 
 import FeedContext from '../../hooks/FeedContext';
 import { MainPageContext } from '../../hooks/MainPageContext';
@@ -15,15 +16,26 @@ export default function Feed({ hashtag }) {
     pageOwner,
     shares,
     feedRepository: { type, canCreatePost },
-    hooks,
+    hooks: {
+      data: { getUserFollowData }
+    },
     checkShares,
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
 
+  const [followData, setFollowData] = useState({ numberOfFollowings: 0 });
   const hasUnloadedPosts = checkShares.afterNewest.shares > 0;
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => loadHashtags(), [shares]);
+  
+  useEffect(() => {
+    // loadHashtags(); [shares]
+    let user = localStorage.getItem('user');
+    user = JSON.parse(user);
+    getUserFollowData(user.id).then((data) => {
+      setFollowData(data);
+    });
+  }, [getUserFollowData]);
+  
 
   const postsElements = shares.map((share) => {
     return (
@@ -32,6 +44,18 @@ export default function Feed({ hashtag }) {
       </PostProvider>
     );
   });
+
+  const emptyPostsMessage = () => {
+    const message = (
+      type === 'timeline' ?
+      Number(followData.numberOfFollowings) === 0 ?
+          "You don't follow anyone yet. Search for new friends!" :
+          "No posts found from your friends"
+        :
+        `There are no posts yet`
+    );
+    return message;
+  }
 
   const handleScroll = async (e) => {
     e.preventDefault();
@@ -50,7 +74,7 @@ export default function Feed({ hashtag }) {
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
         {hasUnloadedPosts ? <LoadNewButton /> : <></>}
-        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts />}</Posts>
+        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts message={emptyPostsMessage()} />}</Posts>
       </Content>
     </Wrapper>
   );
