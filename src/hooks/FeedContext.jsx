@@ -34,6 +34,12 @@ export function FeedProvider({ children }) {
   const { token, user } = useContext(DataContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user) {
+      updateUserFollowData();
+    }
+  }, [user]);
+
   const dates = {
     oldestShare:
       shares.length > 0 ? shares[shares.length - 1].createdAt : '1900-06-23T17:03:04.974Z',
@@ -59,7 +65,6 @@ export function FeedProvider({ children }) {
       togglePostShare,
       submitComment,
       submitPost,
-      updateUserFollowData,
       getUserFollowData,
     },
     navigate: {
@@ -171,7 +176,6 @@ export function FeedProvider({ children }) {
           ? request.data
           : { shares: [], posts: {}, users: {}, pageOwnerId: null },
       );
-      await updateUserFollowData();
     } catch (error) {
       handleError(error);
     }
