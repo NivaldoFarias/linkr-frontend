@@ -58,7 +58,12 @@ function CommentSection() {
                         <p className='comment-user-status__label'>OP</p>
                       </div>
                     ) : (
-                      <></>
+                      comment.isFollowing ? (
+                        <div className='comment-user-status'>
+                        <p className='comment-user-status__label'>following</p>
+                      </div>
+                      ) :
+                      (<></>)
                     )}
                   </div>
                   <div className='comment__content__text'>
