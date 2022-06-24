@@ -173,11 +173,11 @@ export function FeedProvider({ children }) {
     }
   }
 
-  async function togglePostShare(postId, userHasShared) {
+  async function togglePostShare(postId) {
     if (user.id === posts[postId].userId) {
       return;
     }
-
+    const userHasShared = posts[postId].shares.userHasShared;
     const command = userHasShared ? 'unshare' : 'share';
     const url = `/posts/${postId}/${command}`;
     try {

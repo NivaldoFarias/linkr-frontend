@@ -16,6 +16,7 @@ export function PostProvider(props) {
   const [editText, setEditText] = useState(post?.text ?? '');
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
 
   const [isCommentSectionOpen, setOpenCommentSection] = useState(false);
 
@@ -30,6 +31,8 @@ export function PostProvider(props) {
         setEditText,
         modalIsOpen,
         setModalIsOpen,
+        shareModalIsOpen,
+        setShareModalIsOpen,
         isEditingPost,
         setIsEditingPost,
         savePost,
