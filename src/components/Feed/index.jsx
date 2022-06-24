@@ -1,4 +1,5 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from 'react';
 
 import FeedContext from '../../hooks/FeedContext';
 import { MainPageContext } from '../../hooks/MainPageContext';
@@ -16,7 +17,7 @@ export default function Feed({ hashtag }) {
     shares,
     feedRepository: { type, canCreatePost },
     hooks: {
-      data: { updateUserFollowData, unshiftFeed },
+      data: { unshiftFeed },
     },
     checkShares,
     followData,
@@ -25,7 +26,6 @@ export default function Feed({ hashtag }) {
 
   const hasUnloadedNewPosts = checkShares.afterNewest.shares > 0;
   const hasUnloadedOldPosts = checkShares.beforeOldest.shares > 0;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     loadHashtags();
@@ -83,7 +83,7 @@ export default function Feed({ hashtag }) {
   function title() {
     switch (type) {
       case 'user':
-        return `${pageOwner.username ?? 'User'}'s posts`;
+        return `${pageOwner?.username ?? 'User'}'s posts`;
       case 'hashtag':
         return `#${hashtag}`;
       default:

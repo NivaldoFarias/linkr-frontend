@@ -12,5 +12,9 @@ export function LoadNewButton() {
     },
   } = useContext(FeedContext);
 
-  return <Button onClick={pushFeed}>{num} posts novos!</Button>;
+  return (
+    <Button onClick={pushFeed}>
+      {num} New post{Number(num) === 1 ? '' : 's'}!
+    </Button>
+  );
 }

@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { IoRepeatSharp } from 'react-icons/io5';
 import DataContext from '../../../../../hooks/DataContext';
-import FeedContext from '../../../../../hooks/FeedContext';
 
 import PostContext from './../../../../../hooks/PostContext';
 import ShareModal from './ShareModal';

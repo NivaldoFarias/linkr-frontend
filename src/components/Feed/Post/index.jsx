@@ -1,10 +1,11 @@
+import { useContext } from 'react';
 import ReactTooltip from 'react-tooltip';
+import { IoRepeatSharp } from 'react-icons/io5';
 
 import PostContainer, { PostWrapper, RepostLabel, ContentContainer } from './styles/';
 import RightContainer from './RightContainer/';
 import LeftContainer from './LeftContainer/';
 import CommentSection from './CommentSection';
-import { useContext } from 'react';
 import PostContext from '../../../hooks/PostContext';
 import DataContext from '../../../hooks/DataContext';
 import FeedContext from '../../../hooks/FeedContext';
@@ -24,9 +25,10 @@ export default function Post() {
 
   const reshareLabel = showReshareLabel ? (
     <RepostLabel>
-      <div>
-        Re-post by <strong>{reshareUsername}</strong>
-      </div>
+      <IoRepeatSharp />
+      <p>
+        Reshare by <strong>{reshareUsername}</strong>
+      </p>
     </RepostLabel>
   ) : (
     <></>
