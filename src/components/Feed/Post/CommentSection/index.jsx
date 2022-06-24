@@ -17,6 +17,7 @@ function CommentSection() {
     users,
     hooks: {
       data: { submitComment },
+      navigate: { goToUserPage },
     },
   } = useContext(FeedContext);
   const {
@@ -48,22 +49,33 @@ function CommentSection() {
           processedComments.map((comment) => {
             return (
               <div key={comment.id} className='comment'>
-                <img className='comment__avatar' src={comment.imageUrl} alt='user avatar' />
+                <img
+                  className='comment__avatar'
+                  src={comment.imageUrl}
+                  alt='user avatar'
+                  onClick={() => {
+                    goToUserPage(comment.userId);
+                  }}
+                />
                 <div className='comment__content'>
-                  <div className='comment__content__username'>
+                  <div
+                    className='comment__content__username'
+                    onClick={() => {
+                      goToUserPage(comment.userId);
+                    }}
+                  >
                     <p>{comment.username}</p>
                     {comment.userId === postCreatorId ? (
                       <div className='comment-user-status'>
                         <RiUserStarFill className='comment-user-status__icon' />
                         <p className='comment-user-status__label'>OP</p>
                       </div>
-                    ) : (
-                      comment.isFollowing ? (
-                        <div className='comment-user-status'>
+                    ) : comment.isFollowing && comment.userId !== user.id ? (
+                      <div className='comment-user-status'>
                         <p className='comment-user-status__label'>following</p>
                       </div>
-                      ) :
-                      (<></>)
+                    ) : (
+                      <></>
                     )}
                   </div>
                   <div className='comment__content__text'>

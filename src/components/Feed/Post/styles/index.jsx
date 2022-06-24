@@ -7,17 +7,33 @@ export const PostWrapper = styled.div`
   width: 100%;
 `;
 
+export const RepostLabel = styled.div`
+  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '5px')};
+  width: 100%;
+  font-family: ${({ theme }) => theme.fonts.secondary};
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8em;
+  strong {
+    font-weight: 700;
+  }
+`;
+
+export const ContentContainer = styled.div`
+  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '0')};
+  width: 100%;
+`;
+
 const PostContainer = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('row', 'center', 'center', '13px')};
+  ${({ theme }) => theme.mixins.flexbox('column', 'center', 'center', '13px')};
   position: relative;
   padding: 18px 18px 22px 9px;
   min-height: 310px;
   width: 100%;
   min-width: 602px;
 
-  border-radius: 16px;
   border: 2px solid ${({ theme }) => theme.colors.tertiary};
   background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: 16px;
 
   .left-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', '15px')};

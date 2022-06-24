@@ -43,7 +43,6 @@ function RightContainer() {
   function buildPostHeader() {
     return (
       <div className='post-header'>
-        <p>{shareUserId === userId ? 'original' : 'RESHARE'}</p>
         <div className='post-header__username'>
           <p
             onClick={() => {
