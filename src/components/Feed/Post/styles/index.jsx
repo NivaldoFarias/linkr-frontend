@@ -8,13 +8,18 @@ export const PostWrapper = styled.div`
 `;
 
 export const RepostLabel = styled.div`
-  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '5px')};
+  ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'center', '10px')};
+  padding: 0 0 5px 10px;
   width: 100%;
+  color: white;
+  font-size: 0.9rem;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.8em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   strong {
     font-weight: 700;
+  }
+  svg {
+    font-size: 1.4rem;
   }
 `;
 

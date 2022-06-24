@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
 import useInterval from 'use-interval';
@@ -356,7 +356,7 @@ export function FeedProvider({ children }) {
 
   function handleError(error = { response: { data: { message: 'Something went wrong' } } }) {
     confirmAlert({
-      message: `${error.response.data.message}. Please try again.`,
+      message: `${error.response?.data.message ?? 'Something went wrong'}. Please try again.`,
       buttons: [
         {
           label: 'OK',
