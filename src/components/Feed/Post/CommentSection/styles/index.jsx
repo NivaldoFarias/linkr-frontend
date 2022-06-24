@@ -46,7 +46,7 @@ const StyledCommentSection = styled.section`
     }
     &__content {
       ${({ theme }) => theme.mixins.flexbox('column', 'center', 'flex-start', '10px')};
-      width: 100%;
+      width: 90%;
 
       &__username {
         ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '3px')};
@@ -60,12 +60,14 @@ const StyledCommentSection = styled.section`
         ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', 'initial')};
         width: 100%;
 
-        padding-right: 10px;
+        line-height: 17px;
+        font-size: 0.9rem;
+        color: ${({ theme }) => theme.colors.post};
 
         user-select: auto;
-        font-size: 0.9rem;
-        line-height: 17px;
-        color: ${({ theme }) => theme.colors.post};
+        hyphens: auto;
+        word-break: break-word;
+        text-overflow: ellipsis;
       }
       .comment-user-status {
         ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '1px')};

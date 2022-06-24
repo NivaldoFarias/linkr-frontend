@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { RiUserStarFill } from 'react-icons/ri';
 import { AiOutlineSend } from 'react-icons/ai';
 
@@ -11,6 +11,7 @@ import StyledCommentSection from './styles';
 function CommentSection() {
   const [inputValue, setInputValue] = useState('');
   const [processedComments, setProcessedComments] = useState([]);
+  const collapseCommentRef = useRef(null);
 
   const { user } = useContext(DataContext);
   const {
@@ -24,6 +25,13 @@ function CommentSection() {
     post: { id: postId, userId: postCreatorId, comments },
     isCommentSectionOpen,
   } = useContext(PostContext);
+
+  useEffect(() => {
+    if (inputValue === '' && collapseCommentRef.current) {
+      collapseCommentRef.current.parentNode.style.height = 'inherit';
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue]);
 
   useEffect(() => {
     setProcessedComments(
@@ -95,6 +103,7 @@ function CommentSection() {
           value={inputValue}
           type='text'
           placeholder='Write a comment...'
+          ref={collapseCommentRef}
           onChange={handleInput}
           onBlur={handleLeave}
           onReset={handleLeave}
