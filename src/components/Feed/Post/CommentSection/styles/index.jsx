@@ -11,7 +11,7 @@ const StyledCommentSection = styled.section`
   border-right: 2px solid ${({ theme }) => theme.colors.tertiary};
   border-bottom: 2px solid ${({ theme }) => theme.colors.tertiary};
 
-  transition: height 500ms cubic-bezier(0.32, 0.13, 0.32, 0.96);
+  transition: all 500ms cubic-bezier(0.32, 0.13, 0.32, 0.96);
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   background-color: ${({ theme }) => theme.colors.commentSection};

@@ -12,13 +12,14 @@ export const RepostLabel = styled.div`
   padding: 0 0 5px 10px;
   width: 100%;
   color: white;
+  font-size: 0.9rem;
   font-family: ${({ theme }) => theme.fonts.secondary};
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   strong {
     font-weight: 700;
   }
   svg {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
   }
 `;
 
