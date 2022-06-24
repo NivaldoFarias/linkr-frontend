@@ -15,6 +15,7 @@ function Shares() {
       shares: { userHasShared, numberOfShares },
       userId: postUserId,
     },
+    share: { id: shareId },
   } = useContext(PostContext);
   const {
     hooks: {

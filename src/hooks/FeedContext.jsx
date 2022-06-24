@@ -101,6 +101,7 @@ export function FeedProvider({ children }) {
     const { data } = await Axios.get(`/users/${user.id}/follow-data`, CONFIG);
     setFollowData(data);
   }
+
   async function getUserFollowData(userId) {
     const { data } = await Axios.get(`/users/${userId}/follow-data`, CONFIG);
     return data;
@@ -173,11 +174,20 @@ export function FeedProvider({ children }) {
   }
 
   async function togglePostShare(postId, userHasShared) {
+    if (user.id === posts[postId].userId) {
+      return;
+    }
+
     const command = userHasShared ? 'unshare' : 'share';
     const url = `/posts/${postId}/${command}`;
     try {
       await Axios.post(url, {}, CONFIG);
-      await refreshPost(postId);
+      const newFeedData = await refreshPost(postId);
+      if (command === 'unshare') {
+        removeShareView(postId, newFeedData);
+      } else {
+        updateCheckShares();
+      }
     } catch (error) {
       handleError();
     }
@@ -211,15 +221,35 @@ export function FeedProvider({ children }) {
         users: { ...users, ...newUsers },
       };
       setFeedData(object);
+      return object;
     } catch (error) {
       handleError(error);
     }
   }
 
   async function removePostViews(postId) {
-    const newShares = [...shares].filter((share) => share.postId !== postId);
+    const newShares = [...shares].map((share) => {
+      if (share.postId === postId) {
+        return { ...share, hide: true };
+      }
+      return share;
+    });
     const newFeedData = { ...feedData, shares: [...newShares] };
     setFeedData(newFeedData);
+  }
+
+  function removeShareView(postId, newFeedData) {
+    console.log(newFeedData ? 'has' : 'no');
+    const useShares = newFeedData ? newFeedData.shares : shares;
+    const useFeedData = newFeedData ? newFeedData : feedData;
+    const newShares = [...useShares].map((share) => {
+      if (share.postId === postId && user.id === share.userId) {
+        return { ...share, hide: true };
+      }
+      return share;
+    });
+    const updateFeedData = { ...useFeedData, shares: [...newShares] };
+    setFeedData(updateFeedData);
   }
 
   async function refreshUser(userId) {

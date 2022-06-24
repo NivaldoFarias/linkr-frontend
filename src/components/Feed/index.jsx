@@ -34,7 +34,7 @@ export default function Feed({ hashtag }) {
   const postsElements = shares.map((share) => {
     return (
       <PostProvider key={share.id} share={share}>
-        <Post />
+        {share.hide ? <></> : <Post />}
       </PostProvider>
     );
   });
