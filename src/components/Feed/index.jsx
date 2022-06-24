@@ -31,6 +31,15 @@ export default function Feed({ hashtag }) {
       </PostProvider>
     );
   });
+
+  const emptyPostsMessage = () => {
+    if (type === 'timeline') {
+      return 'Lacks implement yet';
+    } else {
+      return `There are no posts yet`;
+    }
+  }
+
   return (
     <Wrapper>
       <Header>
@@ -40,7 +49,7 @@ export default function Feed({ hashtag }) {
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
         {hasUnloadedPosts ? <LoadNewButton /> : <></>}
-        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts />}</Posts>
+        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts message={emptyPostsMessage()}/>}</Posts>
       </Content>
     </Wrapper>
   );
