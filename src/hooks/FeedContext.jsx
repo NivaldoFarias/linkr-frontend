@@ -58,6 +58,7 @@ export function FeedProvider({ children }) {
       togglePostShare,
       submitComment,
       submitPost,
+      unshiftFeed,
     },
     navigate: {
       goToUserPage,
@@ -254,6 +255,7 @@ export function FeedProvider({ children }) {
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
+      console.log(object)
       setFeedData(object);
     } catch (error) {
       handleError(error);
