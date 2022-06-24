@@ -19,7 +19,7 @@ function RightContainer() {
     },
   } = useContext(FeedContext);
   const {
-    share: { id: shareId },
+    share: { id: shareId, userId: shareUserId },
     post: { id: postId, userId, createdAt },
     modalIsOpen,
     isEditingPost,
@@ -43,6 +43,7 @@ function RightContainer() {
   function buildPostHeader() {
     return (
       <div className='post-header'>
+        <p>{shareUserId === userId ? 'original' : 'RESHARE'}</p>
         <div className='post-header__username'>
           <p
             onClick={() => {

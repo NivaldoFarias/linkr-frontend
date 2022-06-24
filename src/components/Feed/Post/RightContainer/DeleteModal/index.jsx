@@ -10,7 +10,7 @@ import getRandomInt from './../../../../../utils/getRandomInt';
 
 export default function DeleteModal() {
   const {
-    postData: { id: postId },
+    post: { id: postId },
     modalIsOpen,
     setModalIsOpen,
   } = useContext(PostContext);

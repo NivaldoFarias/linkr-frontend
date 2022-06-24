@@ -3,14 +3,7 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditActions() {
-  const {
-    updatePostData,
-    isEditingPost,
-    setIsEditingPost,
-    setModalIsOpen,
-    handleError,
-    editPostData,
-  } = useContext(PostContext);
+  const { isEditingPost, setIsEditingPost, setModalIsOpen, savePost } = useContext(PostContext);
 
   return (
     <div className='actions-container'>
@@ -21,13 +14,7 @@ export default function EditActions() {
 
   async function handleEditPostButtonClicked() {
     if (isEditingPost) {
-      try {
-        await editPostData();
-        await updatePostData();
-        setIsEditingPost(false);
-      } catch (error) {
-        handleError(error);
-      }
+      await savePost();
     } else {
       setIsEditingPost(true);
     }
