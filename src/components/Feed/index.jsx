@@ -4,7 +4,7 @@ import FeedContext from '../../hooks/FeedContext';
 import { MainPageContext } from '../../hooks/MainPageContext';
 import { PostProvider } from '../../hooks/PostContext';
 
-import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/';
+import { Wrapper, Header, Title, UserThumbnail, Content, Posts, EndMessage } from './styles/';
 import EmptyPosts from './EmptyPosts/';
 import NewPost from './NewPost/';
 import Post from './Post/';
@@ -23,7 +23,8 @@ export default function Feed({ hashtag }) {
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
 
-  const hasUnloadedPosts = checkShares.afterNewest.shares > 0;
+  const hasUnloadedNewPosts = checkShares.afterNewest.shares > 0;
+  const hasUnloadedOldPosts = checkShares.beforeOldest.shares > 0;
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -54,6 +55,10 @@ export default function Feed({ hashtag }) {
     }
   };
 
+  const endMessage = (
+    <EndMessage>{hasUnloadedOldPosts ? 'Loading more posts...' : 'End of line'}</EndMessage>
+  );
+
   return (
     <Wrapper onScroll={handleScroll}>
       <Header>
@@ -62,8 +67,15 @@ export default function Feed({ hashtag }) {
       </Header>
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
-        {hasUnloadedPosts ? <LoadNewButton /> : <></>}
-        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts message={emptyMessage} />}</Posts>
+        {hasUnloadedNewPosts ? <LoadNewButton /> : <></>}
+        {shares.length > 0 ? (
+          <>
+            <Posts>{postsElements}</Posts>
+            {endMessage}
+          </>
+        ) : (
+          <EmptyPosts message={emptyMessage} />
+        )}
       </Content>
     </Wrapper>
   );
