@@ -78,9 +78,7 @@ function CommentSection() {
                       <></>
                     )}
                   </div>
-                  <div className='comment__content__text'>
-                    <p>{comment.text}</p>
-                  </div>
+                  <p className='comment__content__text'>{comment.text}</p>
                 </div>
               </div>
             );

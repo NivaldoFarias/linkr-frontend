@@ -21,7 +21,6 @@ export default function Feed({ hashtag }) {
     checkShares,
     hooks,
   } = useContext(FeedContext);
-  const { loadHashtags } = useContext(MainPageContext);
 
   const [followData, setFollowData] = useState({ numberOfFollowings: 0 });
   const hasUnloadedPosts = checkShares.afterNewest.shares > 0;

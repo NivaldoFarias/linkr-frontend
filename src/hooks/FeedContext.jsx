@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
 import useInterval from 'use-interval';
@@ -261,7 +261,7 @@ export function FeedProvider({ children }) {
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
-      console.log(object)
+      console.log(object);
       setFeedData(object);
     } catch (error) {
       handleError(error);

@@ -60,6 +60,8 @@ const StyledCommentSection = styled.section`
         ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', 'initial')};
         width: 100%;
 
+        padding-right: 10px;
+
         user-select: auto;
         font-size: 0.9rem;
         line-height: 17px;
