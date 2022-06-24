@@ -73,4 +73,15 @@ const Posts = styled.div`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'initial', '16px')};
 `;
 
-export { Wrapper, Header, Title, UserThumbnail, Content, Posts };
+const EndMessage = styled.div`
+  padding: 16px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 2px;
+  color: ${({ theme }) => theme.colors.primary};
+  text-align: center;
+  font-family: ${({ theme }) => theme.fonts.primary};
+`;
+
+export { Wrapper, Header, Title, UserThumbnail, Content, Posts, EndMessage };

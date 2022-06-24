@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
 import useInterval from 'use-interval';
@@ -20,6 +20,7 @@ export function FeedProvider({ children }) {
     beforeOldest: { date: '1900-06-23T17:03:04.974Z', shares: 0 },
     afterNewest: { date: '1900-06-23T17:03:04.974Z', shares: 0 },
   });
+  const [followData, setFollowData] = useState({ numberOfFollowings: 0, numberOfFollowers: 0 });
 
   const users = feedData.users;
   const posts = feedData.posts;
@@ -30,8 +31,14 @@ export function FeedProvider({ children }) {
     isFollowing: false,
   };
 
-  const { token } = useContext(DataContext);
+  const { token, user } = useContext(DataContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      updateUserFollowData();
+    }
+  }, [user]);
 
   const dates = {
     oldestShare:
@@ -59,7 +66,6 @@ export function FeedProvider({ children }) {
       submitComment,
       submitPost,
       getUserFollowData,
-      unshiftFeed,
     },
     navigate: {
       goToUserPage,
@@ -84,11 +90,17 @@ export function FeedProvider({ children }) {
         setFeedRepository,
         handleError,
         setFeedData,
+        followData,
       }}
     >
       {children}
     </FeedContext.Provider>
   );
+
+  async function updateUserFollowData() {
+    const { data } = await Axios.get(`/users/${user.id}/follow-data`, CONFIG);
+    setFollowData(data);
+  }
 
   async function getUserFollowData(userId) {
     const { data } = await Axios.get(`/users/${userId}/follow-data`, CONFIG);
@@ -120,7 +132,8 @@ export function FeedProvider({ children }) {
     const url = `/users/${userId}/${isFollowing ? 'un' : ''}follow`;
     try {
       await Axios.post(url, {}, CONFIG);
-      refreshUser(userId);
+      await refreshUser(userId);
+      await updateUserFollowData();
     } catch (err) {
       handleError('Unable to follow user');
     }
@@ -129,6 +142,24 @@ export function FeedProvider({ children }) {
   async function reloadFeed(newFeedRepository) {
     setFeedRepository({ ...newFeedRepository });
     await updateFeed(newFeedRepository);
+  }
+
+  async function reloadCheckShares(shares, newRoute) {
+    const route = newRoute ?? feedRepository.route;
+
+    const length = shares.length;
+    if (length > 0) {
+      const beforeDate = shares[length - 1].createdAt;
+      const afterDate = shares[0].createdAt;
+      const PATH = `${route}/posts/check?beforeDate=${beforeDate}&afterDate=${afterDate}`;
+      const { data } = await Axios.get(PATH, CONFIG);
+      const { postsBeforeDate, postsAfterDate } = data;
+      const object = {
+        beforeOldest: { date: beforeDate, shares: postsBeforeDate },
+        afterNewest: { date: afterDate, shares: postsAfterDate },
+      };
+      setCheckShares(object);
+    }
   }
 
   async function togglePostLike(postId, userHasLiked) {
@@ -142,12 +173,21 @@ export function FeedProvider({ children }) {
     }
   }
 
-  async function togglePostShare(postId, userHasShared) {
+  async function togglePostShare(postId) {
+    if (user.id === posts[postId].userId) {
+      return;
+    }
+    const userHasShared = posts[postId].shares.userHasShared;
     const command = userHasShared ? 'unshare' : 'share';
     const url = `/posts/${postId}/${command}`;
     try {
       await Axios.post(url, {}, CONFIG);
-      await refreshPost(postId);
+      const newFeedData = await refreshPost(postId);
+      if (command === 'unshare') {
+        removeShareView(postId, newFeedData);
+      } else {
+        updateCheckShares();
+      }
     } catch (error) {
       handleError();
     }
@@ -163,6 +203,7 @@ export function FeedProvider({ children }) {
           ? request.data
           : { shares: [], posts: {}, users: {}, pageOwnerId: null },
       );
+      reloadCheckShares(request?.data.shares, newFeedRepository.route);
     } catch (error) {
       handleError(error);
     }
@@ -180,15 +221,35 @@ export function FeedProvider({ children }) {
         users: { ...users, ...newUsers },
       };
       setFeedData(object);
+      return object;
     } catch (error) {
       handleError(error);
     }
   }
 
   async function removePostViews(postId) {
-    const newShares = [...shares].filter((share) => share.postId !== postId);
+    const newShares = [...shares].map((share) => {
+      if (share.postId === postId) {
+        return { ...share, hide: true };
+      }
+      return share;
+    });
     const newFeedData = { ...feedData, shares: [...newShares] };
     setFeedData(newFeedData);
+  }
+
+  function removeShareView(postId, newFeedData) {
+    console.log(newFeedData ? 'has' : 'no');
+    const useShares = newFeedData ? newFeedData.shares : shares;
+    const useFeedData = newFeedData ? newFeedData : feedData;
+    const newShares = [...useShares].map((share) => {
+      if (share.postId === postId && user.id === share.userId) {
+        return { ...share, hide: true };
+      }
+      return share;
+    });
+    const updateFeedData = { ...useFeedData, shares: [...newShares] };
+    setFeedData(updateFeedData);
   }
 
   async function refreshUser(userId) {
@@ -241,15 +302,16 @@ export function FeedProvider({ children }) {
         users: { ...users, ...newUsers },
       };
       setFeedData(object);
-      const newCheckShares = { ...checkShares };
-      newCheckShares.afterNewest.shares = 0;
-      setCheckShares(newCheckShares);
+      reloadCheckShares(object.shares);
     } catch (error) {
       handleError(error);
     }
   }
 
   async function unshiftFeed() {
+    if (Number(checkShares.beforeOldest.shares) === 0) {
+      return;
+    }
     const PATH = `${feedRepository.route}/posts?beforeDate=${dates.oldestShare}`;
     try {
       const {
@@ -261,8 +323,8 @@ export function FeedProvider({ children }) {
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
-      console.log(object);
       setFeedData(object);
+      reloadCheckShares(object.shares);
     } catch (error) {
       handleError(error);
     }

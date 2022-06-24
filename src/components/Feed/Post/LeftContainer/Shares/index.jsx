@@ -4,6 +4,7 @@ import DataContext from '../../../../../hooks/DataContext';
 import FeedContext from '../../../../../hooks/FeedContext';
 
 import PostContext from './../../../../../hooks/PostContext';
+import ShareModal from './ShareModal';
 
 function Shares() {
   const {
@@ -11,23 +12,17 @@ function Shares() {
   } = useContext(DataContext);
   const {
     post: {
-      id: postId,
       shares: { userHasShared, numberOfShares },
       userId: postUserId,
     },
+    setShareModalIsOpen,
   } = useContext(PostContext);
-  const {
-    hooks: {
-      data: { togglePostShare },
-    },
-  } = useContext(FeedContext);
 
   const userCanShare = postUserId !== userId;
 
-  const [click, setClick] = useState(userHasShared ?? false);
-
   return (
     <div className='left-container__shares'>
+      <ShareModal />
       <IoRepeatSharp
         className={`left-container__shares__icon ${
           userCanShare && userHasShared ? 'reshared' : ''
@@ -43,12 +38,7 @@ function Shares() {
 
   async function handleClick() {
     if (userCanShare) {
-      setClick(!click);
-      try {
-        await togglePostShare(postId, userHasShared);
-      } catch (err) {
-        setClick(!click);
-      }
+      setShareModalIsOpen(true);
     }
   }
 

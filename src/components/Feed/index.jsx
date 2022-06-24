@@ -4,7 +4,7 @@ import FeedContext from '../../hooks/FeedContext';
 import { MainPageContext } from '../../hooks/MainPageContext';
 import { PostProvider } from '../../hooks/PostContext';
 
-import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/';
+import { Wrapper, Header, Title, UserThumbnail, Content, Posts, EndMessage } from './styles/';
 import EmptyPosts from './EmptyPosts/';
 import NewPost from './NewPost/';
 import Post from './Post/';
@@ -16,51 +16,47 @@ export default function Feed({ hashtag }) {
     shares,
     feedRepository: { type, canCreatePost },
     hooks: {
-      data: { getUserFollowData },
+      data: { updateUserFollowData, unshiftFeed },
     },
     checkShares,
-    hooks,
+    followData,
   } = useContext(FeedContext);
 
-  const [followData, setFollowData] = useState({ numberOfFollowings: 0 });
-  const hasUnloadedPosts = checkShares.afterNewest.shares > 0;
+  const hasUnloadedNewPosts = checkShares.afterNewest.shares > 0;
+  const hasUnloadedOldPosts = checkShares.beforeOldest.shares > 0;
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // loadHashtags(); [shares]
-    let user = localStorage.getItem('user');
-    user = JSON.parse(user);
-    getUserFollowData(user.id).then((data) => {
-      setFollowData(data);
-    });
-  }, [getUserFollowData]);
+    loadHashtags();
+  }, [shares]);
 
   const postsElements = shares.map((share) => {
     return (
       <PostProvider key={share.id} share={share}>
-        <Post />
+        {share.hide ? <></> : <Post />}
       </PostProvider>
     );
   });
 
-  const emptyPostsMessage = () => {
-    const message =
-      type === 'timeline'
-        ? Number(followData.numberOfFollowings) === 0
-          ? "You don't follow anyone yet. Search for new friends!"
-          : 'No posts found from your friends'
-        : `There are no posts yet`;
-    return message;
-  };
+  const emptyMessage =
+    type === 'timeline'
+      ? Number(followData.numberOfFollowings) === 0
+        ? "You don't follow anyone yet. Search for new friends!"
+        : 'No posts found from your friends'
+      : `There are no posts yet`;
 
   const handleScroll = async (e) => {
     e.preventDefault();
     const isBottom =
       Math.abs(e.target.clientHeight - e.target.scrollHeight + e.target.scrollTop) <= 5;
     if (isBottom) {
-      await hooks.data.unshiftFeed();
+      await unshiftFeed();
     }
   };
+
+  const endMessage = (
+    <EndMessage>{hasUnloadedOldPosts ? 'Loading more posts...' : 'End of line'}</EndMessage>
+  );
 
   return (
     <Wrapper onScroll={handleScroll}>
@@ -70,10 +66,15 @@ export default function Feed({ hashtag }) {
       </Header>
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
-        {hasUnloadedPosts ? <LoadNewButton /> : <></>}
-        <Posts>
-          {shares.length > 0 ? postsElements : <EmptyPosts message={emptyPostsMessage()} />}
-        </Posts>
+        {hasUnloadedNewPosts ? <LoadNewButton /> : <></>}
+        {shares.length > 0 ? (
+          <>
+            <Posts>{postsElements}</Posts>
+            {endMessage}
+          </>
+        ) : (
+          <EmptyPosts message={emptyMessage} />
+        )}
       </Content>
     </Wrapper>
   );
