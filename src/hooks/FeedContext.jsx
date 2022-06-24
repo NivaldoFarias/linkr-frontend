@@ -351,7 +351,7 @@ export function FeedProvider({ children }) {
 
   function handleError(error = { response: { data: { message: 'Something went wrong' } } }) {
     confirmAlert({
-      message: `${error.response.data.message}. Please try again.`,
+      message: `${error.response?.data.message ?? 'Something went wrong'}. Please try again.`,
       buttons: [
         {
           label: 'OK',
