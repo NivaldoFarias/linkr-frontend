@@ -1,4 +1,5 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { createRef, useContext, useEffect, useState } from 'react';
 import { RiUserStarFill } from 'react-icons/ri';
 import { AiOutlineSend } from 'react-icons/ai';
 
@@ -11,7 +12,8 @@ import StyledCommentSection from './styles';
 function CommentSection() {
   const [inputValue, setInputValue] = useState('');
   const [processedComments, setProcessedComments] = useState([]);
-  const collapseCommentRef = useRef(null);
+  const newCommentRef = createRef();
+  const measureHeightRef = createRef();
 
   const { user } = useContext(DataContext);
   const {
@@ -27,10 +29,13 @@ function CommentSection() {
   } = useContext(PostContext);
 
   useEffect(() => {
-    if (inputValue === '' && collapseCommentRef.current) {
-      collapseCommentRef.current.parentNode.style.height = 'inherit';
+    if (
+      inputValue === '' &&
+      newCommentRef.current &&
+      newCommentRef.current.parentNode.style.height
+    ) {
+      newCommentRef.current.parentNode.style.height = 'inherit';
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
   useEffect(() => {
@@ -47,71 +52,90 @@ function CommentSection() {
         };
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comments]);
 
+  /* useEffect(() => {
+    if (isCommentSectionOpen) {
+      newCommentRef.current.focus();
+
+      if (measureHeightRef.current) {
+        measureHeightRef.current.style.marginBottom = '100%';
+      }
+    } else {
+      if (measureHeightRef.current) {
+        measureHeightRef.current.style.marginBottom = '0';
+      }
+    }
+
+    if (measureHeightRef.current) {
+      measureHeightRef.current.style.transition = 'all 500ms cubic-bezier(0.13, 0.13, 0.32, 0.96)';
+    }
+  }, [isCommentSectionOpen]); */
+
   return (
-    <StyledCommentSection className={isCommentSectionOpen ? '' : 'collapsed'}>
-      <div className='comments-container'>
-        {processedComments.length > 0 ? (
-          processedComments.map((comment) => {
-            return (
-              <div key={comment.id} className='comment'>
-                <img
-                  className='comment__avatar'
-                  src={comment.imageUrl}
-                  alt='user avatar'
-                  onClick={() => {
-                    goToUserPage(comment.userId);
-                  }}
-                />
-                <div className='comment__content'>
-                  <div
-                    className='comment__content__username'
+    <div className='collapse-wrapper' ref={measureHeightRef}>
+      <StyledCommentSection className={isCommentSectionOpen ? '' : 'collapsed'}>
+        <div className='comments-container'>
+          {processedComments.length > 0 ? (
+            processedComments.map((comment) => {
+              return (
+                <div key={comment.id} className='comment'>
+                  <img
+                    className='comment__avatar'
+                    src={comment.imageUrl}
+                    alt='user avatar'
                     onClick={() => {
                       goToUserPage(comment.userId);
                     }}
-                  >
-                    <p>{comment.username}</p>
-                    {comment.userId === postCreatorId ? (
-                      <div className='comment-user-status'>
-                        <RiUserStarFill className='comment-user-status__icon' />
-                        <p className='comment-user-status__label'>OP</p>
-                      </div>
-                    ) : comment.isFollowing && comment.userId !== user.id ? (
-                      <div className='comment-user-status'>
-                        <p className='comment-user-status__label'>following</p>
-                      </div>
-                    ) : (
-                      <></>
-                    )}
+                  />
+                  <div className='comment__content'>
+                    <div
+                      className='comment__content__username'
+                      onClick={() => {
+                        goToUserPage(comment.userId);
+                      }}
+                    >
+                      <p>{comment.username}</p>
+                      {comment.userId === postCreatorId ? (
+                        <div className='comment-user-status'>
+                          <RiUserStarFill className='comment-user-status__icon' />
+                          <p className='comment-user-status__label'>OP</p>
+                        </div>
+                      ) : comment.isFollowing && comment.userId !== user.id ? (
+                        <div className='comment-user-status'>
+                          <p className='comment-user-status__label'>following</p>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <p className='comment__content__text'>{comment.text}</p>
                   </div>
-                  <p className='comment__content__text'>{comment.text}</p>
                 </div>
-              </div>
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </div>
-      <div className='new-comment'>
-        <img className='new-comment__avatar' src={user.imageUrl} alt='user avatar' />
-        <textarea
-          rows={1}
-          className='new-comment__input'
-          value={inputValue}
-          type='text'
-          placeholder='Write a comment...'
-          ref={collapseCommentRef}
-          onChange={handleInput}
-          onBlur={handleLeave}
-          onReset={handleLeave}
-          onKeyDown={handleKeyDown}
-        />
-        <AiOutlineSend className='new-comment__icon' onClick={handleSubmit} />
-      </div>
-    </StyledCommentSection>
+              );
+            })
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className='new-comment'>
+          <img className='new-comment__avatar' src={user.imageUrl} alt='user avatar' />
+          <textarea
+            rows={1}
+            className='new-comment__input'
+            value={inputValue}
+            type='text'
+            placeholder='Write a comment...'
+            ref={newCommentRef}
+            onChange={handleInput}
+            onBlur={handleLeave}
+            onReset={handleLeave}
+            onKeyDown={handleKeyDown}
+          />
+          <AiOutlineSend className='new-comment__icon' onClick={handleSubmit} />
+        </div>
+      </StyledCommentSection>
+    </div>
   );
 
   function handleInput(e) {

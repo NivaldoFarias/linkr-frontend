@@ -3,15 +3,15 @@ import styled from 'styled-components';
 const StyledCommentSection = styled.section`
   ${({ theme }) => theme.mixins.flexbox('column', 'initial', 'center', '5px')};
 
-  height: 100%;
   padding: 10px 20px 15px;
+  height: 100%;
   width: 590px;
 
   border-left: 2px solid ${({ theme }) => theme.colors.tertiary};
   border-right: 2px solid ${({ theme }) => theme.colors.tertiary};
   border-bottom: 2px solid ${({ theme }) => theme.colors.tertiary};
 
-  transition: all 500ms cubic-bezier(0, 0, 0.32, 0.96);
+  transition: height 500ms cubic-bezier(0.32, 0.13, 0.32, 0.96);
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   background-color: ${({ theme }) => theme.colors.commentSection};
@@ -20,6 +20,7 @@ const StyledCommentSection = styled.section`
     ${({ theme }) => theme.colors.commentSection} 3%,
     ${({ theme }) => theme.colors.primary} 97%
   );
+  overflow: hidden;
 
   .comments-container {
     ${({ theme }) => theme.mixins.flexbox('column', 'flex-start', 'flex-start', 'initial')};
@@ -145,10 +146,10 @@ const StyledCommentSection = styled.section`
     border: none;
 
     * {
-      padding: 0 !important;
-      height: 0 !important;
-      width: 0 !important;
-      border: none !important;
+      padding: 0;
+      height: 0;
+      width: 0;
+      border: none;
     }
     .comments-container {
       display: none;
