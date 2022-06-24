@@ -54,23 +54,13 @@ function CommentSection() {
     );
   }, [comments]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (isCommentSectionOpen) {
       newCommentRef.current.focus();
-
-      if (measureHeightRef.current) {
-        measureHeightRef.current.style.marginBottom = '100%';
-      }
     } else {
-      if (measureHeightRef.current) {
-        measureHeightRef.current.style.marginBottom = '0';
-      }
+      newCommentRef.current.blur();
     }
-
-    if (measureHeightRef.current) {
-      measureHeightRef.current.style.transition = 'all 500ms cubic-bezier(0.13, 0.13, 0.32, 0.96)';
-    }
-  }, [isCommentSectionOpen]); */
+  }, [isCommentSectionOpen]);
 
   return (
     <div className='collapse-wrapper' ref={measureHeightRef}>
