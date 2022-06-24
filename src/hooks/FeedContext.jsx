@@ -99,7 +99,6 @@ export function FeedProvider({ children }) {
 
   async function updateUserFollowData() {
     const { data } = await Axios.get(`/users/${user.id}/follow-data`, CONFIG);
-    console.log(data);
     setFollowData(data);
   }
   async function getUserFollowData(userId) {
@@ -144,6 +143,24 @@ export function FeedProvider({ children }) {
     await updateFeed(newFeedRepository);
   }
 
+  async function reloadCheckShares(shares, newRoute) {
+    const route = newRoute ?? feedRepository.route;
+
+    const length = shares.length;
+    if (length > 0) {
+      const beforeDate = shares[length - 1].createdAt;
+      const afterDate = shares[0].createdAt;
+      const PATH = `${route}/posts/check?beforeDate=${beforeDate}&afterDate=${afterDate}`;
+      const { data } = await Axios.get(PATH, CONFIG);
+      const { postsBeforeDate, postsAfterDate } = data;
+      const object = {
+        beforeOldest: { date: beforeDate, shares: postsBeforeDate },
+        afterNewest: { date: afterDate, shares: postsAfterDate },
+      };
+      setCheckShares(object);
+    }
+  }
+
   async function togglePostLike(postId, userHasLiked) {
     const tryToLike = !userHasLiked;
     const url = `/posts/${postId}/${tryToLike ? '' : 'un'}like`;
@@ -176,6 +193,7 @@ export function FeedProvider({ children }) {
           ? request.data
           : { shares: [], posts: {}, users: {}, pageOwnerId: null },
       );
+      reloadCheckShares(request?.data.shares, newFeedRepository.route);
     } catch (error) {
       handleError(error);
     }
@@ -254,15 +272,16 @@ export function FeedProvider({ children }) {
         users: { ...users, ...newUsers },
       };
       setFeedData(object);
-      const newCheckShares = { ...checkShares };
-      newCheckShares.afterNewest.shares = 0;
-      setCheckShares(newCheckShares);
+      reloadCheckShares(object.shares);
     } catch (error) {
       handleError(error);
     }
   }
 
   async function unshiftFeed() {
+    if (Number(checkShares.beforeOldest.shares) === 0) {
+      return;
+    }
     const PATH = `${feedRepository.route}/posts?beforeDate=${dates.oldestShare}`;
     try {
       const {
@@ -274,8 +293,8 @@ export function FeedProvider({ children }) {
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
-      console.log(object);
       setFeedData(object);
+      reloadCheckShares(object.shares);
     } catch (error) {
       handleError(error);
     }
