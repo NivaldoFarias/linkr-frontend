@@ -11,7 +11,8 @@ export const RepostLabel = styled.div`
   ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '5px')};
   width: 100%;
   font-family: ${({ theme }) => theme.fonts.secondary};
-  color: ${({ theme }) => theme.colors.altTertiary};
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8em;
   strong {
     font-weight: 700;
   }
