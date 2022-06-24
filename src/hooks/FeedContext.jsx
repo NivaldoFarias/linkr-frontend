@@ -345,7 +345,12 @@ export function FeedProvider({ children }) {
   }
 
   function goToHashtagPage(hashtag) {
-    const cleanHashtag = hashtag.replace('#', '').toLowerCase();
+    const cleanHashtag = hashtag
+      .replace('#', '')
+      .replace('.', '')
+      .replace(',', '')
+      .replace(';', '')
+      .toLowerCase();
     navigate(`/hashtag/${cleanHashtag}`);
   }
 

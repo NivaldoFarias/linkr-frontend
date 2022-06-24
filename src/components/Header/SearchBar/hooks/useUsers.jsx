@@ -28,7 +28,7 @@ export default function useUsers(userName) {
       response.then(async ({ data }) => {
         const result = await Promise.all(
           data.users.map(async (user, index) => {
-            const { id, imageUrl, username, following } = user;
+            const { id, imageUrl, username, isFollowing } = user;
             return (
               <motion.li
                 key={id}
@@ -40,7 +40,9 @@ export default function useUsers(userName) {
                 <figure onClick={() => browse(`/user/${id}`)}>
                   <img src={imageUrl} alt={`${username}`} />
                   <figcaption>{username}</figcaption>
-                  <figurecaption style={{color: "#7c7c7c"}}>{following ? <span>&#8226; following</span>: ""}</figurecaption>
+                  <figurecaption style={{ color: '#7c7c7c' }}>
+                    {isFollowing ? <span>&#8226; following</span> : ''}
+                  </figurecaption>
                 </figure>
               </motion.li>
             );
