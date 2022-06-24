@@ -58,6 +58,7 @@ export function FeedProvider({ children }) {
       togglePostShare,
       submitComment,
       submitPost,
+      getUserFollowData,
     },
     navigate: {
       goToUserPage,
@@ -87,6 +88,11 @@ export function FeedProvider({ children }) {
       {children}
     </FeedContext.Provider>
   );
+
+  async function getUserFollowData(userId) {
+    const { data } = await Axios.get(`/users/${userId}/follow-data`, CONFIG);
+    return data;
+  }
 
   async function updateCheckShares() {
     const PATH = `${feedRepository.route}/posts/check?beforeDate=${dates.oldestShare}&afterDate=${dates.newestShare}`;

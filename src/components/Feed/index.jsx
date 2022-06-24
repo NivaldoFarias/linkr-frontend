@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import FeedContext from '../../hooks/FeedContext';
 import { MainPageContext } from '../../hooks/MainPageContext';
@@ -15,12 +15,15 @@ export default function Feed({ hashtag }) {
     pageOwner,
     shares,
     feedRepository: { type, canCreatePost },
+    hooks: {
+      data: { getUserFollowData }
+    },
     checkShares,
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
 
+  const [followData, setFollowData] = useState({ numberOfFollowings: 0 });
   const hasUnloadedPosts = checkShares.afterNewest.shares > 0;
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => loadHashtags(), [shares]);
 
@@ -32,12 +35,25 @@ export default function Feed({ hashtag }) {
     );
   });
 
-  const emptyPostsMessage = () => {
-    if (type === 'timeline') {
-      return 'Lacks implement yet';
-    } else {
-      return `There are no posts yet`;
+  useEffect(() => {
+    let user = localStorage.getItem('user');
+    user = JSON.parse(user);
+    getUserFollowData(user.id).then((data) => {
+      setFollowData(data);
     }
+    );
+  }, [getUserFollowData]);
+
+  const emptyPostsMessage = () => {
+    const message = (
+      type === 'timeline' ?
+      Number(followData.numberOfFollowings) === 0 ?
+          "You don't follow anyone yet. Search for new friends!" :
+          "No posts found from your friends"
+        :
+        `There are no posts yet`
+    );
+    return message;
   }
 
   return (
@@ -49,7 +65,7 @@ export default function Feed({ hashtag }) {
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
         {hasUnloadedPosts ? <LoadNewButton /> : <></>}
-        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts message={emptyPostsMessage()}/>}</Posts>
+        <Posts>{shares.length > 0 ? postsElements : <EmptyPosts message={emptyPostsMessage()} />}</Posts>
       </Content>
     </Wrapper>
   );
