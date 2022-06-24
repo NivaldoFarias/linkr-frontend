@@ -17,7 +17,6 @@ function FollowButton() {
     feedRepository: { type },
   } = useContext(FeedContext);
 
-  const [clicked, setClicked] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,10 +24,9 @@ function FollowButton() {
 
   return type === 'user' && pageOwnerId !== userId ? (
     <StyledFollowButton
-      className={clicked ? 'clicked' : ''}
+      className={isFollowing ? 'clicked' : ''}
       onClick={() => {
         setIsLoading(true);
-        setClicked(true);
         setTimeout(() => {
           submitToggleFollowing();
         }, getRandomInt(750, 1500));
@@ -45,7 +43,6 @@ function FollowButton() {
   async function submitToggleFollowing() {
     await toggleFollowUser(pageOwnerId, isFollowing);
     setIsLoading(false);
-    setClicked(false);
   }
 
   function handleHoverIn() {

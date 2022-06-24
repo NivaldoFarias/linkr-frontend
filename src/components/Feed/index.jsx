@@ -83,7 +83,7 @@ export default function Feed({ hashtag }) {
   function title() {
     switch (type) {
       case 'user':
-        return `${pageOwner.username ?? 'User'}'s posts`;
+        return `${pageOwner?.username ?? 'User'}'s posts`;
       case 'hashtag':
         return `#${hashtag}`;
       default:

@@ -7,6 +7,7 @@ const EmptyPostsContainer = styled.div`
   height: 100%;
   width: 100%;
 
+  text-align: center;
   font-size: 2.3rem;
   font-family: ${({ theme }) => theme.fonts.secondary};
 
