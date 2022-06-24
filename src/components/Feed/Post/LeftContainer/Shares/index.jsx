@@ -23,7 +23,6 @@ function Shares() {
   } = useContext(FeedContext);
 
   const userCanShare = postUserId !== userId;
-  console.log(userCanShare);
 
   const [click, setClick] = useState(userHasShared ?? false);
 

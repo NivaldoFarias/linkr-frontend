@@ -82,7 +82,7 @@ export function FeedProvider({ children }) {
     const url = `/posts/${postId}`;
     try {
       await Axios.delete(url, CONFIG);
-      refreshPost();
+      removePostViews();
     } catch (err) {
       handleError('Unable to delete post');
     }
@@ -157,6 +157,13 @@ export function FeedProvider({ children }) {
     }
   }
 
+  async function removePostViews(postId) {
+    console.log('removePostViews');
+    const newShares = shares.filter((share) => share.postId !== postId);
+    const newFeedData = { ...feedData, shares: newShares };
+    setFeedData(newFeedData);
+  }
+
   async function refreshUser(userId) {
     const url = `/users/${userId}`;
     try {
@@ -200,7 +207,6 @@ export function FeedProvider({ children }) {
       const {
         data: { shares: newShares, posts: newPosts, users: newUsers },
       } = await Axios.get(PATH, CONFIG);
-      console.log(dates);
       const object = {
         ...feedData,
         shares: [...newShares, ...shares],
@@ -219,7 +225,6 @@ export function FeedProvider({ children }) {
       const {
         data: { shares: newShares, posts: newPosts, users: newUsers },
       } = await Axios.get(PATH, CONFIG);
-      console.log(dates);
       const object = {
         ...feedData,
         shares: [...shares, ...newShares],

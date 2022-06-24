@@ -3,8 +3,7 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditActions() {
-  const { updatePostData, isEditingPost, setIsEditingPost, setModalIsOpen, savePost } =
-    useContext(PostContext);
+  const { isEditingPost, setIsEditingPost, setModalIsOpen, savePost } = useContext(PostContext);
 
   return (
     <div className='actions-container'>
