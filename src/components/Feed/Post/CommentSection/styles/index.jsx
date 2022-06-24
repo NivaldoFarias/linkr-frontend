@@ -71,7 +71,7 @@ const StyledCommentSection = styled.section`
         text-overflow: ellipsis;
       }
       .comment-user-status {
-        ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '1px')};
+        ${({ theme }) => theme.mixins.flexbox('row', 'flex-start', 'flex-start', '3px')};
         width: 100%;
 
         &__icon {

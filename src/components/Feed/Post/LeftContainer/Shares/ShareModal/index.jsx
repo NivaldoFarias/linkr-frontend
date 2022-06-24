@@ -1,7 +1,6 @@
 import Modal from 'react-modal';
 import { useContext, useState } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
-import getRandomInt from '../../../../../../utils/getRandomInt';
 import { StyledLoadingDots } from '../../../../../../styles';
 import PostContext from '../../../../../../hooks/PostContext';
 import FeedContext from '../../../../../../hooks/FeedContext';
@@ -10,8 +9,7 @@ export default function ShareModal() {
   const {
     post: {
       id: postId,
-      shares: { userHasShared, numberOfShares },
-      userId: postUserId,
+      shares: { userHasShared },
     },
     shareModalIsOpen,
     setShareModalIsOpen,

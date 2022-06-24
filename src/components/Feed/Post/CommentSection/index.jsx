@@ -2,6 +2,7 @@
 import { createRef, useContext, useEffect, useState } from 'react';
 import { RiUserStarFill } from 'react-icons/ri';
 import { AiOutlineSend } from 'react-icons/ai';
+import { FaUserFriends } from 'react-icons/fa';
 
 import DataContext from '../../../../hooks/DataContext';
 import PostContext from '../../../../hooks/PostContext';
@@ -93,6 +94,7 @@ function CommentSection() {
                         </div>
                       ) : comment.isFollowing && comment.userId !== user.id ? (
                         <div className='comment-user-status'>
+                          <FaUserFriends className='comment-user-status__icon' />
                           <p className='comment-user-status__label'>following</p>
                         </div>
                       ) : (
