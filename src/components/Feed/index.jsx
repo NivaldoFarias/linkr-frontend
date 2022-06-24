@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect} from 'react';
 
 import FeedContext from '../../hooks/FeedContext';
 import { MainPageContext } from '../../hooks/MainPageContext';
@@ -14,9 +14,9 @@ export default function Feed({ hashtag }) {
     pageOwner,
     shares,
     feedRepository: { type, canCreatePost },
+    hooks,
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => loadHashtags(), [shares]);
 
@@ -27,8 +27,17 @@ export default function Feed({ hashtag }) {
       </PostProvider>
     );
   });
+
+  const handleScroll = async (e) => {
+    e.preventDefault();
+    const isBottom = Math.abs(e.target.clientHeight - e.target.scrollHeight + e.target.scrollTop) <= 5 ;
+    if(isBottom) {
+      await hooks.data.unshiftFeed();
+    }
+  }
+
   return (
-    <Wrapper>
+    <Wrapper onScroll={handleScroll}>
       <Header>
         {type === 'user' ? <UserThumbnail src={pageOwner.imageUrl} /> : <></>}
         <Title>{title()}</Title>

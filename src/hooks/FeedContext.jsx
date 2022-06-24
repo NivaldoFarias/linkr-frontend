@@ -45,6 +45,7 @@ export function FeedProvider({ children }) {
       togglePostShare,
       submitComment,
       submitPost,
+      unshiftFeed,
     },
     navigate: {
       goToUserPage,
@@ -217,6 +218,7 @@ export function FeedProvider({ children }) {
       const {
         data: { shares: newShares, posts: newPosts, users: newUsers },
       } = await Axios.get(PATH, CONFIG);
+      console.log('estou executando o loadMore')
       console.log(dates);
       const object = {
         ...feedData,
@@ -224,6 +226,7 @@ export function FeedProvider({ children }) {
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
+      console.log(object)
       setFeedData(object);
     } catch (error) {
       handleError(error);
