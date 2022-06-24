@@ -20,6 +20,7 @@ export function FeedProvider({ children }) {
     beforeOldest: { date: '1900-06-23T17:03:04.974Z', shares: 0 },
     afterNewest: { date: '1900-06-23T17:03:04.974Z', shares: 0 },
   });
+  const [followData, setFollowData] = useState({ numberOfFollowings: 0, numberOfFollowers: 0 });
 
   const users = feedData.users;
   const posts = feedData.posts;
@@ -30,7 +31,7 @@ export function FeedProvider({ children }) {
     isFollowing: false,
   };
 
-  const { token } = useContext(DataContext);
+  const { token, user } = useContext(DataContext);
   const navigate = useNavigate();
 
   const dates = {
@@ -58,8 +59,8 @@ export function FeedProvider({ children }) {
       togglePostShare,
       submitComment,
       submitPost,
+      updateUserFollowData,
       getUserFollowData,
-      unshiftFeed,
     },
     navigate: {
       goToUserPage,
@@ -84,12 +85,18 @@ export function FeedProvider({ children }) {
         setFeedRepository,
         handleError,
         setFeedData,
+        followData,
       }}
     >
       {children}
     </FeedContext.Provider>
   );
 
+  async function updateUserFollowData() {
+    const { data } = await Axios.get(`/users/${user.id}/follow-data`, CONFIG);
+    console.log(data);
+    setFollowData(data);
+  }
   async function getUserFollowData(userId) {
     const { data } = await Axios.get(`/users/${userId}/follow-data`, CONFIG);
     return data;
@@ -120,7 +127,8 @@ export function FeedProvider({ children }) {
     const url = `/users/${userId}/${isFollowing ? 'un' : ''}follow`;
     try {
       await Axios.post(url, {}, CONFIG);
-      refreshUser(userId);
+      await refreshUser(userId);
+      await updateUserFollowData();
     } catch (err) {
       handleError('Unable to follow user');
     }
@@ -163,6 +171,7 @@ export function FeedProvider({ children }) {
           ? request.data
           : { shares: [], posts: {}, users: {}, pageOwnerId: null },
       );
+      await updateUserFollowData();
     } catch (error) {
       handleError(error);
     }
@@ -261,7 +270,7 @@ export function FeedProvider({ children }) {
         posts: { ...posts, ...newPosts },
         users: { ...users, ...newUsers },
       };
-      console.log(object)
+      console.log(object);
       setFeedData(object);
     } catch (error) {
       handleError(error);
