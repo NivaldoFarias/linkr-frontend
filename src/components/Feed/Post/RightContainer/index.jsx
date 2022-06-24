@@ -19,7 +19,7 @@ function RightContainer() {
     },
   } = useContext(FeedContext);
   const {
-    share: { id: shareId },
+    share: { id: shareId, userId: shareUserId },
     post: { id: postId, userId, createdAt },
     modalIsOpen,
     isEditingPost,

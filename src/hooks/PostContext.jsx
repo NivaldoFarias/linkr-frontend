@@ -5,7 +5,12 @@ const PostContext = createContext();
 
 export function PostProvider(props) {
   const { share, children } = props;
-  const { posts } = useContext(FeedContext);
+  const {
+    posts,
+    hooks: {
+      data: { updatePost },
+    },
+  } = useContext(FeedContext);
   const post = { ...posts[share.postId] };
 
   const [editText, setEditText] = useState(post?.text ?? '');
@@ -27,11 +32,17 @@ export function PostProvider(props) {
         setModalIsOpen,
         isEditingPost,
         setIsEditingPost,
+        savePost,
       }}
     >
       {children}
     </PostContext.Provider>
   );
+
+  async function savePost() {
+    await updatePost(post.id, editText);
+    setIsEditingPost(false);
+  }
 }
 
 export default PostContext;

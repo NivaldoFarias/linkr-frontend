@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
+import useInterval from 'use-interval';
 
 import Axios from '../blueprints';
 import DataContext from './DataContext';
@@ -10,6 +11,16 @@ const FeedContext = createContext();
 
 export function FeedProvider({ children }) {
   const [feedData, setFeedData] = useState({ shares: [], posts: {}, users: {}, pageOwnerId: null });
+  const [feedRepository, setFeedRepository] = useState({
+    canCreatePost: true,
+    route: '/timeline',
+    type: 'timeline',
+  });
+  const [checkShares, setCheckShares] = useState({
+    beforeOldest: { date: '1900-06-23T17:03:04.974Z', shares: 0 },
+    afterNewest: { date: '1900-06-23T17:03:04.974Z', shares: 0 },
+  });
+
   const users = feedData.users;
   const posts = feedData.posts;
   const shares = feedData.shares;
@@ -37,6 +48,8 @@ export function FeedProvider({ children }) {
   const hooks = {
     data: {
       reloadFeed,
+      pushFeed,
+      unshiftFeed,
       refreshPost,
       updatePost,
       deletePost,
@@ -53,11 +66,9 @@ export function FeedProvider({ children }) {
     },
   };
 
-  const [feedRepository, setFeedRepository] = useState({
-    canCreatePost: true,
-    route: '/timeline',
-    type: 'timeline',
-  });
+  useInterval(() => {
+    updateCheckShares();
+  }, 15000);
 
   return (
     <FeedContext.Provider
@@ -66,6 +77,7 @@ export function FeedProvider({ children }) {
         posts,
         users,
         pageOwner,
+        checkShares,
         hooks,
         feedRepository,
         setFeedRepository,
@@ -77,11 +89,22 @@ export function FeedProvider({ children }) {
     </FeedContext.Provider>
   );
 
+  async function updateCheckShares() {
+    const PATH = `${feedRepository.route}/posts/check?beforeDate=${dates.oldestShare}&afterDate=${dates.newestShare}`;
+    const { data } = await Axios.get(PATH, CONFIG);
+    const { beforeDate, postsBeforeDate, afterDate, postsAfterDate } = data;
+    const objects = {
+      beforeOldest: { date: beforeDate, shares: postsBeforeDate },
+      afterNewest: { date: afterDate, shares: postsAfterDate },
+    };
+    setCheckShares(objects);
+  }
+
   async function deletePost(postId) {
     const url = `/posts/${postId}`;
     try {
       await Axios.delete(url, CONFIG);
-      refreshPost();
+      removePostViews(postId);
     } catch (err) {
       handleError('Unable to delete post');
     }
@@ -114,8 +137,8 @@ export function FeedProvider({ children }) {
   }
 
   async function togglePostShare(postId, userHasShared) {
-    console.log(userHasShared);
-    const url = `/posts/${postId}/${!userHasShared ? '' : 'un'}share`;
+    const command = userHasShared ? 'unshare' : 'share';
+    const url = `/posts/${postId}/${command}`;
     try {
       await Axios.post(url, {}, CONFIG);
       await refreshPost(postId);
@@ -154,6 +177,12 @@ export function FeedProvider({ children }) {
     } catch (error) {
       handleError(error);
     }
+  }
+
+  async function removePostViews(postId) {
+    const newShares = [...shares].filter((share) => share.postId !== postId);
+    const newFeedData = { ...feedData, shares: [...newShares] };
+    setFeedData(newFeedData);
   }
 
   async function refreshUser(userId) {
@@ -199,7 +228,6 @@ export function FeedProvider({ children }) {
       const {
         data: { shares: newShares, posts: newPosts, users: newUsers },
       } = await Axios.get(PATH, CONFIG);
-      console.log(dates);
       const object = {
         ...feedData,
         shares: [...newShares, ...shares],
@@ -207,6 +235,9 @@ export function FeedProvider({ children }) {
         users: { ...users, ...newUsers },
       };
       setFeedData(object);
+      const newCheckShares = { ...checkShares };
+      newCheckShares.afterNewest.shares = 0;
+      setCheckShares(newCheckShares);
     } catch (error) {
       handleError(error);
     }
@@ -218,8 +249,6 @@ export function FeedProvider({ children }) {
       const {
         data: { shares: newShares, posts: newPosts, users: newUsers },
       } = await Axios.get(PATH, CONFIG);
-      console.log('estou executando o loadMore')
-      console.log(dates);
       const object = {
         ...feedData,
         shares: [...shares, ...newShares],
@@ -237,6 +266,7 @@ export function FeedProvider({ children }) {
     const url = `/posts/${postId}`;
     try {
       await Axios.put(url, { text }, CONFIG);
+      await refreshPost(postId);
     } catch (error) {
       handleError(error);
     }

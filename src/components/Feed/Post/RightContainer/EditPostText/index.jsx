@@ -4,18 +4,12 @@ import PostContext from './../../../../../hooks/PostContext';
 
 export default function EditPostText() {
   const {
-    post: { text },
+    post: { text, id: postId },
     editText,
     setEditText,
     setIsEditingPost,
-    editPostData,
+    savePost,
   } = useContext(PostContext);
-  const {
-    handleError,
-    hooks: {
-      data: { updatePost },
-    },
-  } = useContext(FeedContext);
 
   useEffect(() => {
     setEditText(text);
@@ -33,13 +27,7 @@ export default function EditPostText() {
 
   async function handleEditPostInputKeyDown(e) {
     if (e.key === 'Enter') {
-      try {
-        await editPostData();
-        await updatePost();
-        setIsEditingPost(false);
-      } catch (error) {
-        handleError(error);
-      }
+      await savePost();
     }
   }
 
