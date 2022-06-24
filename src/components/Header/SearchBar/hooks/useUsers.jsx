@@ -13,6 +13,7 @@ const variants = {
 export default function useUsers(userName) {
   const [users, setUsers] = useState([]);
   const { token } = useContext(DataContext);
+
   const browse = useNavigate();
   const config = useMemo(() => {
     return {
@@ -27,7 +28,7 @@ export default function useUsers(userName) {
       response.then(async ({ data }) => {
         const result = await Promise.all(
           data.users.map(async (user, index) => {
-            const { id, imageUrl, username } = user;
+            const { id, imageUrl, username, following } = user;
             return (
               <motion.li
                 key={id}
@@ -39,6 +40,7 @@ export default function useUsers(userName) {
                 <figure onClick={() => browse(`/user/${id}`)}>
                   <img src={imageUrl} alt={`${username}`} />
                   <figcaption>{username}</figcaption>
+                  <figurecaption style={{color: "#7c7c7c"}}>{following ? <span>&#8226; following</span>: ""}</figurecaption>
                 </figure>
               </motion.li>
             );
