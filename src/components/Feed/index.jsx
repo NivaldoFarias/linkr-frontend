@@ -8,14 +8,18 @@ import { Wrapper, Header, Title, UserThumbnail, Content, Posts } from './styles/
 import EmptyPosts from './EmptyPosts/';
 import NewPost from './NewPost/';
 import Post from './Post/';
+import { LoadNewButton } from './LoadNewButton';
 
 export default function Feed({ hashtag }) {
   const {
     pageOwner,
     shares,
     feedRepository: { type, canCreatePost },
+    checkShares,
   } = useContext(FeedContext);
   const { loadHashtags } = useContext(MainPageContext);
+
+  const hasUnloadedPosts = checkShares.afterNewest.shares > 0;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => loadHashtags(), [shares]);
@@ -35,6 +39,7 @@ export default function Feed({ hashtag }) {
       </Header>
       <Content>
         {canCreatePost ? <NewPost /> : <></>}
+        {hasUnloadedPosts ? <LoadNewButton /> : <></>}
         <Posts>{shares.length > 0 ? postsElements : <EmptyPosts />}</Posts>
       </Content>
     </Wrapper>

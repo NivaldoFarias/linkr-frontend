@@ -19,7 +19,8 @@
     "react-scripts": "^4.0.3",
     "react-tooltip": "^4.2.21",
     "styled-components": "^5.3.5",
-    "styled-reset": "^4.4.1"
+    "styled-reset": "^4.4.1",
+    "use-interval": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
