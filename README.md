@@ -32,7 +32,7 @@
 
 <br />
 
-[![Linkr Banner][banner]][github-profile]
+[![Linkr Banner][banner]][banner-url]
 
 ## Overview
 
@@ -100,4 +100,4 @@ In this section I included all Youtube content I used or refered to while studyi
 [contrib-graph]: https://github.com/NivaldoFarias/linkr-frontend/graphs/contributors
 [contrib-rocks]: https://contrib.rocks/image?repo=NivaldoFarias/linkr-frontend
 [banner]: https://github.com/NivaldoFarias/linkr-frontend/blob/main/src/assets/.github/linkr-showroom-alt.png?raw=true
-[github-profile]: https://github.com/NivaldoFarias/linkr-frontend#readme
+[banner-url]:https://github.com/NivaldoFarias/linkr-frontend/blob/main/src/assets/.github/linkr-showroom-alt.png
