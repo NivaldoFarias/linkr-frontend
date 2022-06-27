@@ -99,5 +99,5 @@ In this section I included all Youtube content I used or refered to while studyi
 [youtube-url]: https://youtube.com/playlist?list=PLoZj33I2-ANTWqU331l3ZGlZV8I7rr5ZN
 [contrib-graph]: https://github.com/NivaldoFarias/linkr-frontend/graphs/contributors
 [contrib-rocks]: https://contrib.rocks/image?repo=NivaldoFarias/linkr-frontend
-[banner]: https://github.com/NivaldoFarias/linkr-frontend/blob/main/src/assets/.github/linkr-showroom.png?raw=true
+[banner]: https://github.com/NivaldoFarias/linkr-frontend/blob/main/src/assets/.github/linkr-showroom-alt.png?raw=true
 [github-profile]: https://github.com/NivaldoFarias/linkr-frontend#readme
