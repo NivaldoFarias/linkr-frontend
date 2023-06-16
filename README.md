@@ -26,7 +26,6 @@ To summarize, there are a few key components that made building this project a c
 - As a concept, the platform required a fully-featured, user-friendly interface, with a robust database and website enviroment. Hence, the project was refactored twice, to acommodate the new requirements.
 
 <!-- Features -->
-
 ## Features
 
 - Main page
@@ -49,7 +48,6 @@ To summarize, there are a few key components that made building this project a c
   - [x] Each hashtag has a unique page containing all posts with that hashtag.
 
 <!-- Study Playlist & Contact -->
-
 ## Study Playlist & Contact
 
 In this section I included all Youtube content I used or refered to while studying for this project, aswell as my main contact mediums. Keep in mind that most of these videos contain information that was not previously studied during class, which may affect some parts of the code that contain these _extras_.
@@ -59,7 +57,6 @@ In this section I included all Youtube content I used or refered to while studyi
 [![Slack shield][slack-shield]][slack-url]
 
 <!-- MARKDOWN LINKS & IMAGES -->
-
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=blue
 [linkedin-url]: https://www.linkedin.com/in/nivaldofarias/
 [slack-shield]: https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white
