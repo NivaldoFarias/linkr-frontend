@@ -1,36 +1,17 @@
-<div id="top"></div>
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/NivaldoFarias/linkr-frontend#readme">
-    <img src="https://github.com/NivaldoFarias/linkr-frontend/blob/main/src/assets/logo.png?raw=true" alt="Linkr logo" width="100">
-  </a>
-</div>
+## Summary
 
-<div align="center">
-  <h3>Linkr | Front end</h3>
-  <h6>WIP</h6>
-  <div>
-    <p>Full Stack Development Project</p>
-    <a href="https://linkr-fullstack.vercel.app/"><strong>Preview the App»</strong></a>
-    -
-    <a href="https://github.com/NivaldoFarias/linkr-frontend/tree/main/src"><strong>Browse JSX code»</strong></a>
-    -
-    <a href="https://github.com/NivaldoFarias/linkr-backend#readme"><strong>Back end code»</strong></a>
-  </div>
-</div>
+Full Stack Development Project — Front end
 
-<div align="center">
-  <h3>Built With</h3>
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" height="30px"/>
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" height="30px"/>
-  <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" height="30px"/>
-  <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" height="30px"/>
-</div>
+- [**Preview the App»**](https://linkr-fullstack.vercel.app/)
+- [**Browse JSX code»**](https://github.com/NivaldoFarias/linkr-frontend/tree/main/src)
+- [**Back end code»**](https://github.com/NivaldoFarias/linkr-backend#readme)
+  
+## Built With
 
-#
-
-<br />
+![vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 
 [![Linkr Banner][banner]][banner-url]
 
@@ -67,27 +48,15 @@ To summarize, there are a few key components that made building this project a c
   - [x] Aswell as interactive, the hashtags are constantly updated, taking into account both the number of posts and the number of likes on each of them.
   - [x] Each hashtag has a unique page containing all posts with that hashtag.
 
-#
-
 <!-- Study Playlist & Contact -->
 
-### Study Playlist & Contact
+## Study Playlist & Contact
 
 In this section I included all Youtube content I used or refered to while studying for this project, aswell as my main contact mediums. Keep in mind that most of these videos contain information that was not previously studied during class, which may affect some parts of the code that contain these _extras_.
 
 [![Youtube shield][youtube-shield]][youtube-url]
 [![Linkedin shield][linkedin-shield]][linkedin-url]
 [![Slack shield][slack-shield]][slack-url]
-
-#
-
-### Contributors
-
-[![Contributors][contrib-rocks]][contrib-graph]
-
-###### Made with [contrib.rocks](https://contrib.rocks)
-
-#
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
